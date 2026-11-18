@@ -1,0 +1,2035 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROOC Guild League: AFV Riot — คู่มือวางแผนกลยุทธ์</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: IBM Plex Sans Thai & Prompt -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"IBM Plex Sans Thai"', 'Prompt', 'sans-serif'],
+                        display: ['Prompt', '"IBM Plex Sans Thai"', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'IBM Plex Sans Sans Thai', 'Prompt', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        h1, h2, h3, h4, .font-heading {
+            font-family: 'Prompt', 'IBM Plex Sans Thai', sans-serif;
+        }
+        /* Subtle Clean Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 9999px;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #334155;
+        }
+        /* Canvas container subtle grid */
+        .tactical-canvas-bg {
+            background-color: #0f172a;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+    </style>
+</head>
+<body class="bg-[#F8FAFC] dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-200">
+
+    <!-- ================= HEADER & QUICK SUMMARY BAR ================= -->
+    <header class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <!-- Title & Brand -->
+                <div class="flex items-start sm:items-center gap-3.5">
+                    <div class="w-12 h-12 rounded-2xl bg-indigo-600 text-white flex items-center justify-center shadow-sm shrink-0">
+                        <i class="fa-solid fa-chess-knight text-xl"></i>
+                    </div>
+                    <div>
+                        <div class="flex flex-wrap items-center gap-2 mb-0.5">
+                            <span class="px-2.5 py-0.5 text-xs font-semibold rounded-full bg-indigo-50 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">
+                                Ragnarok Origin Classic
+                            </span>
+                            <span class="px-2.5 py-0.5 text-xs font-semibold rounded-full bg-amber-50 dark:bg-amber-950/80 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800">
+                                Tactical Guide
+                            </span>
+                        </div>
+                        <h1 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
+                            ROOC Guild League: AFV Riot — คู่มือวางแผนกลยุทธ์
+                        </h1>
+                    </div>
+                </div>
+
+                <!-- Theme Toggle & View Mode Switch -->
+                <div class="flex items-center gap-2 self-start md:self-center">
+                    <button onclick="toggleViewAll()" id="viewAllBtn" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 transition flex items-center gap-2">
+                        <i class="fa-solid fa-layer-group text-indigo-600 dark:text-indigo-400"></i>
+                        <span id="viewAllText">โหมด: แยกตามหมวดหมู่</span>
+                    </button>
+                    <button onclick="toggleTheme()" class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition" title="สลับโหมดสีสว่าง/มืด">
+                        <i id="themeIcon" class="fa-solid fa-moon text-sm"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Key Stats Summary Bar -->
+            <div class="mt-4 pt-4 border-t border-slate-100 dark:border-slate-800/80 grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div class="flex items-center gap-3 bg-slate-50 dark:bg-slate-800/60 px-4 py-2.5 rounded-xl border border-slate-200/70 dark:border-slate-800">
+                    <div class="w-9 h-9 rounded-lg bg-amber-100 dark:bg-amber-950 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-500 dark:text-slate-400 font-medium">เป้าหมายชนะทันที</div>
+                        <div class="text-sm font-bold text-slate-900 dark:text-white">3,000 แต้ม <span class="font-normal text-xs text-slate-500 dark:text-slate-400">(หรือตี Crystal แตก)</span></div>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-3 bg-slate-50 dark:bg-slate-800/60 px-4 py-2.5 rounded-xl border border-slate-200/70 dark:border-slate-800">
+                    <div class="w-9 h-9 rounded-lg bg-blue-100 dark:bg-blue-950 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0">
+                        <i class="fa-regular fa-clock"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-500 dark:text-slate-400 font-medium">เวลาการแข่งขัน</div>
+                        <div class="text-sm font-bold text-slate-900 dark:text-white">20 นาที <span class="font-normal text-xs text-slate-500 dark:text-slate-400">(เตรียมตัวก่อนเริ่ม 5 นาที)</span></div>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-3 bg-slate-50 dark:bg-slate-800/60 px-4 py-2.5 rounded-xl border border-slate-200/70 dark:border-slate-800">
+                    <div class="w-9 h-9 rounded-lg bg-emerald-100 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-500 dark:text-slate-400 font-medium">โครงสร้างสนามรบ 3 เลน</div>
+                        <div class="text-sm font-bold text-slate-900 dark:text-white">Main 40 คน / Sub 40 คน <span class="font-normal text-xs text-slate-500 dark:text-slate-400">(รวม 80 คน)</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ================= STICKY CATEGORY NAVIGATION TABS ================= -->
+    <div class="sticky top-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <nav class="flex items-center gap-1 sm:gap-2 overflow-x-auto py-2.5 no-scrollbar" aria-label="หมวดหมู่กลยุทธ์">
+                <button onclick="switchMainTab('overview')" id="tab-btn-overview" class="main-tab-btn shrink-0 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-2">
+                    <span>📊</span>
+                    <span>1. ภาพรวม & กติกาคะแนน</span>
+                </button>
+                <button onclick="switchMainTab('simulator')" id="tab-btn-simulator" class="main-tab-btn shrink-0 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-2">
+                    <span>🎬</span>
+                    <span>2. จำลองแผนการรบ (Animation)</span>
+                </button>
+                <button onclick="switchMainTab('timeline')" id="tab-btn-timeline" class="main-tab-btn shrink-0 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-2">
+                    <span>⏱️</span>
+                    <span>3. ไทม์ไลน์ 20 นาที</span>
+                </button>
+                <button onclick="switchMainTab('roster')" id="tab-btn-roster" class="main-tab-btn shrink-0 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-2">
+                    <span>🛡️</span>
+                    <span>4. จัดทัพ 40 คน & อาชีพเมต้า</span>
+                </button>
+            </nav>
+        </div>
+    </div>
+
+    <!-- ================= MAIN CONTENT AREA ================= -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
+
+        <!-- =================================================================== -->
+        <!-- TAB 1: 📊 ภาพรวม & กติกาคะแนน (OVERVIEW & SCORING RULES)            -->
+        <!-- =================================================================== -->
+        <section id="section-overview" class="tab-section space-y-8">
+            <!-- Section Header -->
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                <div class="space-y-1">
+                    <div class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
+                        <i class="fa-solid fa-bullseye"></i> หมวดที่ 1 • หัวใจสำคัญของการชนะ
+                    </div>
+                    <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
+                        ทำไมโหมดนี้ "Objective สำคัญกว่าการไล่ฆ่าคน (Kill)"
+                    </h2>
+                    <p class="text-sm text-slate-600 dark:text-slate-400">
+                        การฆ่าผู้เล่นได้เพียง <strong class="text-rose-600 dark:text-rose-400">1 คะแนน</strong> แต่การพังรถถัง AFV 1 คันได้ถึง <strong class="text-indigo-600 dark:text-indigo-400">85 คะแนน</strong> (เทียบเท่าฆ่าคน 85 ครั้ง)
+                    </p>
+                </div>
+                <button onclick="switchMainTab('simulator')" class="shrink-0 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs sm:text-sm font-semibold transition flex items-center gap-2 shadow-sm self-start sm:self-center">
+                    <i class="fa-solid fa-play"></i> ดูภาพจำลองการเล่น
+                </button>
+            </div>
+
+            <!-- 6 Scoring Sources Comparison Grid -->
+            <div>
+                <h3 class="text-base font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-ranking-star text-amber-500"></i>
+                    <span>ตารางเปรียบเทียบแหล่งที่มาของคะแนน (เรียงตามความคุ้มค่า)</span>
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- Score Card 1: Crystal Destroy -->
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl p-5 border-2 border-amber-400/80 dark:border-amber-500/60 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between gap-2 mb-3">
+                                <span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300">
+                                    ชนะทันที (Instant Win)
+                                </span>
+                                <span class="text-2xl font-extrabold text-amber-600 dark:text-amber-400">3,000 แต้ม</span>
+                            </div>
+                            <h4 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                                <i class="fa-solid fa-gem text-amber-500"></i> ทำลาย Crystal ศัตรูสำเร็จ
+                            </h4>
+                            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
+                                หากตีป้อม Crystal หลักของศัตรูใน Main-Field แตก จะได้รับ 3,000 คะแนนและจบเกมชนะทันที โดยสกิลจากรถ AFV และบอสใหญ่จะทำดาเมจต่อป้อมได้รุนแรงที่สุด
+                            </p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 text-xs font-semibold text-amber-700 dark:text-amber-400">
+                            💡 ต้องยืนในรัศมีป้อมจึงจะโจมตีป้อมเข้า
+                        </div>
+                    </div>
+
+                    <!-- Score Card 2: Crystal HP % -->
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between gap-2 mb-3">
+                                <span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-orange-100 dark:bg-orange-950 text-orange-800 dark:text-orange-300">
+                                    แต้มหลักสะสม
+                                </span>
+                                <span class="text-2xl font-extrabold text-orange-600 dark:text-orange-400">9 แต้ม / 1%</span>
+                            </div>
+                            <h4 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                                <i class="fa-solid fa-hammer text-orange-500"></i> ตอดเลือดป้อม Crystal ศัตรู
+                            </h4>
+                            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
+                                ทุกๆ 1% ของ HP ป้อมศัตรูที่ลดลง จะได้รับ 9 คะแนน (รวมสูงสุด 900 คะแนนจากการตอดเลือด) และใช้ตัดสินผลแพ้ชนะอันดับที่ 1 กรณีหมดเวลาแล้วแต้มเท่ากัน
+                            </p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 text-xs font-semibold text-slate-500 dark:text-slate-400">
+                            🔧 ใช้ทรัพยากรจากจุด Resource ซ่อมป้อมเราได้
+                        </div>
+                    </div>
+
+                    <!-- Score Card 3: Destroy Enemy AFV -->
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl p-5 border-2 border-indigo-500/70 dark:border-indigo-500/50 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between gap-2 mb-3">
+                                <span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-indigo-100 dark:bg-indigo-950 text-indigo-800 dark:text-indigo-300">
+                                    สำคัญมาก! (High Value)
+                                </span>
+                                <span class="text-2xl font-extrabold text-indigo-600 dark:text-indigo-400">85 แต้ม / คัน</span>
+                            </div>
+                            <h4 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                                <i class="fa-solid fa-truck-monster text-indigo-500"></i> ทำลายรถถัง AFV ของศัตรู
+                            </h4>
+                            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
+                                พังรถ 1 คัน = ฆ่าคน 85 คน! นอกจากนี้หากรถระเบิดในขณะที่ศัตรูยังนั่งอยู่บนรถ <strong class="text-rose-600 dark:text-rose-400">สมาชิกบนรถ 5 คนจะตายพร้อมกันทันที</strong>
+                            </p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 text-xs font-semibold text-indigo-600 dark:text-indigo-400">
+                            ⭐ ผู้มีส่วนร่วมพังรถได้ Personal Points +100 แต้ม
+                        </div>
+                    </div>
+
+                    <!-- Score Card 4: Resource Point Elite -->
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between gap-2 mb-3">
+                                <span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300">
+                                    ตัดสินที่ Last Hit
+                                </span>
+                                <span class="text-2xl font-extrabold text-emerald-600 dark:text-emerald-400">35 แต้ม / ตัว</span>
+                            </div>
+                            <h4 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                                <i class="fa-solid fa-cubes text-emerald-500"></i> มอนสเตอร์ Elite (Resource Point)
+                            </h4>
+                            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
+                                กิลด์ที่ <strong class="text-emerald-600 dark:text-emerald-400">โจมตีครั้งสุดท้าย (Last Hit)</strong> จะได้รับ 35 คะแนนทันที พร้อมรับ "ทรัพยากร" สำหรับใช้ซ่อมป้อม Crystal และกดปล่อย Commander Skill
+                            </p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 text-xs font-semibold text-emerald-600 dark:text-emerald-400">
+                            🥊 ใช้ Champion รอต่อย Asura Strike ตอนเลือด 15%
+                        </div>
+                    </div>
+
+                    <!-- Score Card 5: Sub-Field Morale -->
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between gap-2 mb-3">
+                                <span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-purple-100 dark:bg-purple-950 text-purple-800 dark:text-purple-300">
+                                    โบนัสจากทีมรอง
+                                </span>
+                                <span class="text-2xl font-extrabold text-purple-600 dark:text-purple-400">100 แต้ม x3</span>
+                            </div>
+                            <h4 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                                <i class="fa-solid fa-bolt text-purple-500"></i> บัฟ Morale จาก Sub-Field
+                            </h4>
+                            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
+                                เมื่อทีม Sub-Field สะสม Morale ครบ <strong>1,000 / 2,000 / 3,000</strong> จะส่งแต้มให้ทีมหลักรอบละ 100 คะแนน (รวม 300 คะแนน) พร้อมปลดล็อกบัฟวิ่งเร็ว (MSPD) และลดดาเมจทั้งสนาม
+                            </p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 text-xs font-semibold text-purple-600 dark:text-purple-400">
+                            🔥 ป้อมใน Sub-Field ตีแตกแล้วเกิดใหม่ได้เรื่อยๆ
+                        </div>
+                    </div>
+
+                    <!-- Score Card 6: Player Kills -->
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between opacity-90">
+                        <div>
+                            <div class="flex items-center justify-between gap-2 mb-3">
+                                <span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-rose-100 dark:bg-rose-950 text-rose-800 dark:text-rose-300">
+                                    แต้มน้อยที่สุด
+                                </span>
+                                <span class="text-2xl font-extrabold text-rose-600 dark:text-rose-400">1 แต้ม / คน</span>
+                            </div>
+                            <h4 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                                <i class="fa-solid fa-skull text-rose-500"></i> กำจัดผู้เล่นศัตรู (Player Kill)
+                            </h4>
+                            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
+                                การฆ่าผู้เล่นได้เพียง 1 คะแนนกิลด์เท่านั้น ดังนั้นควรฆ่าเฉพาะเพื่อ <strong>"เปิดทางดันรถ"</strong> หรือ <strong>"ตัดตัวแย่ง Last Hit บอส"</strong> ห้ามวิ่งไล่คิลจนเสียตำแหน่งเด็ดขาด
+                            </p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 text-xs font-semibold text-rose-600 dark:text-rose-400">
+                            ⚠️ ห้ามวิ่งตามศัตรูเข้าจุดเกิด (โดนหัก %HP ตายฟรี)
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tie-Breaker Priority Box -->
+            <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+                    <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                        <i class="fa-solid fa-scale-balanced text-indigo-600 dark:text-indigo-400"></i>
+                        <span>ลำดับการตัดสินผลแพ้ชนะ กรณีหมดเวลา 20 นาทีแล้ว "คะแนนเท่ากัน" (Tie-Breaker)</span>
+                    </h3>
+                    <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">เรียงลำดับความสำคัญ 1 ถึง 5</span>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-5 gap-3">
+                    <div class="bg-indigo-50/70 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800/70 rounded-xl p-3.5">
+                        <div class="text-xs font-bold text-indigo-600 dark:text-indigo-400">อันดับที่ 1</div>
+                        <div class="text-sm font-bold text-slate-900 dark:text-white mt-0.5">HP ของ Crystal</div>
+                        <div class="text-xs text-slate-500 dark:text-slate-400 mt-1">ฝ่ายที่เหลือเลือดป้อมมากกว่าชนะ</div>
+                    </div>
+                    <div class="bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-xl p-3.5">
+                        <div class="text-xs font-bold text-slate-500 dark:text-slate-400">อันดับที่ 2</div>
+                        <div class="text-sm font-bold text-slate-900 dark:text-white mt-0.5">จำนวน AFV ที่ทำลาย</div>
+                        <div class="text-xs text-slate-500 dark:text-slate-400 mt-1">ฝ่ายที่พังรถศัตรูได้มากกว่า</div>
+                    </div>
+                    <div class="bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-xl p-3.5">
+                        <div class="text-xs font-bold text-slate-500 dark:text-slate-400">อันดับที่ 3</div>
+                        <div class="text-sm font-bold text-slate-900 dark:text-white mt-0.5">จำนวนการสังหารรวม</div>
+                        <div class="text-xs text-slate-500 dark:text-slate-400 mt-1">ยอด Kill รวมทั้งกิลด์</div>
+                    </div>
+                    <div class="bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-xl p-3.5">
+                        <div class="text-xs font-bold text-slate-500 dark:text-slate-400">อันดับที่ 4</div>
+                        <div class="text-sm font-bold text-slate-900 dark:text-white mt-0.5">ค่า Morale สนามรอง</div>
+                        <div class="text-xs text-slate-500 dark:text-slate-400 mt-1">แต้ม Morale จาก Sub-Field</div>
+                    </div>
+                    <div class="bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-xl p-3.5">
+                        <div class="text-xs font-bold text-slate-500 dark:text-slate-400">อันดับที่ 5</div>
+                        <div class="text-sm font-bold text-slate-900 dark:text-white mt-0.5">พลังต่อสู้รวมทีมหลัก</div>
+                        <div class="text-xs text-slate-500 dark:text-slate-400 mt-1">CP รวมของ 40 คนใน Main-Field</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main-Field vs Sub-Field & Personal Points Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <!-- Main vs Sub Field Comparison -->
+                <div class="lg:col-span-7 bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                    <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                        <i class="fa-solid fa-sitemap text-indigo-600 dark:text-indigo-400"></i>
+                        <span>เปรียบเทียบหน้าที่ Main-Field (40 คน) vs Sub-Field (40 คน)</span>
+                    </h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="p-4 rounded-xl bg-blue-50/60 dark:bg-blue-950/30 border border-blue-200/80 dark:border-blue-900/60 space-y-2">
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm font-bold text-blue-800 dark:text-blue-300">Main-Field (สนามหลัก)</span>
+                                <span class="px-2 py-0.5 text-xs font-bold rounded bg-blue-600 text-white">Guild Elite 40 คน</span>
+                            </div>
+                            <ul class="text-xs sm:text-sm text-slate-700 dark:text-slate-300 space-y-1.5 list-disc list-inside">
+                                <li>สนามตัดสินแพ้-ชนะหลัก (เป้าหมาย 3,000 แต้ม)</li>
+                                <li>คุ้มกันรถ AFV 3 เลน และรุมพังรถศัตรู (+85 แต้ม)</li>
+                                <li>ชิง Last Hit บอสนาทีที่ 14 (ล่าง) และนาทีที่ 5 (บน)</li>
+                                <li>เก็บทรัพยากรมาซ่อมป้อมและกด Commander Skill</li>
+                            </ul>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-purple-50/60 dark:bg-purple-950/30 border border-purple-200/80 dark:border-purple-900/60 space-y-2">
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm font-bold text-purple-800 dark:text-purple-300">Sub-Field (สนามรอง)</span>
+                                <span class="px-2 py-0.5 text-xs font-bold rounded bg-purple-600 text-white">สมาชิกกิลด์ 40 คน</span>
+                            </div>
+                            <ul class="text-xs sm:text-sm text-slate-700 dark:text-slate-300 space-y-1.5 list-disc list-inside">
+                                <li>เน้นปั๊มเกจ <strong>Morale ให้ถึง 1,000 / 2,000 / 3,000</strong></li>
+                                <li>ส่งโบนัสแต้มให้สนามหลักรวม <strong>+300 คะแนน</strong></li>
+                                <li>ปลดล็อกบัฟ <strong>เพิ่มความเร็วเคลื่อนที่ (MSPD) & ลดดาเมจ</strong></li>
+                                <li>ป้อม Crystal ตีแตกแล้วเกิดใหม่ได้ จึงเน้นบุกเต็มสูบ</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Personal Points & Titles -->
+                <div class="lg:col-span-5 bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between space-y-4">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                                <i class="fa-solid fa-medal text-amber-500"></i>
+                                <span>คะแนนผลงานส่วนตัว (ประเมิน D ถึง SSS)</span>
+                            </h3>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2.5 text-xs sm:text-sm">
+                            <div class="p-3 rounded-xl bg-emerald-50/70 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/60">
+                                <div class="text-slate-500 dark:text-slate-400 text-xs">ร่วมทำลายรถ AFV</div>
+                                <div class="text-base font-extrabold text-emerald-700 dark:text-emerald-400">+100 คะแนน/ครั้ง</div>
+                            </div>
+                            <div class="p-3 rounded-xl bg-blue-50/70 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800/60">
+                                <div class="text-slate-500 dark:text-slate-400 text-xs">สังหาร / ช่วยเหลือ</div>
+                                <div class="text-base font-extrabold text-blue-700 dark:text-blue-400">+10 / +2 คะแนน</div>
+                            </div>
+                            <div class="p-3 rounded-xl bg-rose-50/70 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800/60 col-span-2 flex items-center justify-between">
+                                <div>
+                                    <div class="text-rose-700 dark:text-rose-300 font-bold text-xs">ตัวละครตาย (หักคะแนน)</div>
+                                    <div class="text-xs text-slate-500 dark:text-slate-400">ถ้ารถ AFV พังแล้วยังไม่โดดลง จะตายหมู่ 5 คนทันที!</div>
+                                </div>
+                                <div class="text-base font-extrabold text-rose-600 dark:text-rose-400 shrink-0">-10 คะแนน/ครั้ง</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-3 border-t border-slate-100 dark:border-slate-800">
+                        <div class="text-xs font-bold text-slate-500 dark:text-slate-400 mb-1.5">6 ฉายาเกียรติยศหลังจบเกม (Battlefield Titles):</div>
+                        <div class="flex flex-wrap gap-1.5 text-xs">
+                            <span class="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 font-medium">👑 MVP (คะแนนสูงสุด)</span>
+                            <span class="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 font-medium">⚔️ God of War (ฆ่าสูงสุด)</span>
+                            <span class="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 font-medium">🛡️ Vanguard (ดาเมจต่อ AFV สูงสุด)</span>
+                            <span class="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 font-medium">📦 Logistics (เก็บทรัพยากรสูงสุด)</span>
+                            <span class="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 font-medium">💚 Healing (ฮีลสูงสุด)</span>
+                            <span class="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 font-medium">🤝 Assist (ช่วยเหลือสูงสุด)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =================================================================== -->
+        <!-- TAB 2: 🎬 จำลองแผนการรบ (ANIMATED TACTICAL SIMULATOR - 4 SCENARIOS) -->
+        <!-- =================================================================== -->
+        <section id="section-simulator" class="tab-section space-y-6 hidden">
+            <!-- Section Header -->
+            <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <div class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
+                        <i class="fa-solid fa-clapperboard"></i> หมวดที่ 2 • กระดานจำลองกลยุทธ์แบบเคลื่อนไหว
+                    </div>
+                    <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mt-0.5">
+                        จำลอง 4 สถานการณ์ชี้ขาดผลแพ้ชนะ (กดเลือกสถานการณ์ด้านล่าง)
+                    </h2>
+                </div>
+                <!-- Legend -->
+                <div class="flex flex-wrap items-center gap-3 text-xs font-medium bg-slate-50 dark:bg-slate-800 px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700">
+                    <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span> ฝั่งเรา (Blue)</span>
+                    <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span> ศัตรู (Red)</span>
+                    <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span> บอส / จุดทรัพยากร</span>
+                </div>
+            </div>
+
+            <!-- 4 Scenario Selector Tabs -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                <button onclick="selectScenario(1)" id="scen-tab-1" class="text-left p-4 rounded-2xl border transition-all">
+                    <div class="flex items-center justify-between mb-1">
+                        <span class="text-xs font-bold px-2 py-0.5 rounded-md bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300">สถานการณ์ที่ 1</span>
+                        <i class="fa-solid fa-truck-monster text-indigo-500"></i>
+                    </div>
+                    <div class="font-bold text-sm sm:text-base text-slate-900 dark:text-white">การดันรถ AFV & กฎสละยาน</div>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5 truncate">ปายาพังรถศัตรู (+85) & โดดลงเมื่อ HP &lt;15%</p>
+                </button>
+
+                <button onclick="selectScenario(2)" id="scen-tab-2" class="text-left p-4 rounded-2xl border transition-all">
+                    <div class="flex items-center justify-between mb-1">
+                        <span class="text-xs font-bold px-2 py-0.5 rounded-md bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300">สถานการณ์ที่ 2</span>
+                        <i class="fa-solid fa-hand-fist text-emerald-500"></i>
+                    </div>
+                    <div class="font-bold text-sm sm:text-base text-slate-900 dark:text-white">ซุ่มแย่ง Last Hit ทรัพยากร</div>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5 truncate">ดึงสาย Devotion + อาชูร่าตอนเลือด 10-15%</p>
+                </button>
+
+                <button onclick="selectScenario(3)" id="scen-tab-3" class="text-left p-4 rounded-2xl border transition-all">
+                    <div class="flex items-center justify-between mb-1">
+                        <span class="text-xs font-bold px-2 py-0.5 rounded-md bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300">สถานการณ์ที่ 3</span>
+                        <i class="fa-solid fa-dragon text-amber-500"></i>
+                    </div>
+                    <div class="font-bold text-sm sm:text-base text-slate-900 dark:text-white">ศึกชิงบอสนาที 14 & นาที 5</div>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5 truncate">ปูแลนด์ + เวทย์โซนคน & ลาสท์บอสดันเลนกลาง</p>
+                </button>
+
+                <button onclick="selectScenario(4)" id="scen-tab-4" class="text-left p-4 rounded-2xl border transition-all">
+                    <div class="flex items-center justify-between mb-1">
+                        <span class="text-xs font-bold px-2 py-0.5 rounded-md bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300">สถานการณ์ที่ 4</span>
+                        <i class="fa-solid fa-bolt text-purple-500"></i>
+                    </div>
+                    <div class="font-bold text-sm sm:text-base text-slate-900 dark:text-white">บัฟ Morale & กับดักจุดเกิด</div>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5 truncate">ส่งบัฟทั้งสนาม +300 แต้ม & ห้ามเข้าจุดเกิดศัตรู</p>
+                </button>
+            </div>
+
+            <!-- Main Simulator Workspace: Center Canvas + Right Structured Action Checklist -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                <!-- Left/Center: Animated Battlefield Canvas Card (8 cols) -->
+                <div class="lg:col-span-8 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+                    <!-- Top Status Bar -->
+                    <div class="px-4 py-3 bg-slate-50 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-800 flex flex-wrap items-center justify-between gap-3">
+                        <!-- Blue Score -->
+                        <div class="flex items-center gap-2.5">
+                            <span class="w-3 h-3 rounded-full bg-blue-500"></span>
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-xs font-bold text-slate-700 dark:text-slate-200">ทีมเรา (BLUE)</span>
+                                    <span id="sim-blue-score" class="text-xs font-extrabold px-2 py-0.5 rounded bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300">1,250 แต้ม</span>
+                                </div>
+                                <div class="w-28 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden mt-1">
+                                    <div id="sim-blue-hp" class="h-full bg-blue-500 transition-all" style="width: 92%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Clock & Morale -->
+                        <div class="flex items-center gap-3">
+                            <div class="text-center">
+                                <span class="text-[11px] text-slate-500 dark:text-slate-400 block">เวลาสนามรบ</span>
+                                <span id="sim-clock" class="font-mono text-sm font-extrabold text-slate-900 dark:text-white">14:00</span>
+                            </div>
+                            <div class="h-6 w-px bg-slate-200 dark:bg-slate-700"></div>
+                            <div>
+                                <div class="flex items-center justify-between text-[11px] font-semibold text-purple-600 dark:text-purple-400">
+                                    <span>Morale</span>
+                                    <span id="sim-morale-txt">1500/3000</span>
+                                </div>
+                                <div class="w-24 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden mt-1">
+                                    <div id="sim-morale-bar" class="h-full bg-purple-500 transition-all" style="width: 50%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Red Score -->
+                        <div class="flex items-center gap-2.5">
+                            <div class="text-right">
+                                <div class="flex items-center justify-end gap-2">
+                                    <span id="sim-red-score" class="text-xs font-extrabold px-2 py-0.5 rounded bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300">1,180 แต้ม</span>
+                                    <span class="text-xs font-bold text-slate-700 dark:text-slate-200">ศัตรู (RED)</span>
+                                </div>
+                                <div class="w-28 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden mt-1 ml-auto">
+                                    <div id="sim-red-hp" class="h-full bg-rose-500 transition-all" style="width: 78%"></div>
+                                </div>
+                            </div>
+                            <span class="w-3 h-3 rounded-full bg-rose-500"></span>
+                        </div>
+                    </div>
+
+                    <!-- Canvas Wrapper -->
+                    <div class="relative w-full tactical-canvas-bg flex items-center justify-center overflow-hidden">
+                        <canvas id="battleCanvas" class="w-full max-w-full block cursor-pointer" height="420"></canvas>
+                    </div>
+
+                    <!-- Phase Progress Bar -->
+                    <div class="w-full h-1.5 bg-slate-200 dark:bg-slate-800">
+                        <div id="sim-progress-bar" class="h-full bg-indigo-600 dark:bg-indigo-400 transition-none" style="width: 0%"></div>
+                    </div>
+
+                    <!-- Controls & Live Narrative -->
+                    <div class="p-4 bg-white dark:bg-slate-900 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div class="flex items-center gap-2 shrink-0">
+                            <button onclick="togglePlay()" id="playPauseBtn" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs sm:text-sm flex items-center gap-2 transition shadow-sm">
+                                <i id="playPauseIcon" class="fa-solid fa-pause"></i>
+                                <span id="playPauseText">หยุดชั่วคราว</span>
+                            </button>
+                            <button onclick="restartScenario()" class="px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 font-semibold text-xs sm:text-sm flex items-center gap-1.5 transition">
+                                <i class="fa-solid fa-rotate-left"></i> เล่นซ้ำ
+                            </button>
+                            <button onclick="nextScenario()" class="px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 font-semibold text-xs sm:text-sm flex items-center gap-1.5 transition">
+                                ถัดไป <i class="fa-solid fa-forward-step"></i>
+                            </button>
+                        </div>
+
+                        <!-- Live Subtitle Banner -->
+                        <div class="flex-grow bg-slate-50 dark:bg-slate-800/70 px-3.5 py-2.5 rounded-xl border border-slate-200/80 dark:border-slate-700/80">
+                            <div class="flex items-center justify-between text-xs font-bold text-indigo-600 dark:text-indigo-400 mb-0.5">
+                                <span id="sim-phase-title">กำลังจำลองสถานการณ์</span>
+                                <span id="sim-phase-badge" class="font-mono text-[11px] px-1.5 py-0.2 bg-indigo-50 dark:bg-indigo-950 rounded">Phase 1/3</span>
+                            </div>
+                            <p id="sim-live-desc" class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 font-medium leading-snug">
+                                รถถัง AFV เคลื่อนที่อัตโนมัติตามเลน...
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Structured Action Checklist synced with scenario (4 cols) -->
+                <div id="scenario-checklist-panel" class="lg:col-span-4 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-5 space-y-5">
+                    <!-- Dynamically populated by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- =================================================================== -->
+        <!-- TAB 3: ⏱️ ไทม์ไลน์ 20 นาที (20-MINUTE BATTLE TIMELINE & SHOTCALLER)  -->
+        <!-- =================================================================== -->
+        <section id="section-timeline" class="tab-section space-y-6 hidden">
+            <!-- Section Header -->
+            <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                <div class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
+                    <i class="fa-regular fa-clock"></i> หมวดที่ 3 • คู่มือสั่งการตามเวลา (Shotcaller Blueprint)
+                </div>
+                <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mt-0.5">
+                    ไทม์ไลน์แผนการเล่น 20 นาที (ตั้งแต่เตรียมตัวจนจบแมตช์)
+                </h2>
+                <p class="text-sm text-slate-600 dark:text-slate-400 mt-1">
+                    คลิกที่แต่ละช่วงเวลาเพื่อดูคำสั่งกิลด์ หรือดูตารางสรุปเรียงตามลำดับเวลาทั้งหมดด้านล่าง
+                </p>
+            </div>
+
+            <!-- Interactive Time Selector Pills -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5">
+                <button onclick="selectTimelineStep(0)" id="tl-pill-0" class="p-3.5 rounded-2xl border text-left transition-all">
+                    <span class="text-[11px] font-semibold text-slate-500 dark:text-slate-400 block">ก่อนเริ่มแมตช์</span>
+                    <span class="text-base sm:text-lg font-extrabold text-slate-900 dark:text-white">เตรียมตัว 5 นาที</span>
+                    <span class="text-xs text-indigo-600 dark:text-indigo-400 font-medium block mt-0.5">จัด 8 ตี้ & คนขับรถ</span>
+                </button>
+                <button onclick="selectTimelineStep(1)" id="tl-pill-1" class="p-3.5 rounded-2xl border text-left transition-all">
+                    <span class="text-[11px] font-semibold text-slate-500 dark:text-slate-400 block">ต้นเกม</span>
+                    <span class="text-base sm:text-lg font-extrabold text-slate-900 dark:text-white font-mono">20:00 - 15:00</span>
+                    <span class="text-xs text-indigo-600 dark:text-indigo-400 font-medium block mt-0.5">พังรถ & เก็บ Elite</span>
+                </button>
+                <button onclick="selectTimelineStep(2)" id="tl-pill-2" class="p-3.5 rounded-2xl border text-left transition-all">
+                    <span class="text-[11px] font-bold text-rose-600 dark:text-rose-400 block">จุดเปลี่ยนที่ 1</span>
+                    <span class="text-base sm:text-lg font-extrabold text-rose-600 dark:text-rose-400 font-mono">นาทีที่ 14:00</span>
+                    <span class="text-xs text-slate-700 dark:text-slate-300 font-semibold block mt-0.5">บอส Vanguard (ล่าง)</span>
+                </button>
+                <button onclick="selectTimelineStep(3)" id="tl-pill-3" class="p-3.5 rounded-2xl border text-left transition-all">
+                    <span class="text-[11px] font-semibold text-slate-500 dark:text-slate-400 block">กลางเกม</span>
+                    <span class="text-base sm:text-lg font-extrabold text-slate-900 dark:text-white font-mono">13:00 - 06:00</span>
+                    <span class="text-xs text-purple-600 dark:text-purple-400 font-medium block mt-0.5">ซ่อมป้อม & บัฟ Morale</span>
+                </button>
+                <button onclick="selectTimelineStep(4)" id="tl-pill-4" class="p-3.5 rounded-2xl border text-left transition-all">
+                    <span class="text-[11px] font-bold text-amber-600 dark:text-amber-400 block">จุดชี้ชะตา!</span>
+                    <span class="text-base sm:text-lg font-extrabold text-amber-600 dark:text-amber-400 font-mono">นาทีที่ 05:00</span>
+                    <span class="text-xs text-slate-700 dark:text-slate-300 font-semibold block mt-0.5">บอส Dominator (บน)</span>
+                </button>
+                <button onclick="selectTimelineStep(5)" id="tl-pill-5" class="p-3.5 rounded-2xl border text-left transition-all">
+                    <span class="text-[11px] font-semibold text-slate-500 dark:text-slate-400 block">ท้ายเกม</span>
+                    <span class="text-base sm:text-lg font-extrabold text-emerald-600 dark:text-emerald-400 font-mono">03:00 - 00:00</span>
+                    <span class="text-xs text-emerald-600 dark:text-emerald-400 font-medium block mt-0.5">ปิดเกม / ชนะแต้มเท่า</span>
+                </button>
+            </div>
+
+            <!-- Selected Time Block Focus Card -->
+            <div id="timeline-focus-card" class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-6">
+                <!-- Populated by JS -->
+            </div>
+
+            <!-- Complete Step-by-Step Vertical Overview List -->
+            <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-6">
+                <h3 class="text-base font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-list-ol text-indigo-600 dark:text-indigo-400"></i>
+                    <span>สรุปลำดับคำสั่งกิลด์ทั้ง 6 ช่วงเวลา (ดูภาพรวมรวดเดียว)</span>
+                </h3>
+                <div id="timeline-all-list" class="divide-y divide-slate-100 dark:divide-slate-800">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- =================================================================== -->
+        <!-- TAB 4: 🛡️ จัดทัพ 40 คน & อาชีพเมต้า (8-PARTY ROSTER & META CLASSES)  -->
+        <!-- =================================================================== -->
+        <section id="section-roster" class="tab-section space-y-8 hidden">
+            <!-- Section Header -->
+            <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                <div class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
+                    <i class="fa-solid fa-users-gear"></i> หมวดที่ 4 • การจัดวางปาร์ตี้และคลาสเมต้า ROOC
+                </div>
+                <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mt-0.5">
+                    ผังจัดทัพ 40 คน (8 ปาร์ตี้) & เจาะลึกอาชีพที่ได้เปรียบที่สุด
+                </h2>
+                <p class="text-sm text-slate-600 dark:text-slate-400 mt-1">
+                    แบ่งหน้าที่ชัดเจนระหว่าง "หน่วยล่าบอส/ทรัพยากร" และ "หน่วยประจำการ 3 เลน (คนขับรถ + คนพังรถศัตรู)"
+                </p>
+            </div>
+
+            <!-- SECTION A: 8-PARTY ROSTER STRUCTURE (40 PLAYERS MAIN-FIELD) -->
+            <div class="space-y-4">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                        <span class="w-7 h-7 rounded-lg bg-indigo-600 text-white text-xs flex items-center justify-center font-bold">A</span>
+                        <span>โครงสร้างการจัดวาง 8 ปาร์ตี้ (40 คนใน Main-Field)</span>
+                    </h3>
+                    <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">ปาร์ตี้ละ 5 คน • รวม 40 คน</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Squad 1: Party 1-2 -->
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl p-5 border-2 border-amber-400/80 dark:border-amber-500/60 shadow-sm space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300">
+                                ปาร์ตี้ที่ 1 - 2 (10 คน) • หัวใจหลัก
+                            </span>
+                            <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Roaming / Objective Squad</span>
+                        </div>
+                        <h4 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white">
+                            🎯 หน่วยล่าบอส & แย่ง Last Hit ทรัพยากร
+                        </h4>
+                        <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                            หน่วยเคลื่อนที่เร็วที่มีดาเมจก้อนเดียว (Burst) สูงที่สุด ทำหน้าที่วิ่งเก็บ Last Hit มอนสเตอร์ Elite ตามจุด Resource Point และเป็นทีมหลักในการชิง Last Hit บอสนาทีที่ 14 (ล่าง) และนาทีที่ 5 (บน)
+                        </p>
+                        <div class="pt-2 border-t border-slate-100 dark:border-slate-800">
+                            <div class="text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">คอมพ์แนะนำต่อ 1 ปาร์ตี้:</div>
+                            <div class="flex flex-wrap gap-1.5 text-xs">
+                                <span class="px-2.5 py-1 rounded-lg bg-amber-50 dark:bg-amber-950/70 text-amber-800 dark:text-amber-300 font-semibold border border-amber-200 dark:border-amber-800">🥊 Champion (ลาสท์ช็อต)</span>
+                                <span class="px-2.5 py-1 rounded-lg bg-blue-50 dark:bg-blue-950/70 text-blue-800 dark:text-blue-300 font-semibold border border-blue-200 dark:border-blue-800">🛡️ Paladin (ดึงสาย)</span>
+                                <span class="px-2.5 py-1 rounded-lg bg-cyan-50 dark:bg-cyan-950/70 text-cyan-800 dark:text-cyan-300 font-semibold border border-cyan-200 dark:border-cyan-800">📘 Professor (ปูแลนด์/เติม SP)</span>
+                                <span class="px-2.5 py-1 rounded-lg bg-purple-50 dark:bg-purple-950/70 text-purple-800 dark:text-purple-300 font-semibold border border-purple-200 dark:border-purple-800">🎸 Clown (เพลง Bragi)</span>
+                                <span class="px-2.5 py-1 rounded-lg bg-emerald-50 dark:bg-emerald-950/70 text-emerald-800 dark:text-emerald-300 font-semibold border border-emerald-200 dark:border-emerald-800">💚 High Priest (บัฟ/ฮีล)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Squad 2: Party 3-4 Top Lane -->
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-blue-100 dark:bg-blue-950 text-blue-800 dark:text-blue-300">
+                                ปาร์ตี้ที่ 3 - 4 (10 คน)
+                            </span>
+                            <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Top Lane Garrison</span>
+                        </div>
+                        <h4 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white">
+                            ⬆️ หน่วยประจำการ เลนบน (ขับรถ 5 + คุ้มกัน/พังรถ 5)
+                        </h4>
+                        <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                            ปาร์ตี้ที่ 3 (5 คน) รับหน้าที่ขึ้นขับรถถัง AFV เลนบนเพื่อกดสกิลรถยิงป้อม ส่วนปาร์ตี้ที่ 4 (5 คน) เดินประกบนอกรถเพื่อปายาพังรถศัตรู และเตรียมตั้งโซนรับบอส <strong>Battlefield Dominator (นาทีที่ 05:00)</strong>
+                        </p>
+                        <div class="pt-2 border-t border-slate-100 dark:border-slate-800">
+                            <div class="text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">คลาสหลักตี้คุ้มกันนอกรถ:</div>
+                            <div class="flex flex-wrap gap-1.5 text-xs">
+                                <span class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 font-medium">🧪 Biochemist (ปายาพังรถ)</span>
+                                <span class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 font-medium">🏹 Sniper / Rebellion</span>
+                                <span class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 font-medium">🛡️ Paladin</span>
+                                <span class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 font-medium">💚 High Priest</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Squad 3: Party 5-6 Mid Lane -->
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-indigo-100 dark:bg-indigo-950 text-indigo-800 dark:text-indigo-300">
+                                ปาร์ตี้ที่ 5 - 6 (10 คน)
+                            </span>
+                            <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Mid Lane & Boss Escort</span>
+                        </div>
+                        <h4 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white">
+                            ➡️ หน่วยประจำการ เลนกลาง (รับศึกหนัก & ดันบอสเข้าป้อม)
+                        </h4>
+                        <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                            เลนกลางคือเส้นทางที่บอสทั้ง 2 ตัวจะเดินลุยไปหาป้อมศัตรู และจะหยุดเมื่อเจอรถ AFV ศัตรูขวาง ดังนั้นทีมเลนกลางต้องรีบละลายรถ AFV ศัตรูให้แตกไวที่สุดเพื่อเปิดทางให้บอสเดินถึงป้อมศัตรู
+                        </p>
+                        <div class="pt-2 border-t border-slate-100 dark:border-slate-800">
+                            <div class="text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">คลาสหลักตี้คุมเลนกลาง:</div>
+                            <div class="flex flex-wrap gap-1.5 text-xs">
+                                <span class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 font-medium">☄️ High Wizard (ปูพรมเวทย์)</span>
+                                <span class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 font-medium">🧪 Biochemist</span>
+                                <span class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 font-medium">📘 Professor</span>
+                                <span class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 font-medium">🎸 Clown / Gypsy</span>
+                                <span class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 font-medium">💚 High Priest</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Squad 4: Party 7-8 Bot Lane -->
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300">
+                                ปาร์ตี้ที่ 7 - 8 (10 คน)
+                            </span>
+                            <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Bot Lane Garrison</span>
+                        </div>
+                        <h4 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white">
+                            ⬇️ หน่วยประจำการ เลนล่าง (ขับรถ 5 + คุมโซนบอส Vanguard)
+                        </h4>
+                        <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                            ปาร์ตี้ที่ 7 ขับรถ AFV ดันเลนล่าง ส่วนปาร์ตี้ที่ 8 เดินคุ้มกันและยึดพื้นที่ตรงกลางเลนล่างไว้ล่วงหน้า เพื่อเตรียมรับศึกชิงบอสตัวแรก <strong>Battlefield Vanguard (นาทีที่ 14:00)</strong>
+                        </p>
+                        <div class="pt-2 border-t border-slate-100 dark:border-slate-800">
+                            <div class="text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">คลาสหลักตี้คุ้มกันเลนล่าง:</div>
+                            <div class="flex flex-wrap gap-1.5 text-xs">
+                                <span class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 font-medium">🧪 Biochemist</span>
+                                <span class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 font-medium">🔫 Rebellion / Sniper (วางกับดัก)</span>
+                                <span class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 font-medium">🛡️ Paladin</span>
+                                <span class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 font-medium">💚 High Priest</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION B: ROOC META CLASSES (FILTERABLE) -->
+            <div class="space-y-4">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                        <span class="w-7 h-7 rounded-lg bg-indigo-600 text-white text-xs flex items-center justify-center font-bold">B</span>
+                        <span>เจาะลึก 8 อาชีพเมต้า ROOC และสกิลชี้ขาดในโหมด AFV Riot</span>
+                    </h3>
+
+                    <!-- Role Filter Pills -->
+                    <div class="flex flex-wrap gap-1.5">
+                        <button onclick="filterClasses('all')" id="cls-btn-all" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition">ทั้งหมด (8 อาชีพ)</button>
+                        <button onclick="filterClasses('lasthit')" id="cls-btn-lasthit" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition">Last Hit / พังรถ AFV</button>
+                        <button onclick="filterClasses('zone')" id="cls-btn-zone" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition">แทงค์ & คุมโซน</button>
+                        <button onclick="filterClasses('support')" id="cls-btn-support" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition">ซัพพอร์ตทีม</button>
+                    </div>
+                </div>
+
+                <!-- Classes Grid -->
+                <div id="classes-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-6 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 dark:text-slate-400">
+            <div class="flex items-center gap-2 font-medium">
+                <i class="fa-solid fa-chess-knight text-indigo-600 dark:text-indigo-400"></i>
+                <span>คู่มือวางแผนกลยุทธ์ <strong>ROOC Guild League: AFV Riot</strong></span>
+            </div>
+            <div class="text-center sm:text-right">
+                กฎเหล็ก 3 ข้อ: <strong class="text-slate-700 dark:text-slate-200">พังรถศัตรู (+85) • แย่ง Last Hit บอส & Elite • สละยานเมื่อเลือดรถ &lt;15%</strong>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ================= JAVASCRIPT LOGIC ================= -->
+    <script>
+        // =========================================================================
+        // 1. THEME & NAVIGATION TABS MANAGEMENT
+        // =========================================================================
+        let currentMainTab = 'overview';
+        let isViewAllMode = false;
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            const icon = document.getElementById('themeIcon');
+            html.classList.toggle('dark');
+            if (html.classList.contains('dark')) {
+                icon.className = 'fa-solid fa-sun text-amber-400 text-sm';
+            } else {
+                icon.className = 'fa-solid fa-moon text-sm';
+            }
+        }
+
+        function switchMainTab(tabId) {
+            currentMainTab = tabId;
+            if (isViewAllMode) {
+                isViewAllMode = false;
+                updateViewAllButtonUI();
+            }
+            updateTabVisibility();
+            // Resize canvas if switching to simulator
+            if (tabId === 'simulator') {
+                setTimeout(resizeCanvas, 30);
+            }
+        }
+
+        function toggleViewAll() {
+            isViewAllMode = !isViewAllMode;
+            updateViewAllButtonUI();
+            updateTabVisibility();
+            setTimeout(resizeCanvas, 30);
+        }
+
+        function updateViewAllButtonUI() {
+            const text = document.getElementById('viewAllText');
+            const btn = document.getElementById('viewAllBtn');
+            if (isViewAllMode) {
+                text.textContent = 'โหมด: ดูทั้งหมดในหน้าเดียว';
+                btn.className = 'px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold border border-indigo-300 dark:border-indigo-700 bg-indigo-50 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300 transition flex items-center gap-2';
+            } else {
+                text.textContent = 'โหมด: แยกตามหมวดหมู่';
+                btn.className = 'px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 transition flex items-center gap-2';
+            }
+        }
+
+        function updateTabVisibility() {
+            const tabs = ['overview', 'simulator', 'timeline', 'roster'];
+            tabs.forEach(t => {
+                const sec = document.getElementById('section-' + t);
+                const btn = document.getElementById('tab-btn-' + t);
+
+                if (isViewAllMode || t === currentMainTab) {
+                    sec.classList.remove('hidden');
+                } else {
+                    sec.classList.add('hidden');
+                }
+
+                if (!isViewAllMode && t === currentMainTab) {
+                    btn.className = 'main-tab-btn shrink-0 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-2 bg-indigo-600 text-white shadow-sm';
+                } else if (isViewAllMode) {
+                    btn.className = 'main-tab-btn shrink-0 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-2 bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800';
+                } else {
+                    btn.className = 'main-tab-btn shrink-0 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800';
+                }
+            });
+        }
+
+        // =========================================================================
+        // 2. DATA: SCENARIO CHECKLISTS, 20-MIN TIMELINE & 8 ROOC META CLASSES
+        // =========================================================================
+        const scenarioDetails = {
+            1: {
+                badge: 'สถานการณ์ที่ 1 • การดันรถ & สละยาน',
+                title: 'การดันรถ AFV & กฎเหล็กสละยาน',
+                doList: [
+                    'ส่งผู้เล่น 5 คนขึ้นรถ AFV ทันทีที่เกิด (รถออกตัวหลังเกิด 10 วินาที และสลับที่นั่ง 1-5 เพื่อใช้สกิลรถยิงป้อมได้)',
+                    'ให้ Biochemist ปา Acid Demonstration และ Sniper/Rebellion ยิงละลายรถ AFV ศัตรูตั้งแต่กลางเลน (+85 คะแนน)',
+                    'เมื่อรถ AFV ของเราเลือดลดต่ำกว่า 15% หัวหน้าตี้ต้องสั่งทุกคน "กดสละยาน" ทันที!'
+                ],
+                warnList: [
+                    'หากรถ AFV พังในขณะที่คนยังนั่งอยู่ สมาชิกบนรถทั้ง 5 คนจะตายพร้อมกันทันที (เสียแต้มส่วนตัวคนละ -10 คะแนน)',
+                    'ห้ามปล่อยให้รถ AFV ศัตรูเข้าถึงระยะป้อม Crystal ของเราโดยไม่มีคนสกัด'
+                ],
+                classes: ['Biochemist (ปายาพังรถ)', 'Rebellion / Sniper (ยิงตอดระยะไกล)', 'Paladin (ค้ำหน้ารถ)']
+            },
+            2: {
+                badge: 'สถานการณ์ที่ 2 • ชิงทรัพยากรซ่อมป้อม',
+                title: 'ทริกซุ่มแย่ง Last Hit ทรัพยากร (Resource Point)',
+                doList: [
+                    'เช็กคูลดาวน์และตำแหน่ง Resource Point บน Mini Map เพื่อส่งหน่วยล่าทรัพยากรไปดักรอ',
+                    'ให้ Paladin กด Devotion ดึงสายคุ้มกัน Champion ไว้ แล้วปล่อยให้มอนสเตอร์ Elite เลือดลดลงมาเหลือ ~10-15%',
+                    'ให้ Champion พุ่งเข้าไปกด Asura Strike ปิดฉาก (Last Hit) เพื่อคว้า +35 คะแนน และนำทรัพยากรไปซ่อมป้อม Crystal'
+                ],
+                warnList: [
+                    'ห้าม Champion กด Asura Strike เปิดหัวมอนสเตอร์ตั้งแต่เลือดเต็ม เพราะจะไม่มีสกิลปิด Last Hit ตอนท้าย',
+                    'เมื่อจุด Resource Point รีเซ็ต มอนสเตอร์รอบก่อนหน้าจะถูกรีเซ็ตพร้อมกันทั้งหมด ต้องรีบปิดมอนสเตอร์ให้ไว'
+                ],
+                classes: ['Champion (Asura Strike ลาสท์ช็อต)', 'Paladin (Devotion คุ้มกัน)', 'Professor (โยน SP ให้แชมป์)']
+            },
+            3: {
+                badge: 'สถานการณ์ที่ 3 • ศึกชิงบอสใหญ่',
+                title: 'ศึกชิงบอสนาทีที่ 14 (ล่าง) & นาทีที่ 5 (บน)',
+                doList: [
+                    'นาทีที่ 14:00 รวมพลที่ตรงกลางเลนล่าง (Vanguard) และนาทีที่ 05:00 รวมพลที่ตรงกลางเลนบน (Dominator)',
+                    'แบ่งครึ่งทีมไปยืนโซนกั้นทางเดินศัตรู: Professor ปู Land Protector + Clown กาง Bragi + High Wizard ลงเวทย์ใหญ่',
+                    'ให้ Champion เก็บ Last Hit บอสให้ได้ บอสจะเกิดที่ป้อมเราแล้วเดินลุยเลนกลางไปทุบรถ AFV และป้อมศัตรูอย่างรุนแรง'
+                ],
+                warnList: [
+                    'บอสจะไม่หยุดเมื่อโดนผู้เล่นตี แต่จะหยุดตีรถ AFV ศัตรูที่ขวางทาง ดังนั้นทีมเลนกลางต้องรีบช่วยพังรถศัตรูเปิดทางให้บอส',
+                    'ระวัง Champion ของศัตรูพุ่ง Snap เข้ามาขโมย Last Hit ให้ Professor คอยจับ Spider Web และ Dispell ดักไว้'
+                ],
+                classes: ['Champion (Last Hit บอส)', 'Professor (ปูแลนด์ & Dispell)', 'High Wizard + Clown (ปูพรมกั้นทาง)']
+            },
+            4: {
+                badge: 'สถานการณ์ที่ 4 • บัฟสนามรอง & เขตอันตราย',
+                title: 'พลังหนุน Morale จาก Sub-Field & กฎเขต Respawn',
+                doList: [
+                    'กระตุ้นทีมรอง (Sub-Field 40 คน) ให้บุกพังป้อม พังรถ และลาสท์ Elite เพื่อสะสม Morale ให้ครบ 1,000 / 2,000 / 3,000',
+                    'รับโบนัสคะแนนฟรี +100 แต้มต่อขั้น (รวม +300 คะแนน) พร้อมบัฟวิ่งเร็ว (MSPD) และลดดาเมจทั่วทั้งสนาม',
+                    'ใช้ประโยชน์จากบัฟวิ่งเร็ว 7 วินาทีหลังเกิดใหม่ที่ Respawn Point เพื่อวิ่งกลับเข้าสมรภูมิอย่างรวดเร็ว'
+                ],
+                warnList: [
+                    'ห้ามวิ่งไล่ตามศัตรูเข้าไปในเขต Respawn Point (จุดเกิดซ้าย-ขวา) ของศัตรูเด็ดขาด!',
+                    'ศัตรูในจุดเกิดของตัวเองจะเป็นอมตะ (Invincible) ตีไม่เข้า แต่เราจะโดนดาเมจหักเลือดเป็น %HP ต่อเนื่องจนตายฟรี!'
+                ],
+                classes: ['ทุกอาชีพใน Sub-Field (เร่งปั๊ม Morale)', 'High Priest (ยื้อชีวิตหน้าป้อม)']
+            }
+        };
+
+        const timelineData = [
+            {
+                time: 'เตรียมตัว 5 นาที (ก่อนเริ่ม)',
+                phase: 'ช่วงเตรียมความพร้อมที่จุด Spawn Point',
+                color: 'indigo',
+                mainAction: 'จัดปาร์ตี้ทั้ง 8 ตี้ให้ครบ 40 คน กำหนดชื่อคนขับรถ AFV ประจำเลนบน/กลาง/ล่าง (เลนละ 5 ที่นั่ง) แจกบัฟอาหาร ยาเคลือบของ Biochemist (Chemical Protection) และเช็กสาย Devotion ของ Paladin',
+                subAction: 'ทีมรอง 40 คนจัดตี้เน้นดาเมจบุกทะลวง เตรียมขึ้นรถ AFV ดัน 3 เลนทันทีที่ประตูกั้นเปิด',
+                shotcall: '📢 "เช็กเคลือบ เช็กสายดึง คนขับรถ 5 คนแต่ละเลนเตรียมกดขึ้นรถทันทีที่รถเกิด!"',
+                simId: 1
+            },
+            {
+                time: '20:00 - 15:00 (ต้นเกม)',
+                phase: 'ออกรถ AFV คันแรก & ชิงทรัพยากรซ่อมป้อม',
+                color: 'blue',
+                mainAction: 'รถ AFV จะออกเดินทางอัตโนมัติหลังปรากฏตัว 10 วินาที ให้ตี้คุ้มกันรีบรุมปายาพังรถ AFV ศัตรูให้แตกก่อนถึงป้อมเรา (+85 แต้ม) ส่วนหน่วยล่าทรัพยากร 2 ตี้วิ่งเก็บ Last Hit มอนสเตอร์ Elite ตามจุด Resource Point (+35 แต้ม)',
+                subAction: 'เร่งทำดาเมจใส่ป้อมและพังรถศัตรูใน Sub-Field เพื่อดัน Morale ทะลุ 1,000 แต้มแรกให้เร็วที่สุด (+100 แต้มให้ทีมหลัก)',
+                shotcall: '📢 "โฟกัสพังรถศัตรูเอา 85 แต้มก่อน! ตี้แชมป์เตรียมลาสท์มอนสเตอร์จุด Resource ห้ามเปิดอาชูร่าก่อนเลือดเหลือ 15%!"',
+                simId: 2
+            },
+            {
+                time: '14:00 (จุดเปลี่ยนที่ 1 - เลนล่าง)',
+                phase: 'บอส Battlefield Vanguard เกิดตรงกลางเลนล่าง!',
+                color: 'rose',
+                mainAction: 'สั่งรวมพลที่ "ตรงกลางเลนล่าง" ล่วงหน้า 30 วินาที (ตั้งแต่ 14:30) ให้ Professor ปู Land Protector ทับจุดยืนทีมเรา ส่ง High Wizard + Clown ปูเวทย์ Storm Gust ขวางทางเข้าศัตรู แล้วให้ Champion ต่อย Asura Strike เก็บ Last Hit บอส!',
+                subAction: 'เร่งปั๊มเกจ Morale สู่ระดับ 2,000 เพื่อส่งบัฟลดดาเมจและเพิ่มความเร็ววิ่งหนุนทีมหลักในไฟต์ชิงบอส',
+                shotcall: '📢 "รวมเลนล่างด่วน! โปรปูแลนด์ วิสาดกั้นทางเข้าศัตรูไว้ แชมป์เตรียมชาร์จบอลรอลาสท์บอสที่ 15%!"',
+                simId: 3
+            },
+            {
+                time: '13:00 - 06:00 (กลางเกม)',
+                phase: 'ดันเลนกลางตามหลังบอส & ซ่อมป้อมรักษา % HP',
+                color: 'purple',
+                mainAction: 'เดินทัพตามบอส Vanguard ที่กำลังลุยเลนกลาง รีบพังรถ AFV ศัตรูที่ขวางทางบอสเพื่อให้บอสเดินไปทุบป้อม Crystal ศัตรู พร้อมนำแต้มทรัพยากรที่ได้มากด "ซ่อมแซม Crystal" ของฝั่งเราให้เลือดเต็มอยู่เสมอ',
+                subAction: 'ตีป้อม Crystal ใน Sub-Field ให้แตกเพื่อดัน Morale แตะ 3,000 แต้มสูงสุด (ส่งแต้มครบ +300 คะแนนและบัฟขั้นสุด)',
+                shotcall: '📢 "เคลียร์รถศัตรูเลนกลางเปิดทางให้บอสเดิน! คนขับรถถ้าเลือดรถต่ำกว่า 15% โดดลงทันที ห้ามตายหมู่!"',
+                simId: 4
+            },
+            {
+                time: '05:00 (จุดชี้ชะตา - เลนบน)',
+                phase: 'บอสใหญ่ Battlefield Dominator เกิดตรงกลางเลนบน!',
+                color: 'amber',
+                mainAction: 'รวมพลใหญ่ที่ "ตรงกลางเลนบน" ก่อนนาทีที่ 05:00 พร้อมทุ่ม Commander Skill ที่สะสมไว้! หากแต้มนำให้เน้นตั้งโซนปิดทางศัตรูแล้วชัวร์ Last Hit แต่หากแต้มตามให้ Paladin ดึงสาย Champion พุ่ง Snap เข้าไปขโมย Last Hit พลิกเกม!',
+                subAction: 'รักษาความได้เปรียบและเก็บกวาดรถ AFV ต่อเนื่องเพื่อรักษาค่า Morale สูงสุดไว้ช่วยตัดสิน Tie-breaker',
+                shotcall: '📢 "ทุ่ม Commander Skill ที่เลนบนทั้งหมด! ล็อกตัวแชมป์ศัตรูไว้ อย่าให้หลุดเข้ามาแย่งลาสท์ Dominator ได้!"',
+                simId: 3
+            },
+            {
+                time: '03:00 - 00:00 (ท้ายเกม)',
+                phase: 'แผนปิดเกม หรือ ชนะด้วยกติกา Tie-Breaker',
+                color: 'emerald',
+                mainAction: 'หากแต้มนำหรือเสมอกัน: เน้นกดซ่อมป้อม Crystal ของเราให้ % HP สูงกว่าศัตรู และรุมพังรถ AFV ศัตรูเพิ่ม (เพราะตัดสินที่ 1. HP ป้อม > 2. จำนวนรถที่พัง) หากแต้มตาม: ทุ่มคุ้มกันรถ AFV และบอสสาดสกิลถล่มป้อมศัตรูให้แตกเพื่อชนะ 3,000 แต้มทันที!',
+                subAction: 'ประคองแต้ม Morale 3,000 จนหมดเวลาการแข่งขัน',
+                shotcall: '📢 "เช็กเลือดป้อม! กดซ่อมป้อมรัวๆ ห้ามวิ่งเข้าจุดเกิดศัตรูไปแจกแต้มเด็ดขาด!"',
+                simId: 1
+            }
+        ];
+
+        const roocMetaClasses = [
+            {
+                name: 'Champion',
+                thaiName: 'แชมเปี้ยน',
+                role: 'lasthit',
+                roleBadge: 'Last Hit อันดับ 1',
+                badgeColor: 'amber',
+                icon: 'fa-hand-fist',
+                skills: ['Asura Strike', 'Snap (พุ่งตัว)', 'Zen + Fury'],
+                duty: 'เก็บ Last Hit บอส Vanguard (14:00), Dominator (05:00) และมอนสเตอร์ Elite ในจุด Resource Point (+35 แต้ม)',
+                tip: 'ห้ามใช้อาชูร่าเปิดหัวมอนสเตอร์ ให้รอจังหวะเลือดบอส/มอนสเตอร์เหลือ 10-15% แล้วค่อยกด Snap เข้าไปต่อยปิดฉาก'
+            },
+            {
+                name: 'Biochemist',
+                thaiName: 'ไบโอเคมิสต์',
+                role: 'lasthit',
+                roleBadge: 'ตัวละลายรถถัง AFV',
+                badgeColor: 'emerald',
+                icon: 'fa-flask-vial',
+                skills: ['Acid Demonstration', 'Chemical Protection', 'Slim Potion Pitcher'],
+                duty: 'ปาระเบิดขวดยาละลายรถถัง AFV ศัตรูให้พังก่อนถึงป้อม (+85 แต้ม/คัน) และเคลือบอุปกรณ์ให้ปาร์ตี้หลัก',
+                tip: 'ยืนเหยียบเพลง Bragi ของ Clown แล้วรัว Acid Demonstration ใส่รถถังศัตรู จะเก็บฉายา Vanguard และแต้มส่วนตัว +100 ได้ง่ายมาก'
+            },
+            {
+                name: 'Paladin',
+                thaiName: 'พาลาดิน',
+                role: 'zone',
+                roleBadge: 'แทงค์ & คุ้มกันตัวแบก',
+                badgeColor: 'blue',
+                icon: 'fa-shield-halved',
+                skills: ['Devotion (ดึงสาย)', 'Sacrifice', 'Defender', 'Gospel'],
+                duty: 'ดึงสาย Devotion คุ้มกัน Champion มือลาสท์บอสและ Biochemist ไม่ให้ตายก่อนจังหวะสำคัญ และยืนค้ำโซนหน้ารถ/หน้าป้อม',
+                tip: 'เปิด Defender ลดดาเมจยิงไกลเวลาเดินนำขบวนรถ AFV และให้ High Priest กาง Safety Wall / Pneuma ทับตัว Paladin เสมอ'
+            },
+            {
+                name: 'Professor',
+                thaiName: 'โปรเฟสเซอร์',
+                role: 'zone',
+                roleBadge: 'ปูแลนด์ & ตัดบัฟศัตรู',
+                badgeColor: 'cyan',
+                icon: 'fa-hat-wizard',
+                skills: ['Land Protector', 'Dispell', 'Spider Web', 'Soul Exhale'],
+                duty: 'ปูพื้น Land Protector กันเวทย์ใหญ่ให้ทีมตอนยืนตีบอสหรือดันป้อม คอยโยน SP ให้ Champion และลบบัฟศัตรู',
+                tip: 'เล็งใช้ Spider Web ขังขาและกด Dispell ใส่ Champion ศัตรูที่พยายามจะวิ่งเข้ามาแย่ง Last Hit บอส'
+            },
+            {
+                name: 'Rebellion & Sniper',
+                thaiName: 'รีเบลเลียน & สไนเปอร์',
+                role: 'lasthit',
+                roleBadge: 'ยิงไกลกดดันรถ & คน',
+                badgeColor: 'rose',
+                icon: 'fa-crosshairs',
+                skills: ['Sharp Shooting / FAS', 'Fire Dance / Rapid Shower', 'Ankle Snare'],
+                duty: 'ใช้ระยะยิงที่ไกลกว่าคลาสอื่น ตอดเลือดรถถัง AFV ศัตรูจากนอกระยะอันตราย และวางกับดักล็อกขาแนวหน้าศัตรู',
+                tip: 'คอยดักยิงเก็บตกผู้เล่นศัตรูจังหวะที่เพิ่งกระโดดสละยานลงมาจากรถถัง หรือตอดเลือดมอนสเตอร์ Elite ให้พร้อมสำหรับแชมป์ลาสท์'
+            },
+            {
+                name: 'High Wizard',
+                thaiName: 'ไฮวิซาร์ด',
+                role: 'zone',
+                roleBadge: 'ปูพรมเวทย์ปิดทางเดิน',
+                badgeColor: 'purple',
+                icon: 'fa-meteor',
+                skills: ['Storm Gust', 'Meteor Storm', 'Lord of Vermilion', 'Quagmire'],
+                duty: 'ร่ายเวทย์ใหญ่ปูพรมปิดทางเดินคอขวดตอนบอสเกิดนาทีที่ 14 (เลนล่าง) และนาทีที่ 5 (เลนบน) ไม่ให้ศัตรูเดินเข้าใกล้บอสได้',
+                tip: 'วาง Quagmire ลดความเร็วเคลื่อนที่หน้าโซน แล้วร่าย Storm Gust เลเวลสูงเพื่อทั้งทำดาเมจและแช่แข็งขัดจังหวะทีมศัตรู'
+            },
+            {
+                name: 'Clown & Gypsy',
+                thaiName: 'คลาวน์ & ยิปซี',
+                role: 'support',
+                roleBadge: 'ลดร่าย & ลดดีเลย์สกิล',
+                badgeColor: 'indigo',
+                icon: 'fa-guitar',
+                skills: ['Poem of Bragi', 'Service for You', 'Apple of Idun', 'Tarot Card of Fate'],
+                duty: 'กาง Poem of Bragi ให้ High Wizard ร่ายเวทย์ไร้หลอด และให้ Biochemist ปายาพังรถถัง AFV แบบรัวไม่ยั้ง',
+                tip: 'เดินเกาะติดกลุ่มดาเมจหลักเสมอ และใช้ไพ่ Tarot Card สุ่มใบ้หรือลบบัฟตัวแทงค์ศัตรูในจังหวะชุลมุน'
+            },
+            {
+                name: 'High Priest',
+                thaiName: 'ไฮพรีสต์',
+                role: 'support',
+                roleBadge: 'ยื้อชีวิตหน้าป้อม & จุดบอส',
+                badgeColor: 'emerald',
+                icon: 'fa-staff-snake',
+                skills: ['Safety Wall', 'Pneuma', 'Sanctuary', 'Assumptio'],
+                duty: 'กาง Safety Wall กันอาชูร่าศัตรู กาง Pneuma กันดาเมจยิงไกล และวาง Sanctuary ฮีลพื้นยื้อชีวิตทีมในรัศมีป้อมและจุดบอส',
+                tip: 'การรักษาชีวิตเพื่อนไม่ให้ตาย ช่วยป้องกันการโดนหัก Personal Points (-10) และทำให้ทีมไม่ต้องเสียเวลาวิ่งกลับจากจุดเกิด'
+            }
+        ];
+
+        // =========================================================================
+        // 3. RENDER FUNCTIONS FOR TIMELINE, CHECKLIST & CLASSES
+        // =========================================================================
+        function renderScenarioChecklist(scenId) {
+            const data = scenarioDetails[scenId];
+            const panel = document.getElementById('scenario-checklist-panel');
+            panel.innerHTML = `
+                <div>
+                    <span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">
+                        ${data.badge}
+                    </span>
+                    <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white mt-2">
+                        ${data.title}
+                    </h3>
+                </div>
+
+                <!-- สิ่งที่ต้องทำ -->
+                <div class="space-y-2">
+                    <div class="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 flex items-center gap-1.5">
+                        <i class="fa-solid fa-circle-check"></i> สิ่งที่ต้องทำ (Action Checklist)
+                    </div>
+                    <ul class="space-y-2">
+                        ${data.doList.map(item => `
+                            <li class="flex items-start gap-2 text-xs sm:text-sm text-slate-700 dark:text-slate-300 bg-emerald-50/50 dark:bg-emerald-950/25 p-2.5 rounded-xl border border-emerald-200/60 dark:border-emerald-900/50">
+                                <i class="fa-solid fa-check text-emerald-600 dark:text-emerald-400 mt-1 shrink-0"></i>
+                                <span>${item}</span>
+                            </li>
+                        `).join('')}
+                    </ul>
+                </div>
+
+                <!-- ข้อควรระวัง -->
+                <div class="space-y-2">
+                    <div class="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-400 flex items-center gap-1.5">
+                        <i class="fa-solid fa-triangle-exclamation"></i> ข้อควรระวังเด็ดขาด
+                    </div>
+                    <ul class="space-y-2">
+                        ${data.warnList.map(item => `
+                            <li class="flex items-start gap-2 text-xs sm:text-sm text-slate-700 dark:text-slate-300 bg-rose-50/50 dark:bg-rose-950/25 p-2.5 rounded-xl border border-rose-200/60 dark:border-rose-900/50">
+                                <i class="fa-solid fa-xmark text-rose-600 dark:text-rose-400 mt-1 shrink-0"></i>
+                                <span>${item}</span>
+                            </li>
+                        `).join('')}
+                    </ul>
+                </div>
+
+                <!-- อาชีพหลักที่ใช้ -->
+                <div class="pt-3 border-t border-slate-100 dark:border-slate-800">
+                    <div class="text-xs font-bold text-slate-500 dark:text-slate-400 mb-2">อาชีพหลักที่ใช้ในจังหวะนี้:</div>
+                    <div class="flex flex-wrap gap-1.5">
+                        ${data.classes.map(c => `
+                            <span class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700">
+                                ${c}
+                            </span>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        function selectTimelineStep(idx) {
+            const item = timelineData[idx];
+            timelineData.forEach((_, i) => {
+                const pill = document.getElementById('tl-pill-' + i);
+                if (i === idx) {
+                    pill.className = 'p-3.5 rounded-2xl border-2 border-indigo-600 dark:border-indigo-400 bg-indigo-50/50 dark:bg-indigo-950/40 text-left transition-all shadow-sm';
+                } else {
+                    pill.className = 'p-3.5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800/60 text-left transition-all';
+                }
+            });
+
+            const focusCard = document.getElementById('timeline-focus-card');
+            focusCard.innerHTML = `
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-100 dark:border-slate-800">
+                    <div>
+                        <span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300">
+                            ⏱️ ช่วงเวลา: ${item.time}
+                        </span>
+                        <h3 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mt-2">
+                            ${item.phase}
+                        </h3>
+                    </div>
+                    <button onclick="openSimFromTimeline(${item.simId})" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs sm:text-sm font-semibold transition flex items-center gap-2 self-start md:self-center shadow-sm">
+                        <i class="fa-solid fa-play"></i> ดูภาพเคลื่อนไหวของช่วงนี้
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 mt-4">
+                    <div class="lg:col-span-7 p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/80 space-y-1.5">
+                        <div class="text-xs font-bold uppercase text-blue-700 dark:text-blue-400 flex items-center gap-1.5">
+                            <i class="fa-solid fa-shield-halved"></i> ภารกิจทีมหลัก (Main-Field 40 คน)
+                        </div>
+                        <p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed">
+                            ${item.mainAction}
+                        </p>
+                    </div>
+
+                    <div class="lg:col-span-5 p-4 rounded-xl bg-purple-50/50 dark:bg-purple-950/25 border border-purple-200/70 dark:border-purple-900/50 space-y-1.5">
+                        <div class="text-xs font-bold uppercase text-purple-700 dark:text-purple-400 flex items-center gap-1.5">
+                            <i class="fa-solid fa-bolt"></i> ภารกิจทีมรอง (Sub-Field 40 คน)
+                        </div>
+                        <p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed">
+                            ${item.subAction}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="mt-4 p-3.5 rounded-xl bg-amber-50/80 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/70 flex items-center gap-3">
+                    <i class="fa-solid fa-bullhorn text-amber-600 dark:text-amber-400 text-base shrink-0"></i>
+                    <div class="text-xs sm:text-sm text-amber-900 dark:text-amber-200 font-medium">
+                        <strong>ประโยคสั่งการไมค์กิลด์ (Shotcaller):</strong> ${item.shotcall}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderAllTimelineList() {
+            const list = document.getElementById('timeline-all-list');
+            list.innerHTML = timelineData.map((t, i) => `
+                <div class="py-3.5 first:pt-0 last:pb-0 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <div class="flex items-start sm:items-center gap-3">
+                        <span class="w-6 h-6 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-bold flex items-center justify-center shrink-0 mt-0.5 sm:mt-0">${i + 1}</span>
+                        <div>
+                            <div class="flex flex-wrap items-center gap-2">
+                                <span class="font-mono text-xs sm:text-sm font-extrabold text-indigo-600 dark:text-indigo-400">${t.time}</span>
+                                <span class="text-sm font-bold text-slate-900 dark:text-white">• ${t.phase}</span>
+                            </div>
+                            <p class="text-xs text-slate-600 dark:text-slate-400 mt-0.5">${t.mainAction}</p>
+                        </div>
+                    </div>
+                    <button onclick="selectTimelineStep(${i})" class="shrink-0 text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:underline self-end sm:self-center">
+                        ดูรายละเอียด
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function openSimFromTimeline(simId) {
+            switchMainTab('simulator');
+            selectScenario(simId);
+        }
+
+        function filterClasses(role) {
+            ['all', 'lasthit', 'zone', 'support'].forEach(r => {
+                const btn = document.getElementById('cls-btn-' + r);
+                if (r === role) {
+                    btn.className = 'px-3.5 py-1.5 rounded-xl text-xs font-bold transition bg-indigo-600 text-white shadow-sm';
+                } else {
+                    btn.className = 'px-3.5 py-1.5 rounded-xl text-xs font-bold transition bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800';
+                }
+            });
+
+            const filtered = role === 'all' ? roocMetaClasses : roocMetaClasses.filter(c => c.role === role);
+            const grid = document.getElementById('classes-grid');
+
+            const badgeStyles = {
+                amber: 'bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300',
+                emerald: 'bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300',
+                blue: 'bg-blue-100 dark:bg-blue-950 text-blue-800 dark:text-blue-300',
+                cyan: 'bg-cyan-100 dark:bg-cyan-950 text-cyan-800 dark:text-cyan-300',
+                rose: 'bg-rose-100 dark:bg-rose-950 text-rose-800 dark:text-rose-300',
+                purple: 'bg-purple-100 dark:bg-purple-950 text-purple-800 dark:text-purple-300',
+                indigo: 'bg-indigo-100 dark:bg-indigo-950 text-indigo-800 dark:text-indigo-300'
+            };
+
+            grid.innerHTML = filtered.map(c => `
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between hover:border-indigo-300 dark:hover:border-indigo-700 transition">
+                    <div>
+                        <div class="flex items-center justify-between gap-2 mb-3">
+                            <div class="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-lg">
+                                <i class="fa-solid ${c.icon}"></i>
+                            </div>
+                            <span class="px-2.5 py-1 rounded-lg text-[11px] font-bold ${badgeStyles[c.badgeColor]}">
+                                ${c.roleBadge}
+                            </span>
+                        </div>
+                        <h4 class="text-base font-bold text-slate-900 dark:text-white">${c.name} <span class="text-xs font-normal text-slate-500 dark:text-slate-400">(${c.thaiName})</span></h4>
+
+                        <div class="mt-3 flex flex-wrap gap-1">
+                            ${c.skills.map(s => `<span class="px-2 py-0.5 rounded-md text-[11px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">${s}</span>`).join('')}
+                        </div>
+
+                        <p class="mt-3 text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                            <strong class="text-slate-800 dark:text-slate-200">หน้าที่หลัก:</strong> ${c.duty}
+                        </p>
+                    </div>
+
+                    <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 text-xs text-indigo-700 dark:text-indigo-300 font-medium">
+                        💡 <strong>ทริก:</strong> ${c.tip}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // =========================================================================
+        // 4. INTERACTIVE 3-LANE TACTICAL SIMULATOR (CANVAS ENGINE)
+        // =========================================================================
+        const canvas = document.getElementById('battleCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let currentScenario = 1;
+        let isPlaying = true;
+        let animTick = 0;
+        const SCENARIO_DURATION = 660;
+        let floatingTexts = [];
+        let particles = [];
+
+        function resizeCanvas() {
+            const parent = canvas.parentElement;
+            if (parent && parent.clientWidth > 0) {
+                canvas.width = Math.max(parent.clientWidth, 680);
+                canvas.height = 420;
+            }
+        }
+        window.addEventListener('resize', resizeCanvas);
+
+        function selectScenario(id) {
+            currentScenario = id;
+            animTick = 0;
+            floatingTexts = [];
+            particles = [];
+            isPlaying = true;
+            updatePlayButtonUI();
+            updateScenarioTabsUI();
+            renderScenarioChecklist(id);
+        }
+
+        function updateScenarioTabsUI() {
+            for (let i = 1; i <= 4; i++) {
+                const btn = document.getElementById('scen-tab-' + i);
+                if (i === currentScenario) {
+                    btn.className = 'text-left p-4 rounded-2xl border-2 border-indigo-600 dark:border-indigo-400 bg-indigo-50/40 dark:bg-indigo-950/40 transition-all shadow-sm';
+                } else {
+                    btn.className = 'text-left p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-all';
+                }
+            }
+        }
+
+        function togglePlay() {
+            isPlaying = !isPlaying;
+            updatePlayButtonUI();
+        }
+
+        function restartScenario() {
+            animTick = 0;
+            floatingTexts = [];
+            particles = [];
+            isPlaying = true;
+            updatePlayButtonUI();
+        }
+
+        function nextScenario() {
+            const next = currentScenario >= 4 ? 1 : currentScenario + 1;
+            selectScenario(next);
+        }
+
+        function updatePlayButtonUI() {
+            const icon = document.getElementById('playPauseIcon');
+            const text = document.getElementById('playPauseText');
+            if (isPlaying) {
+                icon.className = 'fa-solid fa-pause';
+                text.textContent = 'หยุดชั่วคราว';
+            } else {
+                icon.className = 'fa-solid fa-play';
+                text.textContent = 'เล่นต่อ';
+            }
+        }
+
+        function spawnFloatingText(x, y, text, color = '#fbbf24', size = 14) {
+            floatingTexts.push({ x, y, text, color, size, alpha: 1, vy: -0.85 });
+        }
+
+        function spawnExplosion(x, y, color = '#f59e0b', count = 16) {
+            for (let i = 0; i < count; i++) {
+                const angle = (Math.PI * 2 * i) / count + Math.random() * 0.25;
+                const speed = 1.1 + Math.random() * 2.5;
+                particles.push({
+                    x, y,
+                    vx: Math.cos(angle) * speed,
+                    vy: Math.sin(angle) * speed,
+                    radius: 2 + Math.random() * 2.5,
+                    color,
+                    alpha: 1
+                });
+            }
+        }
+
+        function drawRoundedRect(x, y, w, h, r, fill, stroke, lineWidth = 1.5) {
+            ctx.beginPath();
+            ctx.roundRect(x, y, w, h, r);
+            if (fill) {
+                ctx.fillStyle = fill;
+                ctx.fill();
+            }
+            if (stroke) {
+                ctx.strokeStyle = stroke;
+                ctx.lineWidth = lineWidth;
+                ctx.stroke();
+            }
+        }
+
+        function drawCrystal(x, y, isBlue, hpPercent) {
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(x, y, 50, 0, Math.PI * 2);
+            ctx.fillStyle = isBlue ? 'rgba(59, 130, 246, 0.1)' : 'rgba(244, 63, 94, 0.1)';
+            ctx.fill();
+            ctx.setLineDash([4, 4]);
+            ctx.strokeStyle = isBlue ? 'rgba(96, 165, 250, 0.5)' : 'rgba(251, 113, 133, 0.5)';
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            ctx.beginPath();
+            ctx.moveTo(x, y - 24);
+            ctx.lineTo(x + 18, y);
+            ctx.lineTo(x, y + 24);
+            ctx.lineTo(x - 18, y);
+            ctx.closePath();
+            ctx.fillStyle = isBlue ? '#3b82f6' : '#f43f5e';
+            ctx.fill();
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            const barW = 60;
+            drawRoundedRect(x - barW / 2, y - 39, barW, 6, 3, '#0f172a', '#475569', 1);
+            drawRoundedRect(x - barW / 2, y - 39, (barW * Math.max(0, hpPercent)) / 100, 6, 3, isBlue ? '#38bdf8' : '#fb7185', null);
+
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 11px "IBM Plex Sans Thai", sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText(`Crystal ${Math.round(hpPercent)}%`, x, y - 44);
+            ctx.restore();
+        }
+
+        function drawAFV(x, y, isBlue, hpPercent, seats = 5, label = 'AFV') {
+            ctx.save();
+            const w = 52;
+            const h = 28;
+            drawRoundedRect(x - w / 2, y - h / 2, w, h, 6, isBlue ? '#1d4ed8' : '#be123c', isBlue ? '#60a5fa' : '#fb7185', 2);
+            ctx.beginPath();
+            ctx.arc(x, y, 8, 0, Math.PI * 2);
+            ctx.fillStyle = isBlue ? '#3b82f6' : '#f43f5e';
+            ctx.fill();
+            ctx.strokeStyle = '#fff';
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            ctx.lineTo(isBlue ? x + 20 : x - 20, y);
+            ctx.strokeStyle = '#e2e8f0';
+            ctx.lineWidth = 3.5;
+            ctx.stroke();
+
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 10px "IBM Plex Sans Thai", sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText(`${label} (${seats}/5)`, x, y + 25);
+
+            const bw = 48;
+            drawRoundedRect(x - bw / 2, y - 23, bw, 5.5, 2, '#0f172a', '#475569', 1);
+            const hpColor = hpPercent < 20 ? '#facc15' : (isBlue ? '#38bdf8' : '#fb7185');
+            drawRoundedRect(x - bw / 2, y - 23, (bw * Math.max(0, hpPercent)) / 100, 5.5, 2, hpColor, null);
+            ctx.restore();
+        }
+
+        function drawHeroUnit(x, y, isBlue, jobName, auraColor = null) {
+            ctx.save();
+            if (auraColor) {
+                ctx.beginPath();
+                ctx.arc(x, y, 16 + Math.sin(animTick * 0.2) * 2.5, 0, Math.PI * 2);
+                ctx.fillStyle = auraColor;
+                ctx.fill();
+            }
+            ctx.beginPath();
+            ctx.arc(x, y, 10, 0, Math.PI * 2);
+            ctx.fillStyle = isBlue ? '#2563eb' : '#e11d48';
+            ctx.fill();
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 11px "IBM Plex Sans Thai", sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText(jobName, x, y - 14);
+            ctx.restore();
+        }
+
+        function drawBossUnit(x, y, name, hpPercent, owner = 'neutral') {
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(x, y, 26 + Math.sin(animTick * 0.15) * 2.5, 0, Math.PI * 2);
+            ctx.fillStyle = owner === 'blue' ? 'rgba(59, 130, 246, 0.25)' : 'rgba(245, 158, 11, 0.22)';
+            ctx.fill();
+            ctx.strokeStyle = owner === 'blue' ? '#60a5fa' : '#f59e0b';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(x, y, 17, 0, Math.PI * 2);
+            ctx.fillStyle = owner === 'blue' ? '#1d4ed8' : '#b45309';
+            ctx.fill();
+            ctx.strokeStyle = '#fde68a';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 11px "IBM Plex Sans Thai", sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('BOSS', x, y + 4);
+
+            const bw = 80;
+            drawRoundedRect(x - bw / 2, y - 36, bw, 7, 3, '#0f172a', '#f59e0b', 1);
+            drawRoundedRect(x - bw / 2, y - 36, (bw * Math.max(0, hpPercent)) / 100, 7, 3, owner === 'blue' ? '#38bdf8' : '#f59e0b', null);
+
+            ctx.fillStyle = '#fde68a';
+            ctx.font = 'bold 11px "IBM Plex Sans Thai", sans-serif';
+            ctx.fillText(`${name} (${Math.round(hpPercent)}%)`, x, y - 41);
+            ctx.restore();
+        }
+
+        function drawBaseBattlefield(w, h, blueCrystalHP, redCrystalHP) {
+            const laneY = [88, 210, 332];
+
+            // Respawn Zones
+            drawRoundedRect(12, 30, 64, h - 60, 10, 'rgba(37, 99, 235, 0.14)', 'rgba(96, 165, 250, 0.4)', 1.5);
+            drawRoundedRect(w - 76, 30, 64, h - 60, 10, 'rgba(225, 29, 72, 0.14)', 'rgba(251, 113, 133, 0.4)', 1.5);
+
+            ctx.save();
+            ctx.fillStyle = '#93c5fd';
+            ctx.font = 'bold 10px "IBM Plex Sans Thai", sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('RESPAWN', 44, 50);
+            ctx.fillText('อมตะ 100%', 44, 65);
+
+            ctx.fillStyle = '#fda4af';
+            ctx.fillText('RESPAWN', w - 44, 50);
+            ctx.fillText('ห้ามเข้า! (-%HP)', w - 44, 65);
+            ctx.restore();
+
+            const laneNames = ['เลนบน (TOP LANE • บอส 05:00)', 'เลนกลาง (MID LANE • เส้นทางบอสเดิน)', 'เลนล่าง (BOT LANE • บอส 14:00)'];
+            laneY.forEach((y, idx) => {
+                drawRoundedRect(135, y - 20, w - 270, 40, 8, 'rgba(30, 41, 59, 0.7)', 'rgba(71, 85, 105, 0.45)', 1);
+                ctx.save();
+                ctx.beginPath();
+                ctx.setLineDash([7, 7]);
+                ctx.moveTo(150, y);
+                ctx.lineTo(w - 150, y);
+                ctx.strokeStyle = 'rgba(148, 163, 184, 0.2)';
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+                ctx.restore();
+
+                ctx.fillStyle = 'rgba(148, 163, 184, 0.45)';
+                ctx.font = 'bold 11px "IBM Plex Sans Thai", sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText(laneNames[idx], w / 2, y + 4);
+            });
+
+            // Resource Points
+            const resPositions = [
+                { x: w * 0.38, y: 149, label: 'Resource A' },
+                { x: w * 0.62, y: 149, label: 'Resource B' },
+                { x: w * 0.38, y: 271, label: 'Resource C' },
+                { x: w * 0.62, y: 271, label: 'Resource D' }
+            ];
+            resPositions.forEach(rp => {
+                ctx.save();
+                ctx.beginPath();
+                ctx.arc(rp.x, rp.y, 14, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(16, 185, 129, 0.14)';
+                ctx.fill();
+                ctx.strokeStyle = 'rgba(52, 211, 153, 0.45)';
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+                ctx.fillStyle = '#6ee7b7';
+                ctx.font = '10px "IBM Plex Sans Thai", sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText(rp.label, rp.x, rp.y + 25);
+                ctx.restore();
+            });
+
+            drawCrystal(130, 210, true, blueCrystalHP);
+            drawCrystal(w - 130, 210, false, redCrystalHP);
+        }
+
+        function updateSimHUD(title, badge, desc, clock, blueScore, redScore, morale, blueHP, redHP) {
+            document.getElementById('sim-phase-title').textContent = title;
+            document.getElementById('sim-phase-badge').textContent = badge;
+            document.getElementById('sim-live-desc').textContent = desc;
+            document.getElementById('sim-clock').textContent = clock;
+            document.getElementById('sim-blue-score').textContent = blueScore.toLocaleString() + ' แต้ม';
+            document.getElementById('sim-red-score').textContent = redScore.toLocaleString() + ' แต้ม';
+            document.getElementById('sim-morale-txt').textContent = morale + '/3000';
+            document.getElementById('sim-morale-bar').style.width = Math.min(100, (morale / 3000) * 100) + '%';
+            document.getElementById('sim-blue-hp').style.width = blueHP + '%';
+            document.getElementById('sim-red-hp').style.width = redHP + '%';
+        }
+
+        // Scenario 1 Animation
+        function renderScenario1(w, h, t) {
+            const p = t / SCENARIO_DURATION;
+            drawBaseBattlefield(w, h, 96, 85);
+
+            const blueTopX = 205 + Math.min(0.45, p) * (w - 410);
+            const redTopX = (w - 205) - Math.min(0.42, p) * (w - 410);
+            const redTopHP = p < 0.25 ? 100 : Math.max(0, 100 - ((p - 0.25) / 0.3) * 100);
+
+            drawAFV(blueTopX, 88, true, 88, 5, 'AFV เรา');
+            drawHeroUnit(blueTopX - 36, 58, true, 'Biochemist', 'rgba(16, 185, 129, 0.35)');
+            drawHeroUnit(blueTopX - 68, 88, true, 'Sniper/Rebel');
+
+            if (redTopHP > 0) {
+                drawAFV(redTopX, 88, false, redTopHP, 5, 'AFV ศัตรู');
+                if (p >= 0.22 && p <= 0.55 && animTick % 12 === 0) {
+                    spawnExplosion(redTopX, 88, '#10b981', 8);
+                    spawnFloatingText(redTopX, 66, 'Acid Demo! -18,500', '#34d399', 13);
+                }
+            } else {
+                if (Math.abs(p - 0.56) < 0.015) {
+                    spawnExplosion(redTopX, 88, '#f43f5e', 24);
+                    spawnFloatingText(redTopX, 65, '💥 พังรถศัตรู! +85 แต้ม (ตายหมู่ 5 คน)', '#fbbf24', 15);
+                }
+                ctx.fillStyle = '#fb7185';
+                ctx.font = 'bold 11px "IBM Plex Sans Thai", sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('💥 รถศัตรูพัง (+85 คะแนน & ตายหมู่ 5 คน)', redTopX, 92);
+            }
+
+            // Bottom lane bailout
+            const blueBotX = 210 + Math.min(0.5, p) * (w - 410);
+            const blueBotHP = p < 0.3 ? 100 - p * 120 : Math.max(0, 64 - ((p - 0.3) / 0.45) * 64);
+
+            if (blueBotHP > 0) {
+                const seatsLeft = blueBotHP <= 16 ? 0 : 5;
+                drawAFV(blueBotX, 332, true, blueBotHP, seatsLeft, seatsLeft === 0 ? 'สละยานแล้ว!' : 'AFV เรา');
+                if (blueBotHP <= 18 && blueBotHP > 13) {
+                    spawnFloatingText(blueBotX, 305, '⚠️ HP < 15% สละยานทันที!', '#facc15', 14);
+                }
+                if (blueBotHP <= 16) {
+                    for (let i = 0; i < 5; i++) {
+                        const ox = blueBotX - 42 - i * 15;
+                        const oy = 358 + (i % 2) * 10;
+                        ctx.beginPath();
+                        ctx.arc(ox, oy, 5.5, 0, Math.PI * 2);
+                        ctx.fillStyle = '#38bdf8';
+                        ctx.fill();
+                        ctx.strokeStyle = '#fff';
+                        ctx.stroke();
+                    }
+                    ctx.fillStyle = '#38bdf8';
+                    ctx.font = 'bold 11px "IBM Plex Sans Thai", sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('โดดลงรถทัน 5 คน! (รอดตายหมู่)', blueBotX - 60, 385);
+                }
+            } else {
+                if (Math.abs(p - 0.76) < 0.015) {
+                    spawnExplosion(blueBotX, 332, '#f59e0b', 18);
+                    spawnFloatingText(blueBotX, 312, '✅ รถพังแต่ทีมเรารอดครบ 5 คน!', '#38bdf8', 14);
+                }
+                ctx.fillStyle = '#38bdf8';
+                ctx.font = 'bold 11px "IBM Plex Sans Thai", sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('✅ สละยานสำเร็จ! ไม่เสียแต้มส่วนตัว (-10x5)', blueBotX - 25, 336);
+            }
+
+            drawAFV(w * 0.44, 210, true, 75, 5, 'AFV เรา');
+            drawAFV(w * 0.56, 210, false, 68, 5, 'AFV ศัตรู');
+
+            if (p < 0.25) {
+                updateSimHUD('สถานการณ์ที่ 1: การดันรถ AFV & กฎสละยาน', 'Phase 1/3', 'รถถัง AFV บรรทุกผู้เล่น 5 คนเคลื่อนที่ตามเลน ให้ Biochemist และ Sniper/Rebellion เดินประกบ', '19:10', 420, 390, 600, 96, 85);
+            } else if (p < 0.6) {
+                updateSimHUD('สถานการณ์ที่ 1: ปายาละลายรถศัตรู (+85 แต้ม)', 'Phase 2/3', 'Biochemist ปา Acid Demonstration พังรถ AFV ศัตรูเลนบน! ศัตรูไม่โดดลงรถ ตายหมู่ 5 คน เราได้ +85 แต้ม!', '18:35', 505, 390, 800, 96, 85);
+            } else {
+                updateSimHUD('สถานการณ์ที่ 1: HP < 15% สั่งสละยานทันที!', 'Phase 3/3', 'เลนล่างรถ AFV เราเลือดต่ำกว่า 15% หัวหน้าตี้สั่งทุกคนกดสละยานโดดลงรถทันที รอดตายหมู่ครบ 5 คน!', '18:05', 510, 475, 950, 96, 85);
+            }
+        }
+
+        // Scenario 2 Animation
+        function renderScenario2(w, h, t) {
+            const p = t / SCENARIO_DURATION;
+            const blueRepairedHP = p > 0.68 ? Math.min(98, 76 + ((p - 0.68) / 0.25) * 22) : 76;
+            drawBaseBattlefield(w, h, blueRepairedHP, 82);
+
+            const targetX = w * 0.62;
+            const targetY = 149;
+
+            let eliteHP = p < 0.48 ? Math.max(12, 100 - (p / 0.48) * 88) : 0;
+
+            if (eliteHP > 0) {
+                ctx.save();
+                ctx.beginPath();
+                ctx.arc(targetX, targetY, 18, 0, Math.PI * 2);
+                ctx.fillStyle = '#059669';
+                ctx.fill();
+                ctx.strokeStyle = '#fbbf24';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                ctx.fillStyle = '#fff';
+                ctx.font = 'bold 10px "IBM Plex Sans Thai", sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('ELITE', targetX, targetY + 4);
+
+                drawRoundedRect(targetX - 32, targetY - 32, 64, 6, 3, '#0f172a', '#fff', 1);
+                drawRoundedRect(targetX - 32, targetY - 32, (64 * eliteHP) / 100, 6, 3, eliteHP <= 20 ? '#ef4444' : '#10b981', null);
+                ctx.fillStyle = '#fde68a';
+                ctx.fillText(`Elite ${Math.round(eliteHP)}%`, targetX, targetY - 37);
+                ctx.restore();
+            }
+
+            drawHeroUnit(targetX + 52, targetY - 10, false, 'Red DPS');
+            drawHeroUnit(targetX + 48, targetY + 22, false, 'Red Tank');
+
+            const paladinX = w * 0.42;
+            const paladinY = 154;
+            const champX = p < 0.44 ? w * 0.46 : (p < 0.52 ? w * 0.46 + ((p - 0.44) / 0.08) * (targetX - 22 - w * 0.46) : targetX - 22);
+            const champY = 146;
+
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(paladinX, paladinY);
+            ctx.lineTo(champX, champY);
+            ctx.strokeStyle = '#38bdf8';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([4, 3]);
+            ctx.stroke();
+            ctx.restore();
+
+            drawHeroUnit(paladinX, paladinY, true, 'Paladin (Devotion)');
+            drawHeroUnit(champX, champY, true, 'Champion', 'rgba(245, 158, 11, 0.45)');
+
+            if (Math.abs(p - 0.49) < 0.018) {
+                spawnExplosion(targetX, targetY, '#f59e0b', 28);
+                spawnFloatingText(targetX, targetY - 28, '💥 ASURA STRIKE! Last Hit (+35 แต้ม!)', '#fbbf24', 16);
+            }
+
+            if (p >= 0.55 && p <= 0.85) {
+                const orbProg = (p - 0.55) / 0.3;
+                const orbX = targetX + (130 - targetX) * orbProg;
+                const orbY = targetY + (210 - targetY) * orbProg;
+                ctx.save();
+                ctx.beginPath();
+                ctx.arc(orbX, orbY, 8, 0, Math.PI * 2);
+                ctx.fillStyle = '#34d399';
+                ctx.fill();
+                ctx.strokeStyle = '#ffffff';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                ctx.fillStyle = '#6ee7b7';
+                ctx.font = 'bold 11px "IBM Plex Sans Thai", sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('แต้มซ่อมป้อม', orbX, orbY - 12);
+                ctx.restore();
+            }
+
+            if (Math.abs(p - 0.85) < 0.018) {
+                spawnExplosion(130, 210, '#38bdf8', 18);
+                spawnFloatingText(165, 185, '🔧 ซ่อมป้อม Crystal +HP!', '#38bdf8', 14);
+            }
+
+            if (p < 0.44) {
+                updateSimHUD('สถานการณ์ที่ 2: ซุ่มรอจังหวะ Last Hit จุด Resource', 'Phase 1/3', 'Paladin ดึงสาย Devotion ให้ Champion ยืนซุ่มรอให้ศัตรูตีมอนสเตอร์ Elite จนเลือดลดเหลือ ~15%', '17:00', 820, 810, 1100, 76, 82);
+            } else if (p < 0.68) {
+                updateSimHUD('สถานการณ์ที่ 2: Champion พุ่งต่อย Asura Strike!', 'Phase 2/3', 'เมื่อเลือด Elite เหลือ 12% Champion พุ่ง Snap เข้าไปกด Asura Strike ปิดฉาก! คว้า +35 คะแนนและทรัพยากรทันที', '16:52', 855, 810, 1150, 76, 82);
+            } else {
+                updateSimHUD('สถานการณ์ที่ 2: นำทรัพยากรไปซ่อมป้อม Crystal', 'Phase 3/3', 'นำทรัพยากรที่ได้มากดซ่อมแซมป้อม Crystal ของเราให้เลือดเต็ม เพื่อรักษาความได้เปรียบและตัดแต้มศัตรู', '16:40', 855, 810, 1200, Math.round(blueRepairedHP), 82);
+            }
+        }
+
+        // Scenario 3 Animation
+        function renderScenario3(w, h, t) {
+            const p = t / SCENARIO_DURATION;
+            const redCrystalHP = p > 0.82 ? Math.max(42, 78 - ((p - 0.82) / 0.18) * 36) : 78;
+            drawBaseBattlefield(w, h, 90, redCrystalHP);
+
+            const bossBotX = w * 0.5;
+            const bossBotY = 332;
+
+            if (p < 0.52) {
+                const bossHP = Math.max(10, 100 - (p / 0.46) * 90);
+                drawBossUnit(bossBotX, bossBotY, 'Vanguard (14:00)', bossHP, 'neutral');
+
+                const zoneX = bossBotX + 90;
+                const zoneY = 332;
+
+                // Land Protector
+                ctx.save();
+                ctx.beginPath();
+                ctx.arc(bossBotX - 24, bossBotY, 40, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(245, 158, 11, 0.16)';
+                ctx.fill();
+                ctx.strokeStyle = '#fbbf24';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                ctx.fillStyle = '#fde68a';
+                ctx.font = 'bold 10px "IBM Plex Sans Thai", sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('Land Protector', bossBotX - 24, bossBotY + 52);
+                ctx.restore();
+
+                // Storm Gust Zone
+                ctx.save();
+                ctx.beginPath();
+                ctx.arc(zoneX, zoneY, 35, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(56, 189, 248, 0.25)';
+                ctx.fill();
+                ctx.strokeStyle = '#38bdf8';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                ctx.fillStyle = '#7dd3fc';
+                ctx.font = 'bold 10px "IBM Plex Sans Thai", sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('❄️ Storm Gust + Bragi', zoneX, zoneY - 42);
+                ctx.restore();
+
+                drawHeroUnit(bossBotX - 52, bossBotY - 20, true, 'Professor');
+                drawHeroUnit(bossBotX + 32, bossBotY - 24, true, 'High Wizard');
+                drawHeroUnit(bossBotX - 26, bossBotY + 10, true, 'Champion', 'rgba(245, 158, 11, 0.5)');
+
+                drawHeroUnit(zoneX + 48, zoneY - 10, false, 'Red Champ (ติดโซน!)');
+                drawHeroUnit(zoneX + 54, zoneY + 18, false, 'Red Team');
+
+                if (Math.abs(p - 0.48) < 0.018) {
+                    spawnExplosion(bossBotX, bossBotY, '#f59e0b', 30);
+                    spawnFloatingText(bossBotX, bossBotY - 42, '👑 Champion ต่อย Asura Strike ได้ Last Hit บอส!', '#fbbf24', 15);
+                }
+            } else {
+                const marchProg = (p - 0.52) / 0.45;
+                const vanguardX = 160 + Math.min(1, marchProg) * (w - 330);
+                const vanguardY = 210;
+
+                drawBossUnit(vanguardX, vanguardY, 'พันธมิตร: Vanguard', 95, 'blue');
+
+                const redMidAFVX = w * 0.58;
+                if (vanguardX < redMidAFVX - 24) {
+                    drawAFV(redMidAFVX, 210, false, 70, 5, 'AFV ศัตรู');
+                } else if (Math.abs(vanguardX - (redMidAFVX - 20)) < 12) {
+                    spawnExplosion(redMidAFVX, 210, '#f43f5e', 24);
+                    spawnFloatingText(redMidAFVX, 182, '💥 บอสทุบรถ AFV ศัตรูพัง! (+85 แต้ม)', '#fbbf24', 14);
+                }
+
+                if (marchProg > 0.78 && animTick % 14 === 0) {
+                    spawnExplosion(w - 130, 210, '#f59e0b', 16);
+                    spawnFloatingText(w - 170, 170, '💥 บอสทุบป้อม Crystal ศัตรู! -9,999', '#fbbf24', 14);
+                }
+            }
+
+            if (p < 0.35) {
+                updateSimHUD('สถานการณ์ที่ 3: ศึกชิงบอสใหญ่ (นาที 14:00 & 05:00)', 'Phase 1/3', 'ครึ่งทีมกางโซน: Professor ปู Land Protector + Clown กาง Bragi + High Wizard ร่าย Storm Gust ปิดทางศัตรู', '14:00', 1420, 1380, 1800, 90, 78);
+            } else if (p < 0.55) {
+                updateSimHUD('สถานการณ์ที่ 3: Champion เก็บ Last Hit บอสสำเร็จ!', 'Phase 2/3', 'ศัตรูติดโซนเวทย์เข้ามาไม่ได้ Champion ของเรากด Asura Strike เก็บ Last Hit บอส Vanguard สำเร็จ!', '13:45', 1450, 1380, 1950, 90, 78);
+            } else {
+                updateSimHUD('สถานการณ์ที่ 3: บอสเดินลุยเลนกลาง ทุบรถ & ป้อมศัตรู!', 'Phase 3/3', 'บอสเกิดที่ป้อมเราและเดินลุยเลนกลาง (ไม่สนคนตี) หยุดทุบรถ AFV ศัตรูจนพัง (+85 แต้ม) แล้วไปทุบป้อมศัตรู!', '13:15', 1860, 1380, 2100, 90, Math.round(redCrystalHP));
+            }
+        }
+
+        // Scenario 4 Animation
+        function renderScenario4(w, h, t) {
+            const p = t / SCENARIO_DURATION;
+            let moraleVal = 1000;
+            let bonusScore = 2000;
+            let tierText = '🔥 Morale 1,000: +100 แต้ม & บัฟวิ่งเร็ว/ลดดาเมจ ขั้นที่ 1';
+
+            if (p >= 0.35 && p < 0.68) {
+                moraleVal = 2000;
+                bonusScore = 2100;
+                tierText = '⚡ Morale 2,000: +200 แต้ม & บัฟวิ่งเร็ว/ลดดาเมจ ขั้นที่ 2';
+            } else if (p >= 0.68) {
+                moraleVal = 3000;
+                bonusScore = 2200;
+                tierText = '👑 Morale 3,000: +300 แต้ม & บัฟสูงสุดทั่วทั้งสนามรบ!';
+            }
+
+            drawBaseBattlefield(w, h, 92, 60);
+
+            // Global Morale Wave
+            [0.08, 0.35, 0.68].forEach((trig, idx) => {
+                if (p >= trig && p <= trig + 0.16) {
+                    const waveProg = (p - trig) / 0.16;
+                    ctx.save();
+                    ctx.beginPath();
+                    ctx.arc(w / 2, h / 2, waveProg * (w * 0.52), 0, Math.PI * 2);
+                    ctx.strokeStyle = idx === 2 ? 'rgba(245, 158, 11, 0.7)' : 'rgba(168, 85, 247, 0.7)';
+                    ctx.lineWidth = 4;
+                    ctx.stroke();
+                    ctx.restore();
+                }
+                if (Math.abs(p - trig) < 0.015) {
+                    spawnFloatingText(w / 2, h / 2 - 35, `⚡ SUB-FIELD MORALE ${(idx + 1) * 1000}! (+100 แต้ม & บัฟทั้งสนาม!)`, '#e879f9', 15);
+                }
+            });
+
+            // Buffed units pushing Top & Mid
+            const pushX = Math.min(w - 235, 200 + p * 320);
+            drawAFV(pushX, 88, true, 94, 5, 'AFV เรา');
+            drawHeroUnit(pushX - 45, 72, true, 'บัฟ MSPD+ถึก!', 'rgba(168, 85, 247, 0.4)');
+
+            drawAFV(pushX, 210, true, 90, 5, 'AFV เรา');
+
+            // Bottom lane demonstrates Enemy Respawn Zone Trap Warning!
+            const enemyInSpawnX = w - 44;
+            const enemyInSpawnY = 332;
+            drawHeroUnit(enemyInSpawnX, enemyInSpawnY, false, 'ศัตรู (อมตะ)');
+
+            const chaserX = p < 0.5 ? (w - 210) + p * 220 : (w - 100);
+            drawHeroUnit(chaserX, 332, true, 'ห้ามตามเข้าจุดเกิด!');
+
+            if (p > 0.45 && animTick % 16 === 0) {
+                spawnExplosion(chaserX, 332, '#f43f5e', 10);
+                spawnFloatingText(chaserX - 30, 305, '⚠️ เขตจุดเกิดศัตรู! โดนหัก -25% HP!', '#fb7185', 13);
+            }
+
+            // Banner inside canvas
+            drawRoundedRect(w / 2 - 190, 8, 380, 30, 8, 'rgba(88, 28, 135, 0.9)', '#c084fc', 1.5);
+            ctx.fillStyle = '#fde68a';
+            ctx.font = 'bold 11px "IBM Plex Sans Thai", sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText(tierText, w / 2, 27);
+
+            updateSimHUD(
+                'สถานการณ์ที่ 4: บัฟ Morale สนามรอง & กับดักเขตจุดเกิด',
+                `Morale ${moraleVal}/3000`,
+                'ทีมรองปั๊ม Morale ส่งแต้มฟรี +300 และบัฟทั้งสนาม! ส่วนด้านขวา: ห้ามวิ่งตามศัตรูเข้า Respawn Point เพราะศัตรูเป็นอมตะและเราจะโดนหัก %HP ตายฟรี',
+                '10:00', bonusScore, 1620, moraleVal, 92, 60
+            );
+        }
+
+        function animateLoop() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            if (isPlaying) {
+                animTick++;
+                if (animTick >= SCENARIO_DURATION) {
+                    animTick = 0;
+                    floatingTexts = [];
+                    particles = [];
+                }
+            }
+
+            const w = canvas.width;
+            const h = canvas.height;
+
+            if (currentScenario === 1) renderScenario1(w, h, animTick);
+            else if (currentScenario === 2) renderScenario2(w, h, animTick);
+            else if (currentScenario === 3) renderScenario3(w, h, animTick);
+            else if (currentScenario === 4) renderScenario4(w, h, animTick);
+
+            // Particles
+            for (let i = particles.length - 1; i >= 0; i--) {
+                const pt = particles[i];
+                if (isPlaying) {
+                    pt.x += pt.vx;
+                    pt.y += pt.vy;
+                    pt.alpha -= 0.024;
+                }
+                if (pt.alpha <= 0) {
+                    particles.splice(i, 1);
+                    continue;
+                }
+                ctx.save();
+                ctx.globalAlpha = Math.max(0, pt.alpha);
+                ctx.beginPath();
+                ctx.arc(pt.x, pt.y, pt.radius, 0, Math.PI * 2);
+                ctx.fillStyle = pt.color;
+                ctx.fill();
+                ctx.restore();
+            }
+
+            // Floating Combat Texts
+            for (let i = floatingTexts.length - 1; i >= 0; i--) {
+                const ft = floatingTexts[i];
+                if (isPlaying) {
+                    ft.y += ft.vy;
+                    ft.alpha -= 0.013;
+                }
+                if (ft.alpha <= 0) {
+                    floatingTexts.splice(i, 1);
+                    continue;
+                }
+                ctx.save();
+                ctx.globalAlpha = Math.max(0, ft.alpha);
+                ctx.font = `bold ${ft.size}px "IBM Plex Sans Thai", sans-serif`;
+                ctx.textAlign = 'center';
+                ctx.fillStyle = '#000000';
+                ctx.fillText(ft.text, ft.x + 1.5, ft.y + 1.5);
+                ctx.fillStyle = ft.color;
+                ctx.fillText(ft.text, ft.x, ft.y);
+                ctx.restore();
+            }
+
+            // Update Progress Bar
+            const progPercent = (animTick / SCENARIO_DURATION) * 100;
+            const progBar = document.getElementById('sim-progress-bar');
+            if (progBar) progBar.style.width = progPercent + '%';
+
+            requestAnimationFrame(animateLoop);
+        }
+
+        canvas.addEventListener('click', togglePlay);
+
+        // Initialize on Window Load
+        window.onload = function () {
+            resizeCanvas();
+            updateTabVisibility();
+            selectScenario(1);
+            selectTimelineStep(2); // Default focus on 14:00 Boss
+            renderAllTimelineList();
+            filterClasses('all');
+            animateLoop();
+        };
+    </script>
+</body>
+</html>
