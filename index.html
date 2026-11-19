@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ROOC Guild League: AFV Riot — คู่มือวางแผนกลยุทธ์</title>
+    <title>ROOC Guild League: AFV Riot — คู่มือวางแผนกลยุทธ์ (อัปเดตแพตช์ Rebalance พ.ย. 2026)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: IBM Plex Sans Thai & Prompt -->
+    <!-- Google Fonts: Anuphan (Modern Clean), Sarabun (Looped Easy Reading), Kanit (Headings & Numbers) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@400;500;600;700&family=Kanit:wght@500;600;700&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
@@ -19,8 +19,9 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['"IBM Plex Sans Thai"', 'Prompt', 'sans-serif'],
-                        display: ['Prompt', '"IBM Plex Sans Thai"', 'sans-serif']
+                        sans: ['Anuphan', 'Sarabun', 'sans-serif'],
+                        serifThai: ['Sarabun', 'Anuphan', 'sans-serif'],
+                        display: ['Kanit', 'Anuphan', 'sans-serif']
                     }
                 }
             }
@@ -28,12 +29,30 @@
     </script>
 
     <style>
+        :root {
+            --font-body: 'Anuphan', sans-serif;
+            --font-heading: 'Kanit', 'Anuphan', sans-serif;
+            --base-font-size: 16px;
+        }
+        html {
+            font-size: var(--base-font-size);
+        }
         body {
-            font-family: 'IBM Plex Sans Sans Thai', 'Prompt', sans-serif;
+            font-family: var(--font-body);
+            line-height: 1.75;
+            letter-spacing: 0.01em;
             -webkit-font-smoothing: antialiased;
         }
+        body.font-mode-sarabun {
+            --font-body: 'Sarabun', sans-serif;
+            --font-heading: 'Kanit', 'Sarabun', sans-serif;
+        }
+        html.font-size-large {
+            --base-font-size: 18px;
+        }
         h1, h2, h3, h4, .font-heading {
-            font-family: 'Prompt', 'IBM Plex Sans Thai', sans-serif;
+            font-family: var(--font-heading);
+            line-height: 1.4;
         }
         /* Subtle Clean Scrollbar */
         ::-webkit-scrollbar {
@@ -64,69 +83,84 @@
 
     <!-- ================= HEADER & QUICK SUMMARY BAR ================= -->
     <header class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                 <!-- Title & Brand -->
-                <div class="flex items-start sm:items-center gap-3.5">
-                    <div class="w-12 h-12 rounded-2xl bg-indigo-600 text-white flex items-center justify-center shadow-sm shrink-0">
-                        <i class="fa-solid fa-chess-knight text-xl"></i>
+                <div class="flex items-start sm:items-center gap-4">
+                    <div class="w-13 h-13 p-3.5 rounded-2xl bg-indigo-600 text-white flex items-center justify-center shadow-sm shrink-0">
+                        <i class="fa-solid fa-chess-knight text-2xl"></i>
                     </div>
                     <div>
-                        <div class="flex flex-wrap items-center gap-2 mb-0.5">
-                            <span class="px-2.5 py-0.5 text-xs font-semibold rounded-full bg-indigo-50 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">
+                        <div class="flex flex-wrap items-center gap-2 mb-1">
+                            <span class="px-3 py-0.5 text-xs font-semibold rounded-full bg-indigo-50 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">
                                 Ragnarok Origin Classic
                             </span>
-                            <span class="px-2.5 py-0.5 text-xs font-semibold rounded-full bg-amber-50 dark:bg-amber-950/80 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800">
-                                Tactical Guide
+                            <span class="px-3 py-0.5 text-xs font-semibold rounded-full bg-emerald-50 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+                                <i class="fa-solid fa-sparkles mr-1"></i>อัปเดตแพตช์ Rebalance พ.ย. 2026
                             </span>
                         </div>
-                        <h1 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
+                        <h1 class="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white tracking-tight">
                             ROOC Guild League: AFV Riot — คู่มือวางแผนกลยุทธ์
                         </h1>
                     </div>
                 </div>
 
-                <!-- Theme Toggle & View Mode Switch -->
-                <div class="flex items-center gap-2 self-start md:self-center">
-                    <button onclick="toggleViewAll()" id="viewAllBtn" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 transition flex items-center gap-2">
-                        <i class="fa-solid fa-layer-group text-indigo-600 dark:text-indigo-400"></i>
-                        <span id="viewAllText">โหมด: แยกตามหมวดหมู่</span>
+                <!-- Typography, Font Size, View Mode & Theme Controls -->
+                <div class="flex flex-wrap items-center gap-2 self-start lg:self-center">
+                    <!-- Font Family Switcher -->
+                    <button onclick="toggleFontFamily()" id="fontFamilyBtn" class="px-3.5 py-2 rounded-xl text-sm font-semibold border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 transition flex items-center gap-2" title="สลับฟอนต์โมเดิร์น (Anuphan) / ฟอนต์มีหัวอ่านสบาย (Sarabun)">
+                        <i class="fa-solid fa-font text-indigo-600 dark:text-indigo-400"></i>
+                        <span id="fontFamilyText">ฟอนต์: โมเดิร์น (Anuphan)</span>
                     </button>
+
+                    <!-- Font Size Switcher -->
+                    <button onclick="toggleFontSize()" id="fontSizeBtn" class="px-3.5 py-2 rounded-xl text-sm font-semibold border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 transition flex items-center gap-1.5" title="ขยายขนาดตัวอักษรให้อ่านง่ายขึ้น">
+                        <i class="fa-solid fa-text-height text-emerald-600 dark:text-emerald-400"></i>
+                        <span id="fontSizeText">ขนาด: ปกติ</span>
+                    </button>
+
+                    <!-- View Mode Switch -->
+                    <button onclick="toggleViewAll()" id="viewAllBtn" class="px-3.5 py-2 rounded-xl text-sm font-semibold border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 transition flex items-center gap-2">
+                        <i class="fa-solid fa-layer-group text-indigo-600 dark:text-indigo-400"></i>
+                        <span id="viewAllText">โหมด: แยกหมวดหมู่</span>
+                    </button>
+
+                    <!-- Dark/Light Theme Toggle -->
                     <button onclick="toggleTheme()" class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition" title="สลับโหมดสีสว่าง/มืด">
-                        <i id="themeIcon" class="fa-solid fa-moon text-sm"></i>
+                        <i id="themeIcon" class="fa-solid fa-moon text-base"></i>
                     </button>
                 </div>
             </div>
 
             <!-- Key Stats Summary Bar -->
-            <div class="mt-4 pt-4 border-t border-slate-100 dark:border-slate-800/80 grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <div class="flex items-center gap-3 bg-slate-50 dark:bg-slate-800/60 px-4 py-2.5 rounded-xl border border-slate-200/70 dark:border-slate-800">
-                    <div class="w-9 h-9 rounded-lg bg-amber-100 dark:bg-amber-950 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
-                        <i class="fa-solid fa-trophy"></i>
+            <div class="mt-5 pt-4 border-t border-slate-100 dark:border-slate-800/80 grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+                <div class="flex items-center gap-3.5 bg-slate-50 dark:bg-slate-800/60 px-4 py-3 rounded-xl border border-slate-200/70 dark:border-slate-800">
+                    <div class="w-10 h-10 rounded-lg bg-amber-100 dark:bg-amber-950 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
+                        <i class="fa-solid fa-trophy text-lg"></i>
                     </div>
                     <div>
-                        <div class="text-xs text-slate-500 dark:text-slate-400 font-medium">เป้าหมายชนะทันที</div>
-                        <div class="text-sm font-bold text-slate-900 dark:text-white">3,000 แต้ม <span class="font-normal text-xs text-slate-500 dark:text-slate-400">(หรือตี Crystal แตก)</span></div>
+                        <div class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium">เป้าหมายชนะทันที</div>
+                        <div class="text-base font-bold text-slate-900 dark:text-white">3,000 แต้ม <span class="font-normal text-sm text-slate-500 dark:text-slate-400">(หรือตี Crystal แตก)</span></div>
                     </div>
                 </div>
 
-                <div class="flex items-center gap-3 bg-slate-50 dark:bg-slate-800/60 px-4 py-2.5 rounded-xl border border-slate-200/70 dark:border-slate-800">
-                    <div class="w-9 h-9 rounded-lg bg-blue-100 dark:bg-blue-950 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0">
-                        <i class="fa-regular fa-clock"></i>
+                <div class="flex items-center gap-3.5 bg-slate-50 dark:bg-slate-800/60 px-4 py-3 rounded-xl border border-slate-200/70 dark:border-slate-800">
+                    <div class="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-950 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0">
+                        <i class="fa-regular fa-clock text-lg"></i>
                     </div>
                     <div>
-                        <div class="text-xs text-slate-500 dark:text-slate-400 font-medium">เวลาการแข่งขัน</div>
-                        <div class="text-sm font-bold text-slate-900 dark:text-white">20 นาที <span class="font-normal text-xs text-slate-500 dark:text-slate-400">(เตรียมตัวก่อนเริ่ม 5 นาที)</span></div>
+                        <div class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium">เวลาการแข่งขัน</div>
+                        <div class="text-base font-bold text-slate-900 dark:text-white">20 นาที <span class="font-normal text-sm text-slate-500 dark:text-slate-400">(เตรียมตัวก่อนเริ่ม 5 นาที)</span></div>
                     </div>
                 </div>
 
-                <div class="flex items-center gap-3 bg-slate-50 dark:bg-slate-800/60 px-4 py-2.5 rounded-xl border border-slate-200/70 dark:border-slate-800">
-                    <div class="w-9 h-9 rounded-lg bg-emerald-100 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
-                        <i class="fa-solid fa-users"></i>
+                <div class="flex items-center gap-3.5 bg-slate-50 dark:bg-slate-800/60 px-4 py-3 rounded-xl border border-slate-200/70 dark:border-slate-800">
+                    <div class="w-10 h-10 rounded-lg bg-emerald-100 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
+                        <i class="fa-solid fa-users text-lg"></i>
                     </div>
                     <div>
-                        <div class="text-xs text-slate-500 dark:text-slate-400 font-medium">โครงสร้างสนามรบ 3 เลน</div>
-                        <div class="text-sm font-bold text-slate-900 dark:text-white">Main 40 คน / Sub 40 คน <span class="font-normal text-xs text-slate-500 dark:text-slate-400">(รวม 80 คน)</span></div>
+                        <div class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium">โครงสร้างสนามรบ 3 เลน</div>
+                        <div class="text-base font-bold text-slate-900 dark:text-white">Main 40 คน / Sub 40 คน <span class="font-normal text-sm text-slate-500 dark:text-slate-400">(รวม 80 คน)</span></div>
                     </div>
                 </div>
             </div>
@@ -136,22 +170,22 @@
     <!-- ================= STICKY CATEGORY NAVIGATION TABS ================= -->
     <div class="sticky top-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <nav class="flex items-center gap-1 sm:gap-2 overflow-x-auto py-2.5 no-scrollbar" aria-label="หมวดหมู่กลยุทธ์">
-                <button onclick="switchMainTab('overview')" id="tab-btn-overview" class="main-tab-btn shrink-0 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-2">
+            <nav class="flex items-center gap-1.5 sm:gap-2.5 overflow-x-auto py-3 no-scrollbar" aria-label="หมวดหมู่กลยุทธ์">
+                <button onclick="switchMainTab('overview')" id="tab-btn-overview" class="main-tab-btn shrink-0 px-4 py-2.5 rounded-xl text-sm sm:text-base font-bold transition flex items-center gap-2">
                     <span>📊</span>
                     <span>1. ภาพรวม & กติกาคะแนน</span>
                 </button>
-                <button onclick="switchMainTab('simulator')" id="tab-btn-simulator" class="main-tab-btn shrink-0 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-2">
+                <button onclick="switchMainTab('simulator')" id="tab-btn-simulator" class="main-tab-btn shrink-0 px-4 py-2.5 rounded-xl text-sm sm:text-base font-bold transition flex items-center gap-2">
                     <span>🎬</span>
                     <span>2. จำลองแผนการรบ (Animation)</span>
                 </button>
-                <button onclick="switchMainTab('timeline')" id="tab-btn-timeline" class="main-tab-btn shrink-0 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-2">
+                <button onclick="switchMainTab('timeline')" id="tab-btn-timeline" class="main-tab-btn shrink-0 px-4 py-2.5 rounded-xl text-sm sm:text-base font-bold transition flex items-center gap-2">
                     <span>⏱️</span>
                     <span>3. ไทม์ไลน์ 20 นาที</span>
                 </button>
-                <button onclick="switchMainTab('roster')" id="tab-btn-roster" class="main-tab-btn shrink-0 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-2">
+                <button onclick="switchMainTab('roster')" id="tab-btn-roster" class="main-tab-btn shrink-0 px-4 py-2.5 rounded-xl text-sm sm:text-base font-bold transition flex items-center gap-2">
                     <span>🛡️</span>
-                    <span>4. จัดทัพ 40 คน & อาชีพเมต้า</span>
+                    <span>4. อาชีพเมต้า (แพตช์ พ.ย.) & จัดทัพ 40 คน</span>
                 </button>
             </nav>
         </div>
@@ -668,153 +702,190 @@
         <!-- =================================================================== -->
         <section id="section-roster" class="tab-section space-y-8 hidden">
             <!-- Section Header -->
-            <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
-                <div class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
-                    <i class="fa-solid fa-users-gear"></i> หมวดที่ 4 • การจัดวางปาร์ตี้และคลาสเมต้า ROOC
+            <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div>
+                        <div class="inline-flex items-center gap-2 text-xs sm:text-sm font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i> หมวดที่ 4 • อัปเดตข้อมูลตามแพตช์ปรับสมดุลอาชีพ พฤศจิกายน 2026 (Pioneer Test / Live Patch)
+                        </div>
+                        <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mt-1">
+                            เจาะลึก 10 อาชีพเมต้า Rebalance ล่าสุด & ผังจัดทัพ 40 คน (8 ปาร์ตี้)
+                        </h2>
+                        <p class="text-sm sm:text-base text-slate-600 dark:text-slate-400 mt-1">
+                            วิเคราะห์เจาะลึกการเปลี่ยนแปลงสกิลครั้งใหญ่ในแพตช์ พ.ย. 2026 ที่เปลี่ยนวิธีเล่นโหมด AFV Riot ไปอย่างสิ้นเชิง
+                        </p>
+                    </div>
                 </div>
-                <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mt-0.5">
-                    ผังจัดทัพ 40 คน (8 ปาร์ตี้) & เจาะลึกอาชีพที่ได้เปรียบที่สุด
-                </h2>
-                <p class="text-sm text-slate-600 dark:text-slate-400 mt-1">
-                    แบ่งหน้าที่ชัดเจนระหว่าง "หน่วยล่าบอส/ทรัพยากร" และ "หน่วยประจำการ 3 เลน (คนขับรถ + คนพังรถศัตรู)"
-                </p>
+
+                <!-- Highlight Banner of Top 4 Patch Changes Affecting AFV Riot -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-2">
+                    <div class="p-3.5 rounded-xl bg-emerald-50/80 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/70">
+                        <div class="text-xs font-bold text-emerald-700 dark:text-emerald-300 uppercase">🔥 ไฮไลท์แพตช์ #1 • Biochemist</div>
+                        <div class="text-sm sm:text-base font-bold text-slate-900 dark:text-white mt-0.5">ปายาทะลุ Land Protector!</div>
+                        <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 mt-1">
+                            Acid Demonstration ปาใส่เป้าหมายที่ยืนใน Land Protector เข้าเต็มดาเมจแล้ว (แค่ไม่ติดไฟพื้น) ละลายรถถังและบอสได้ตลอดเวลา
+                        </p>
+                    </div>
+                    <div class="p-3.5 rounded-xl bg-amber-50/80 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/70">
+                        <div class="text-xs font-bold text-amber-700 dark:text-amber-300 uppercase">🥊 ไฮไลท์แพตช์ #2 • Champion</div>
+                        <div class="text-sm sm:text-base font-bold text-slate-900 dark:text-white mt-0.5">อาชูร่าไร้ Fixed Cast + ลดเลือด 50%</div>
+                        <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 mt-1">
+                            +10 ตัด Fixed Cast ทิ้งทั้งหมด แย่ง Last Hit บอสไวสุดๆ และ +16 ทำลายโล่ทันที พร้อมติดลด Max HP 50% นาน 20 วิ (ล้างไม่ได้)
+                        </p>
+                    </div>
+                    <div class="p-3.5 rounded-xl bg-blue-50/80 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800/70">
+                        <div class="text-xs font-bold text-blue-700 dark:text-blue-300 uppercase">🛡️ ไฮไลท์แพตช์ #3 • Paladin</div>
+                        <div class="text-sm sm:text-base font-bold text-slate-900 dark:text-white mt-0.5">Sacrifice เคลือบธาตุได้ + ลดเสียเลือด</div>
+                        <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 mt-1">
+                            สายหอกแลกเลือดลด HP ที่เสียลง 30%+30% และที่ +16 เคลือบธาตุได้แล้ว! รับบัฟแหวน Clown (+ธาตุ 20%) แทงแรงมหาศาล
+                        </p>
+                    </div>
+                    <div class="p-3.5 rounded-xl bg-purple-50/80 dark:bg-purple-950/40 border border-purple-200 dark:border-purple-800/70">
+                        <div class="text-xs font-bold text-purple-700 dark:text-purple-300 uppercase">🏹 ไฮไลท์แพตช์ #4 • Sniper & Sage</div>
+                        <div class="text-sm sm:text-base font-bold text-slate-900 dark:text-white mt-0.5">แทรปเจาะเกราะเวทย์ & Psychic เปลี่ยนธาตุ</div>
+                        <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 mt-1">
+                            Sniper สายกับดักสเกลตาม M.Pen + คิด %Max HP เป้าหมาย ส่วน Professor ยืนพื้นธาตุแล้ว Psychic Wave เปลี่ยนธาตุตามพื้น (+35% DMG)
+                        </p>
+                    </div>
+                </div>
             </div>
 
-            <!-- SECTION A: 8-PARTY ROSTER STRUCTURE (40 PLAYERS MAIN-FIELD) -->
+            <!-- SECTION A: ROOC META CLASSES (REBALANCE NOV 2026 - FILTERABLE) -->
             <div class="space-y-4">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                    <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                        <span class="w-7 h-7 rounded-lg bg-indigo-600 text-white text-xs flex items-center justify-center font-bold">A</span>
-                        <span>โครงสร้างการจัดวาง 8 ปาร์ตี้ (40 คนใน Main-Field)</span>
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <h3 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2.5">
+                        <span class="w-8 h-8 rounded-lg bg-indigo-600 text-white text-sm flex items-center justify-center font-bold">A</span>
+                        <span>เจาะลึก 10 อาชีพเมต้า ROOC (อัปเดตสกิล Rebalance พ.ย. 2026)</span>
                     </h3>
-                    <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">ปาร์ตี้ละ 5 คน • รวม 40 คน</span>
+
+                    <!-- Role Filter Pills -->
+                    <div class="flex flex-wrap gap-2">
+                        <button onclick="filterClasses('all')" id="cls-btn-all" class="px-4 py-2 rounded-xl text-sm font-bold transition">ทั้งหมด (10 อาชีพ)</button>
+                        <button onclick="filterClasses('lasthit')" id="cls-btn-lasthit" class="px-4 py-2 rounded-xl text-sm font-bold transition">Last Hit บอส / พังรถ AFV</button>
+                        <button onclick="filterClasses('zone')" id="cls-btn-zone" class="px-4 py-2 rounded-xl text-sm font-bold transition">แทงค์ & เวทย์/กับดักคุมโซน</button>
+                        <button onclick="filterClasses('support')" id="cls-btn-support" class="px-4 py-2 rounded-xl text-sm font-bold transition">ซัพพอร์ต & บัฟธาตุ</button>
+                    </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Classes Grid -->
+                <div id="classes-grid" class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+
+            <!-- SECTION B: 8-PARTY ROSTER STRUCTURE (40 PLAYERS MAIN-FIELD) -->
+            <div class="space-y-4 pt-4">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <h3 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2.5">
+                        <span class="w-8 h-8 rounded-lg bg-indigo-600 text-white text-sm flex items-center justify-center font-bold">B</span>
+                        <span>โครงสร้างการจัดวาง 8 ปาร์ตี้ (40 คนใน Main-Field ตามเมต้าใหม่)</span>
+                    </h3>
+                    <span class="text-sm font-semibold text-slate-500 dark:text-slate-400">ปาร์ตี้ละ 5 คน • รวม 40 คน</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <!-- Squad 1: Party 1-2 -->
-                    <div class="bg-white dark:bg-slate-900 rounded-2xl p-5 border-2 border-amber-400/80 dark:border-amber-500/60 shadow-sm space-y-3">
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border-2 border-amber-400/80 dark:border-amber-500/60 shadow-sm space-y-3.5">
                         <div class="flex items-center justify-between">
-                            <span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300">
-                                ปาร์ตี้ที่ 1 - 2 (10 คน) • หัวใจหลัก
+                            <span class="px-3 py-1 rounded-lg text-xs sm:text-sm font-bold bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300">
+                                ปาร์ตี้ที่ 1 - 2 (10 คน) • หน่วยชี้ชะตาเกม
                             </span>
-                            <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Roaming / Objective Squad</span>
+                            <span class="text-xs sm:text-sm font-semibold text-slate-500 dark:text-slate-400">Boss & Elite Last-Hit Squad</span>
                         </div>
-                        <h4 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white">
+                        <h4 class="text-lg font-bold text-slate-900 dark:text-white">
                             🎯 หน่วยล่าบอส & แย่ง Last Hit ทรัพยากร
                         </h4>
-                        <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                            หน่วยเคลื่อนที่เร็วที่มีดาเมจก้อนเดียว (Burst) สูงที่สุด ทำหน้าที่วิ่งเก็บ Last Hit มอนสเตอร์ Elite ตามจุด Resource Point และเป็นทีมหลักในการชิง Last Hit บอสนาทีที่ 14 (ล่าง) และนาทีที่ 5 (บน)
+                        <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
+                            ใช้จุดเด่นของ <strong>Champion แพตช์ใหม่ (Rising Dragon II +10 ไร้หลอดร่ายคงที่)</strong> ร่วมกับ <strong>Assassin Cross สายมีดคู่ Soul Destroyer (+16 ไร้ร่าย)</strong> วิ่งเก็บ Last Hit มอนสเตอร์ Elite (+35 แต้ม) และชิง Last Hit บอสนาทีที่ 14 (ล่าง) และนาทีที่ 5 (บน)
                         </p>
-                        <div class="pt-2 border-t border-slate-100 dark:border-slate-800">
-                            <div class="text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">คอมพ์แนะนำต่อ 1 ปาร์ตี้:</div>
-                            <div class="flex flex-wrap gap-1.5 text-xs">
-                                <span class="px-2.5 py-1 rounded-lg bg-amber-50 dark:bg-amber-950/70 text-amber-800 dark:text-amber-300 font-semibold border border-amber-200 dark:border-amber-800">🥊 Champion (ลาสท์ช็อต)</span>
-                                <span class="px-2.5 py-1 rounded-lg bg-blue-50 dark:bg-blue-950/70 text-blue-800 dark:text-blue-300 font-semibold border border-blue-200 dark:border-blue-800">🛡️ Paladin (ดึงสาย)</span>
-                                <span class="px-2.5 py-1 rounded-lg bg-cyan-50 dark:bg-cyan-950/70 text-cyan-800 dark:text-cyan-300 font-semibold border border-cyan-200 dark:border-cyan-800">📘 Professor (ปูแลนด์/เติม SP)</span>
-                                <span class="px-2.5 py-1 rounded-lg bg-purple-50 dark:bg-purple-950/70 text-purple-800 dark:text-purple-300 font-semibold border border-purple-200 dark:border-purple-800">🎸 Clown (เพลง Bragi)</span>
-                                <span class="px-2.5 py-1 rounded-lg bg-emerald-50 dark:bg-emerald-950/70 text-emerald-800 dark:text-emerald-300 font-semibold border border-emerald-200 dark:border-emerald-800">💚 High Priest (บัฟ/ฮีล)</span>
+                        <div class="pt-3 border-t border-slate-100 dark:border-slate-800">
+                            <div class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">คอมพ์แนะนำต่อ 1 ปาร์ตี้:</div>
+                            <div class="flex flex-wrap gap-2 text-xs sm:text-sm">
+                                <span class="px-3 py-1 rounded-lg bg-amber-50 dark:bg-amber-950/70 text-amber-800 dark:text-amber-300 font-semibold border border-amber-200 dark:border-amber-800">🥊 Champion (ไร้ Fixed Cast/ลดเลือด 50%)</span>
+                                <span class="px-3 py-1 rounded-lg bg-blue-50 dark:bg-blue-950/70 text-blue-800 dark:text-blue-300 font-semibold border border-blue-200 dark:border-blue-800">🛡️ Paladin (ดึงสาย/Sacrifice เคลือบธาตุ)</span>
+                                <span class="px-3 py-1 rounded-lg bg-rose-50 dark:bg-rose-950/70 text-rose-800 dark:text-rose-300 font-semibold border border-rose-200 dark:border-rose-800">🗡️ Assassin Cross (Soul Destroyer ไร้ร่าย)</span>
+                                <span class="px-3 py-1 rounded-lg bg-purple-50 dark:bg-purple-950/70 text-purple-800 dark:text-purple-300 font-semibold border border-purple-200 dark:border-purple-800">🎸 Clown (บัฟธาตุ +20% / ลดเกราะ 20%)</span>
+                                <span class="px-3 py-1 rounded-lg bg-emerald-50 dark:bg-emerald-950/70 text-emerald-800 dark:text-emerald-300 font-semibold border border-emerald-200 dark:border-emerald-800">💚 High Priest (Pneuma/SW CD 8 วิ)</span>
                             </div>
                         </div>
                     </div>
 
                     <!-- Squad 2: Party 3-4 Top Lane -->
-                    <div class="bg-white dark:bg-slate-900 rounded-2xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3.5">
                         <div class="flex items-center justify-between">
-                            <span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-blue-100 dark:bg-blue-950 text-blue-800 dark:text-blue-300">
+                            <span class="px-3 py-1 rounded-lg text-xs sm:text-sm font-bold bg-blue-100 dark:bg-blue-950 text-blue-800 dark:text-blue-300">
                                 ปาร์ตี้ที่ 3 - 4 (10 คน)
                             </span>
-                            <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Top Lane Garrison</span>
+                            <span class="text-xs sm:text-sm font-semibold text-slate-500 dark:text-slate-400">Top Lane & Dominator Squad</span>
                         </div>
-                        <h4 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white">
-                            ⬆️ หน่วยประจำการ เลนบน (ขับรถ 5 + คุ้มกัน/พังรถ 5)
+                        <h4 class="text-lg font-bold text-slate-900 dark:text-white">
+                            ⬆️ หน่วยประจำการ เลนบน (ขับรถ 5 + ละลายรถศัตรู 5)
                         </h4>
-                        <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                            ปาร์ตี้ที่ 3 (5 คน) รับหน้าที่ขึ้นขับรถถัง AFV เลนบนเพื่อกดสกิลรถยิงป้อม ส่วนปาร์ตี้ที่ 4 (5 คน) เดินประกบนอกรถเพื่อปายาพังรถศัตรู และเตรียมตั้งโซนรับบอส <strong>Battlefield Dominator (นาทีที่ 05:00)</strong>
+                        <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
+                            ปาร์ตี้ 3 ขึ้นขับรถ AFV ส่วนปาร์ตี้ 4 ใช้ <strong>Biochemist (ปายาทะลุแลนด์ได้แล้ว)</strong> คู่กับ <strong>Rebellion สายปืนกล Black Rose (ยิ่งไกลยิ่งแรงสูงสุด +100% & เจาะเกราะ)</strong> ยิงละลายรถถังศัตรูและคุมโซนบอส Dominator นาทีที่ 05:00
                         </p>
-                        <div class="pt-2 border-t border-slate-100 dark:border-slate-800">
-                            <div class="text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">คลาสหลักตี้คุ้มกันนอกรถ:</div>
-                            <div class="flex flex-wrap gap-1.5 text-xs">
-                                <span class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 font-medium">🧪 Biochemist (ปายาพังรถ)</span>
-                                <span class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 font-medium">🏹 Sniper / Rebellion</span>
-                                <span class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 font-medium">🛡️ Paladin</span>
-                                <span class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 font-medium">💚 High Priest</span>
+                        <div class="pt-3 border-t border-slate-100 dark:border-slate-800">
+                            <div class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">คลาสหลักตี้คุ้มกันนอกรถ:</div>
+                            <div class="flex flex-wrap gap-2 text-xs sm:text-sm">
+                                <span class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 font-medium">🧪 Biochemist (ปายาทะลุ Land)</span>
+                                <span class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 font-medium">🔫 Rebellion (ปืนกล Black Rose)</span>
+                                <span class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 font-medium">🛡️ Paladin (หอก Sacrifice / โล่ Smite)</span>
+                                <span class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 font-medium">💚 High Priest / Doram</span>
                             </div>
                         </div>
                     </div>
 
                     <!-- Squad 3: Party 5-6 Mid Lane -->
-                    <div class="bg-white dark:bg-slate-900 rounded-2xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3.5">
                         <div class="flex items-center justify-between">
-                            <span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-indigo-100 dark:bg-indigo-950 text-indigo-800 dark:text-indigo-300">
+                            <span class="px-3 py-1 rounded-lg text-xs sm:text-sm font-bold bg-indigo-100 dark:bg-indigo-950 text-indigo-800 dark:text-indigo-300">
                                 ปาร์ตี้ที่ 5 - 6 (10 คน)
                             </span>
-                            <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Mid Lane & Boss Escort</span>
+                            <span class="text-xs sm:text-sm font-semibold text-slate-500 dark:text-slate-400">Mid Lane Elemental Resonance</span>
                         </div>
-                        <h4 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white">
-                            ➡️ หน่วยประจำการ เลนกลาง (รับศึกหนัก & ดันบอสเข้าป้อม)
+                        <h4 class="text-lg font-bold text-slate-900 dark:text-white">
+                            ➡️ หน่วยประจำการ เลนกลาง (คอมโบสนามธาตุ & ดันบอสเข้าป้อม)
                         </h4>
-                        <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                            เลนกลางคือเส้นทางที่บอสทั้ง 2 ตัวจะเดินลุยไปหาป้อมศัตรู และจะหยุดเมื่อเจอรถ AFV ศัตรูขวาง ดังนั้นทีมเลนกลางต้องรีบละลายรถ AFV ศัตรูให้แตกไวที่สุดเพื่อเปิดทางให้บอสเดินถึงป้อมศัตรู
+                        <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
+                            ใช้คอมโบเมต้าใหม่: <strong>Professor (ยืนพื้นธาตุยิง Psychic Wave เปลี่ยนธาตุ +35% DMG & ลดต้านทานธาตุ 15%)</strong> คู่กับ <strong>High Wizard (Soul Staff สถานะ Soul Surge ยิงไร้ร่าย + Gravity Field สโลว์ 20%)</strong> และ <strong>Clown/Gypsy (บัฟธาตุ +20%)</strong> กวาดเลนกลางเปิดทางให้บอสเดินทุบป้อม
                         </p>
-                        <div class="pt-2 border-t border-slate-100 dark:border-slate-800">
-                            <div class="text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">คลาสหลักตี้คุมเลนกลาง:</div>
-                            <div class="flex flex-wrap gap-1.5 text-xs">
-                                <span class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 font-medium">☄️ High Wizard (ปูพรมเวทย์)</span>
-                                <span class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 font-medium">🧪 Biochemist</span>
-                                <span class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 font-medium">📘 Professor</span>
-                                <span class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 font-medium">🎸 Clown / Gypsy</span>
-                                <span class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 font-medium">💚 High Priest</span>
+                        <div class="pt-3 border-t border-slate-100 dark:border-slate-800">
+                            <div class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">คลาสหลักตี้คุมเลนกลาง:</div>
+                            <div class="flex flex-wrap gap-2 text-xs sm:text-sm">
+                                <span class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 font-medium">📘 Professor (Psychic เปลี่ยนธาตุ)</span>
+                                <span class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 font-medium">☄️ High Wizard (Soul Staff / เวทย์ใหญ่)</span>
+                                <span class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 font-medium">🧪 Biochemist</span>
+                                <span class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 font-medium">🎸 Clown / Gypsy (แหวนธาตุ +20%)</span>
+                                <span class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 font-medium">💚 High Priest</span>
                             </div>
                         </div>
                     </div>
 
                     <!-- Squad 4: Party 7-8 Bot Lane -->
-                    <div class="bg-white dark:bg-slate-900 rounded-2xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3.5">
                         <div class="flex items-center justify-between">
-                            <span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300">
+                            <span class="px-3 py-1 rounded-lg text-xs sm:text-sm font-bold bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300">
                                 ปาร์ตี้ที่ 7 - 8 (10 คน)
                             </span>
-                            <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Bot Lane Garrison</span>
+                            <span class="text-xs sm:text-sm font-semibold text-slate-500 dark:text-slate-400">Bot Lane Trap & Vanguard Control</span>
                         </div>
-                        <h4 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white">
-                            ⬇️ หน่วยประจำการ เลนล่าง (ขับรถ 5 + คุมโซนบอส Vanguard)
+                        <h4 class="text-lg font-bold text-slate-900 dark:text-white">
+                            ⬇️ หน่วยประจำการ เลนล่าง (วางแทรปเจาะเกราะเวทย์ & คุมบอส 14:00)
                         </h4>
-                        <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                            ปาร์ตี้ที่ 7 ขับรถ AFV ดันเลนล่าง ส่วนปาร์ตี้ที่ 8 เดินคุ้มกันและยึดพื้นที่ตรงกลางเลนล่างไว้ล่วงหน้า เพื่อเตรียมรับศึกชิงบอสตัวแรก <strong>Battlefield Vanguard (นาทีที่ 14:00)</strong>
+                        <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
+                            ใช้ <strong>Sniper สายกับดักโฉมใหม่ (Trap Mastery คิดค่า M.Pen + ดาเมจตาม %Max HP ศัตรู ดีเลย์แค่ 0.3 วิ รัศมี 3.5m)</strong> ร่วมกับ <strong>Doram สายเวทย์ร่างยักษ์ (ยิง Silvervine ไร้ร่ายล็อกขา)</strong> วางกับดักระเบิดแนวหน้าศัตรูและยึดพื้นที่เลนล่างรอรับบอส Vanguard นาทีที่ 14:00
                         </p>
-                        <div class="pt-2 border-t border-slate-100 dark:border-slate-800">
-                            <div class="text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">คลาสหลักตี้คุ้มกันเลนล่าง:</div>
-                            <div class="flex flex-wrap gap-1.5 text-xs">
-                                <span class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 font-medium">🧪 Biochemist</span>
-                                <span class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 font-medium">🔫 Rebellion / Sniper (วางกับดัก)</span>
-                                <span class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 font-medium">🛡️ Paladin</span>
-                                <span class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 font-medium">💚 High Priest</span>
+                        <div class="pt-3 border-t border-slate-100 dark:border-slate-800">
+                            <div class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">คลาสหลักตี้คุ้มกันเลนล่าง:</div>
+                            <div class="flex flex-wrap gap-2 text-xs sm:text-sm">
+                                <span class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 font-medium">🏹 Sniper (สาย Trap M.Pen + %Max HP)</span>
+                                <span class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 font-medium">🐾 Doram (แมวเวทย์ Giant Form ไร้ร่าย)</span>
+                                <span class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 font-medium">🧪 Biochemist</span>
+                                <span class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 font-medium">🛡️ Paladin (Sacrifice เคลือบธาตุ)</span>
+                                <span class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 font-medium">💚 High Priest</span>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <!-- SECTION B: ROOC META CLASSES (FILTERABLE) -->
-            <div class="space-y-4">
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                        <span class="w-7 h-7 rounded-lg bg-indigo-600 text-white text-xs flex items-center justify-center font-bold">B</span>
-                        <span>เจาะลึก 8 อาชีพเมต้า ROOC และสกิลชี้ขาดในโหมด AFV Riot</span>
-                    </h3>
-
-                    <!-- Role Filter Pills -->
-                    <div class="flex flex-wrap gap-1.5">
-                        <button onclick="filterClasses('all')" id="cls-btn-all" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition">ทั้งหมด (8 อาชีพ)</button>
-                        <button onclick="filterClasses('lasthit')" id="cls-btn-lasthit" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition">Last Hit / พังรถ AFV</button>
-                        <button onclick="filterClasses('zone')" id="cls-btn-zone" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition">แทงค์ & คุมโซน</button>
-                        <button onclick="filterClasses('support')" id="cls-btn-support" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition">ซัพพอร์ตทีม</button>
-                    </div>
-                </div>
-
-                <!-- Classes Grid -->
-                <div id="classes-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <!-- Populated by JS -->
                 </div>
             </div>
         </section>
@@ -837,20 +908,49 @@
     <!-- ================= JAVASCRIPT LOGIC ================= -->
     <script>
         // =========================================================================
-        // 1. THEME & NAVIGATION TABS MANAGEMENT
+        // 1. THEME, FONT FAMILY, FONT SIZE & NAVIGATION TABS MANAGEMENT
         // =========================================================================
         let currentMainTab = 'overview';
         let isViewAllMode = false;
+        let isSarabunFont = false;
+        let isLargeFont = false;
 
         function toggleTheme() {
             const html = document.documentElement;
             const icon = document.getElementById('themeIcon');
             html.classList.toggle('dark');
             if (html.classList.contains('dark')) {
-                icon.className = 'fa-solid fa-sun text-amber-400 text-sm';
+                icon.className = 'fa-solid fa-sun text-amber-400 text-base';
             } else {
-                icon.className = 'fa-solid fa-moon text-sm';
+                icon.className = 'fa-solid fa-moon text-base';
             }
+        }
+
+        function toggleFontFamily() {
+            isSarabunFont = !isSarabunFont;
+            const body = document.body;
+            const label = document.getElementById('fontFamilyText');
+            if (isSarabunFont) {
+                body.classList.add('font-mode-sarabun');
+                label.textContent = 'ฟอนต์: มีหัวอ่านสบาย (Sarabun)';
+            } else {
+                body.classList.remove('font-mode-sarabun');
+                label.textContent = 'ฟอนต์: โมเดิร์น (Anuphan)';
+            }
+        }
+
+        function toggleFontSize() {
+            isLargeFont = !isLargeFont;
+            const html = document.documentElement;
+            const label = document.getElementById('fontSizeText');
+            if (isLargeFont) {
+                html.classList.add('font-size-large');
+                label.textContent = 'ขนาด: ใหญ่พิเศษ (A+)';
+            } else {
+                html.classList.remove('font-size-large');
+                label.textContent = 'ขนาด: ปกติ';
+            }
+            setTimeout(resizeCanvas, 30);
         }
 
         function switchMainTab(tabId) {
@@ -878,10 +978,10 @@
             const btn = document.getElementById('viewAllBtn');
             if (isViewAllMode) {
                 text.textContent = 'โหมด: ดูทั้งหมดในหน้าเดียว';
-                btn.className = 'px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold border border-indigo-300 dark:border-indigo-700 bg-indigo-50 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300 transition flex items-center gap-2';
+                btn.className = 'px-3.5 py-2 rounded-xl text-sm font-semibold border border-indigo-300 dark:border-indigo-700 bg-indigo-50 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300 transition flex items-center gap-2';
             } else {
-                text.textContent = 'โหมด: แยกตามหมวดหมู่';
-                btn.className = 'px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 transition flex items-center gap-2';
+                text.textContent = 'โหมด: แยกหมวดหมู่';
+                btn.className = 'px-3.5 py-2 rounded-xl text-sm font-semibold border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 transition flex items-center gap-2';
             }
         }
 
@@ -898,60 +998,60 @@
                 }
 
                 if (!isViewAllMode && t === currentMainTab) {
-                    btn.className = 'main-tab-btn shrink-0 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-2 bg-indigo-600 text-white shadow-sm';
+                    btn.className = 'main-tab-btn shrink-0 px-4 py-2.5 rounded-xl text-sm sm:text-base font-bold transition flex items-center gap-2 bg-indigo-600 text-white shadow-sm';
                 } else if (isViewAllMode) {
-                    btn.className = 'main-tab-btn shrink-0 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-2 bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800';
+                    btn.className = 'main-tab-btn shrink-0 px-4 py-2.5 rounded-xl text-sm sm:text-base font-bold transition flex items-center gap-2 bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800';
                 } else {
-                    btn.className = 'main-tab-btn shrink-0 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800';
+                    btn.className = 'main-tab-btn shrink-0 px-4 py-2.5 rounded-xl text-sm sm:text-base font-bold transition flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800';
                 }
             });
         }
 
         // =========================================================================
-        // 2. DATA: SCENARIO CHECKLISTS, 20-MIN TIMELINE & 8 ROOC META CLASSES
+        // 2. DATA: SCENARIO CHECKLISTS, 20-MIN TIMELINE & 10 ROOC REBALANCED CLASSES
         // =========================================================================
         const scenarioDetails = {
             1: {
-                badge: 'สถานการณ์ที่ 1 • การดันรถ & สละยาน',
-                title: 'การดันรถ AFV & กฎเหล็กสละยาน',
+                badge: 'สถานการณ์ที่ 1 • การดันรถ & สละยาน (แพตช์ใหม่)',
+                title: 'การดันรถ AFV & ปายาทะลุแลนด์ + กฎสละยาน',
                 doList: [
-                    'ส่งผู้เล่น 5 คนขึ้นรถ AFV ทันทีที่เกิด (รถออกตัวหลังเกิด 10 วินาที และสลับที่นั่ง 1-5 เพื่อใช้สกิลรถยิงป้อมได้)',
-                    'ให้ Biochemist ปา Acid Demonstration และ Sniper/Rebellion ยิงละลายรถ AFV ศัตรูตั้งแต่กลางเลน (+85 คะแนน)',
+                    'ส่งผู้เล่น 5 คนขึ้นรถ AFV ทันทีที่เกิด (รถออกตัวหลังเกิด 10 วินาที และสลับที่นั่ง 1-5 เพื่อกดสกิลรถยิงป้อม)',
+                    'ให้ Biochemist ปา Acid Demonstration (แพตช์ใหม่ปาใส่ศัตรู/รถที่อยู่ใน Land Protector เข้าเต็มดาเมจแล้ว!) คู่กับ Rebellion ปืนกล Black Rose ยิงละลายรถศัตรูจากระยะไกล (+85 คะแนน)',
                     'เมื่อรถ AFV ของเราเลือดลดต่ำกว่า 15% หัวหน้าตี้ต้องสั่งทุกคน "กดสละยาน" ทันที!'
                 ],
                 warnList: [
                     'หากรถ AFV พังในขณะที่คนยังนั่งอยู่ สมาชิกบนรถทั้ง 5 คนจะตายพร้อมกันทันที (เสียแต้มส่วนตัวคนละ -10 คะแนน)',
-                    'ห้ามปล่อยให้รถ AFV ศัตรูเข้าถึงระยะป้อม Crystal ของเราโดยไม่มีคนสกัด'
+                    'ระวัง Sniper สายกับดักแพตช์ใหม่ (M.Pen + %Max HP) วางแทรปดักทางเดินคุ้มกันรถ'
                 ],
-                classes: ['Biochemist (ปายาพังรถ)', 'Rebellion / Sniper (ยิงตอดระยะไกล)', 'Paladin (ค้ำหน้ารถ)']
+                classes: ['Biochemist (ปายาทะลุแลนด์)', 'Rebellion (ปืนกล Black Rose)', 'Paladin (Sacrifice เคลือบธาตุ)']
             },
             2: {
                 badge: 'สถานการณ์ที่ 2 • ชิงทรัพยากรซ่อมป้อม',
-                title: 'ทริกซุ่มแย่ง Last Hit ทรัพยากร (Resource Point)',
+                title: 'ทริกซุ่มแย่ง Last Hit ทรัพยากร (Asura ไร้ Fixed Cast)',
                 doList: [
                     'เช็กคูลดาวน์และตำแหน่ง Resource Point บน Mini Map เพื่อส่งหน่วยล่าทรัพยากรไปดักรอ',
-                    'ให้ Paladin กด Devotion ดึงสายคุ้มกัน Champion ไว้ แล้วปล่อยให้มอนสเตอร์ Elite เลือดลดลงมาเหลือ ~10-15%',
-                    'ให้ Champion พุ่งเข้าไปกด Asura Strike ปิดฉาก (Last Hit) เพื่อคว้า +35 คะแนน และนำทรัพยากรไปซ่อมป้อม Crystal'
+                    'ให้ Paladin ดึงสายคุ้มกัน Champion (Rising Dragon II +10 ตัด Fixed Cast ออกทั้งหมด!) หรือ Assassin Cross (มีดคู่ Soul Destroyer +16 ไร้ร่าย) รอจนมอนสเตอร์ Elite เลือดเหลือ ~15%',
+                    'พุ่งเข้าไปกด Asura Strike หรือ Soul Destroyer ปิดฉาก (Last Hit) คว้า +35 คะแนน และนำทรัพยากรไปซ่อมป้อม Crystal'
                 ],
                 warnList: [
-                    'ห้าม Champion กด Asura Strike เปิดหัวมอนสเตอร์ตั้งแต่เลือดเต็ม เพราะจะไม่มีสกิลปิด Last Hit ตอนท้าย',
+                    'ห้ามกด Asura Strike เปิดหัวมอนสเตอร์ตั้งแต่เลือดเต็ม ให้เก็บไว้ปิด Last Hit เท่านั้น',
                     'เมื่อจุด Resource Point รีเซ็ต มอนสเตอร์รอบก่อนหน้าจะถูกรีเซ็ตพร้อมกันทั้งหมด ต้องรีบปิดมอนสเตอร์ให้ไว'
                 ],
-                classes: ['Champion (Asura Strike ลาสท์ช็อต)', 'Paladin (Devotion คุ้มกัน)', 'Professor (โยน SP ให้แชมป์)']
+                classes: ['Champion (Asura ไร้ Fixed Cast)', 'Assassin Cross (Soul Destroyer ไร้ร่าย)', 'Paladin (คุ้มกัน)']
             },
             3: {
                 badge: 'สถานการณ์ที่ 3 • ศึกชิงบอสใหญ่',
                 title: 'ศึกชิงบอสนาทีที่ 14 (ล่าง) & นาทีที่ 5 (บน)',
                 doList: [
-                    'นาทีที่ 14:00 รวมพลที่ตรงกลางเลนล่าง (Vanguard) และนาทีที่ 05:00 รวมพลที่ตรงกลางเลนบน (Dominator)',
-                    'แบ่งครึ่งทีมไปยืนโซนกั้นทางเดินศัตรู: Professor ปู Land Protector + Clown กาง Bragi + High Wizard ลงเวทย์ใหญ่',
-                    'ให้ Champion เก็บ Last Hit บอสให้ได้ บอสจะเกิดที่ป้อมเราแล้วเดินลุยเลนกลางไปทุบรถ AFV และป้อมศัตรูอย่างรุนแรง'
+                    'นาทีที่ 14:00 รวมพลตรงกลางเลนล่าง (Vanguard) และนาทีที่ 05:00 รวมพลตรงกลางเลนบน (Dominator)',
+                    'กางโซนสกัดศัตรู: Professor ยืนพื้นธาตุยิง Psychic Wave เปลี่ยนธาตุ (+35% DMG/ลดต้านทาน 15%) + Sniper วางแทรปเจาะเกราะเวทย์ (ดีเลย์ 0.3 วิ) + High Wizard เปิด Soul Surge วาง Gravity Field สโลว์ 20%',
+                    'ให้ Champion ต่อย Asura Strike (ตัดโล่ + ลด Max HP ตัวแทงค์ศัตรู 50%) และเก็บ Last Hit บอส เพื่อให้บอสเดินลุยเลนกลางไปทุบรถและป้อมศัตรู'
                 ],
                 warnList: [
-                    'บอสจะไม่หยุดเมื่อโดนผู้เล่นตี แต่จะหยุดตีรถ AFV ศัตรูที่ขวางทาง ดังนั้นทีมเลนกลางต้องรีบช่วยพังรถศัตรูเปิดทางให้บอส',
-                    'ระวัง Champion ของศัตรูพุ่ง Snap เข้ามาขโมย Last Hit ให้ Professor คอยจับ Spider Web และ Dispell ดักไว้'
+                    'บอสจะหยุดตีรถ AFV ศัตรูที่ขวางทางเลนกลาง ดังนั้นทีมเลนกลางต้องรีบปายาพังรถศัตรูเปิดทางให้บอสเดินถึงป้อม',
+                    'แพตช์ใหม่ Acid Demonstration ปาทะลุ Land Protector ได้แล้ว ห้ามยืนกระจุกนิ่งๆ ในแลนด์โดยไม่มี Safety Wall / Pneuma (คูลดาวน์ใหม่ 8 วิ)'
                 ],
-                classes: ['Champion (Last Hit บอส)', 'Professor (ปูแลนด์ & Dispell)', 'High Wizard + Clown (ปูพรมกั้นทาง)']
+                classes: ['Champion (Asura ไร้ Fixed Cast)', 'Professor (Psychic เปลี่ยนธาตุ)', 'Sniper (Trap M.Pen)', 'High Wizard (Soul Staff)']
             },
             4: {
                 badge: 'สถานการณ์ที่ 4 • บัฟสนามรอง & เขตอันตราย',
@@ -959,13 +1059,13 @@
                 doList: [
                     'กระตุ้นทีมรอง (Sub-Field 40 คน) ให้บุกพังป้อม พังรถ และลาสท์ Elite เพื่อสะสม Morale ให้ครบ 1,000 / 2,000 / 3,000',
                     'รับโบนัสคะแนนฟรี +100 แต้มต่อขั้น (รวม +300 คะแนน) พร้อมบัฟวิ่งเร็ว (MSPD) และลดดาเมจทั่วทั้งสนาม',
-                    'ใช้ประโยชน์จากบัฟวิ่งเร็ว 7 วินาทีหลังเกิดใหม่ที่ Respawn Point เพื่อวิ่งกลับเข้าสมรภูมิอย่างรวดเร็ว'
+                    'ผสานบัฟแหวน Clown/Gypsy แพตช์ใหม่ (+ดาเมจธาตุ น้ำ/ไฟ/ลม/ดิน/Holy 20%) ให้ Paladin สายหอกแลกเลือดเคลือบธาตุและ Professor ดันเลนอย่างรวดเร็ว'
                 ],
                 warnList: [
                     'ห้ามวิ่งไล่ตามศัตรูเข้าไปในเขต Respawn Point (จุดเกิดซ้าย-ขวา) ของศัตรูเด็ดขาด!',
                     'ศัตรูในจุดเกิดของตัวเองจะเป็นอมตะ (Invincible) ตีไม่เข้า แต่เราจะโดนดาเมจหักเลือดเป็น %HP ต่อเนื่องจนตายฟรี!'
                 ],
-                classes: ['ทุกอาชีพใน Sub-Field (เร่งปั๊ม Morale)', 'High Priest (ยื้อชีวิตหน้าป้อม)']
+                classes: ['Clown / Gypsy (บัฟธาตุ +20% & ลดเกราะ 20%)', 'Paladin (Sacrifice เคลือบธาตุ)', 'High Priest (เซฟทีม)']
             }
         };
 
@@ -974,45 +1074,45 @@
                 time: 'เตรียมตัว 5 นาที (ก่อนเริ่ม)',
                 phase: 'ช่วงเตรียมความพร้อมที่จุด Spawn Point',
                 color: 'indigo',
-                mainAction: 'จัดปาร์ตี้ทั้ง 8 ตี้ให้ครบ 40 คน กำหนดชื่อคนขับรถ AFV ประจำเลนบน/กลาง/ล่าง (เลนละ 5 ที่นั่ง) แจกบัฟอาหาร ยาเคลือบของ Biochemist (Chemical Protection) และเช็กสาย Devotion ของ Paladin',
+                mainAction: 'จัดปาร์ตี้ทั้ง 8 ตี้ให้ครบ 40 คน กำหนดชื่อคนขับรถ AFV ประจำเลนบน/กลาง/ล่าง (เลนละ 5 ที่นั่ง) แจกบัฟอาหาร ยาเคลือบของ Biochemist (Chemical Protection) เช็กใบเคลือบธาตุของ Paladin สายหอก Sacrifice (+16 เคลือบธาตุได้แล้ว) และเช็กสาย Devotion',
                 subAction: 'ทีมรอง 40 คนจัดตี้เน้นดาเมจบุกทะลวง เตรียมขึ้นรถ AFV ดัน 3 เลนทันทีที่ประตูกั้นเปิด',
-                shotcall: '📢 "เช็กเคลือบ เช็กสายดึง คนขับรถ 5 คนแต่ละเลนเตรียมกดขึ้นรถทันทีที่รถเกิด!"',
+                shotcall: '📢 "เช็กยาเคลือบไบโอ พาลาดินกดเคลือบธาตุหอก Sacrifice คนขับรถ 5 คนแต่ละเลนเตรียมขึ้นรถทันทีที่รถเกิด!"',
                 simId: 1
             },
             {
                 time: '20:00 - 15:00 (ต้นเกม)',
                 phase: 'ออกรถ AFV คันแรก & ชิงทรัพยากรซ่อมป้อม',
                 color: 'blue',
-                mainAction: 'รถ AFV จะออกเดินทางอัตโนมัติหลังปรากฏตัว 10 วินาที ให้ตี้คุ้มกันรีบรุมปายาพังรถ AFV ศัตรูให้แตกก่อนถึงป้อมเรา (+85 แต้ม) ส่วนหน่วยล่าทรัพยากร 2 ตี้วิ่งเก็บ Last Hit มอนสเตอร์ Elite ตามจุด Resource Point (+35 แต้ม)',
+                mainAction: 'รถ AFV ออกเดินทางหลังเกิด 10 วินาที ให้ Biochemist (ปายาทะลุแลนด์ได้แล้ว) และ Rebellion ปืนกล Black Rose (ยิ่งยืนไกลยิ่งแรงสูงสุด +100%) รุมพังรถศัตรู (+85 แต้ม) ส่วนหน่วยล่าทรัพยากรส่ง Champion (Asura ไร้ Fixed Cast) และ SinX (Soul Destroyer ไร้ร่าย) เก็บ Last Hit มอนสเตอร์ Elite (+35 แต้ม)',
                 subAction: 'เร่งทำดาเมจใส่ป้อมและพังรถศัตรูใน Sub-Field เพื่อดัน Morale ทะลุ 1,000 แต้มแรกให้เร็วที่สุด (+100 แต้มให้ทีมหลัก)',
-                shotcall: '📢 "โฟกัสพังรถศัตรูเอา 85 แต้มก่อน! ตี้แชมป์เตรียมลาสท์มอนสเตอร์จุด Resource ห้ามเปิดอาชูร่าก่อนเลือดเหลือ 15%!"',
+                shotcall: '📢 "ไบโอ+รีเบลโฟกัสพังรถศัตรูเอา 85 แต้ม! ตี้แชมป์รอลาสท์มอนสเตอร์จุด Resource ด้วยอาชูร่าไร้ร่ายตอนเลือด 15%!"',
                 simId: 2
             },
             {
                 time: '14:00 (จุดเปลี่ยนที่ 1 - เลนล่าง)',
                 phase: 'บอส Battlefield Vanguard เกิดตรงกลางเลนล่าง!',
                 color: 'rose',
-                mainAction: 'สั่งรวมพลที่ "ตรงกลางเลนล่าง" ล่วงหน้า 30 วินาที (ตั้งแต่ 14:30) ให้ Professor ปู Land Protector ทับจุดยืนทีมเรา ส่ง High Wizard + Clown ปูเวทย์ Storm Gust ขวางทางเข้าศัตรู แล้วให้ Champion ต่อย Asura Strike เก็บ Last Hit บอส!',
+                mainAction: 'สั่งรวมพลที่ "ตรงกลางเลนล่าง" ล่วงหน้า 30 วินาที ให้ Sniper วางแทรปเจาะเกราะเวทย์ (ดีเลย์ 0.3 วิ รัศมี 3.5m) ปิดทางเดิน ร่วมกับ Professor ยืนพื้นธาตุยิง Psychic Wave เปลี่ยนธาตุ (+35% DMG) และ High Wizard ร่าย Gravity Field สโลว์ 20% แล้วให้ Champion ต่อย Asura Strike เก็บ Last Hit บอส!',
                 subAction: 'เร่งปั๊มเกจ Morale สู่ระดับ 2,000 เพื่อส่งบัฟลดดาเมจและเพิ่มความเร็ววิ่งหนุนทีมหลักในไฟต์ชิงบอส',
-                shotcall: '📢 "รวมเลนล่างด่วน! โปรปูแลนด์ วิสาดกั้นทางเข้าศัตรูไว้ แชมป์เตรียมชาร์จบอลรอลาสท์บอสที่ 15%!"',
+                shotcall: '📢 "รวมเลนล่างด่วน! สไนวางแทรป+วิสาดวาง Gravity กั้นทางศัตรู แชมป์ต่อยตัดโล่ลดเลือดแทงค์ 50% แล้วรอลาสท์บอส!"',
                 simId: 3
             },
             {
                 time: '13:00 - 06:00 (กลางเกม)',
                 phase: 'ดันเลนกลางตามหลังบอส & ซ่อมป้อมรักษา % HP',
                 color: 'purple',
-                mainAction: 'เดินทัพตามบอส Vanguard ที่กำลังลุยเลนกลาง รีบพังรถ AFV ศัตรูที่ขวางทางบอสเพื่อให้บอสเดินไปทุบป้อม Crystal ศัตรู พร้อมนำแต้มทรัพยากรที่ได้มากด "ซ่อมแซม Crystal" ของฝั่งเราให้เลือดเต็มอยู่เสมอ',
+                mainAction: 'เดินทัพตามบอส Vanguard ที่ลุยเลนกลาง ให้ Clown/Gypsy เปิดสกิลแหวน (+ดาเมจธาตุ 20%) และ Eternal Chaos (ลดเกราะศัตรู 20%) เพื่อเร่งดาเมจให้ Paladin Sacrifice เคลือบธาตุและ Biochemist พังรถศัตรูที่ขวางทางบอส พร้อมนำทรัพยากรไปกด "ซ่อมแซม Crystal"',
                 subAction: 'ตีป้อม Crystal ใน Sub-Field ให้แตกเพื่อดัน Morale แตะ 3,000 แต้มสูงสุด (ส่งแต้มครบ +300 คะแนนและบัฟขั้นสุด)',
-                shotcall: '📢 "เคลียร์รถศัตรูเลนกลางเปิดทางให้บอสเดิน! คนขับรถถ้าเลือดรถต่ำกว่า 15% โดดลงทันที ห้ามตายหมู่!"',
+                shotcall: '📢 "บาดเปิดแหวนบัฟธาตุ 20%! เคลียร์รถศัตรูเลนกลางเปิดทางให้บอสเดิน คนขับรถถ้าเลือดรถต่ำกว่า 15% โดดลงทันที!"',
                 simId: 4
             },
             {
                 time: '05:00 (จุดชี้ชะตา - เลนบน)',
                 phase: 'บอสใหญ่ Battlefield Dominator เกิดตรงกลางเลนบน!',
                 color: 'amber',
-                mainAction: 'รวมพลใหญ่ที่ "ตรงกลางเลนบน" ก่อนนาทีที่ 05:00 พร้อมทุ่ม Commander Skill ที่สะสมไว้! หากแต้มนำให้เน้นตั้งโซนปิดทางศัตรูแล้วชัวร์ Last Hit แต่หากแต้มตามให้ Paladin ดึงสาย Champion พุ่ง Snap เข้าไปขโมย Last Hit พลิกเกม!',
+                mainAction: 'รวมพลใหญ่ที่ "ตรงกลางเลนบน" ก่อนนาทีที่ 05:00 พร้อมทุ่ม Commander Skill! ให้ High Priest สลับกาง Pneuma และ Safety Wall (แพตช์ใหม่คูลดาวน์ไวขึ้นเหลือ 8 วินาที) เซฟตัวดาเมจหลัก และใช้ Champion ต่อย Asura Strike ไร้ Fixed Cast ชิง Last Hit บอส Dominator!',
                 subAction: 'รักษาความได้เปรียบและเก็บกวาดรถ AFV ต่อเนื่องเพื่อรักษาค่า Morale สูงสุดไว้ช่วยตัดสิน Tie-breaker',
-                shotcall: '📢 "ทุ่ม Commander Skill ที่เลนบนทั้งหมด! ล็อกตัวแชมป์ศัตรูไว้ อย่าให้หลุดเข้ามาแย่งลาสท์ Dominator ได้!"',
+                shotcall: '📢 "ทุ่ม Commander Skill ที่เลนบนทั้งหมด! พรีสต์กาง Pneuma/SW ทุก 8 วิ แชมป์เตรียมลาสท์ Dominator!"',
                 simId: 3
             },
             {
@@ -1021,7 +1121,7 @@
                 color: 'emerald',
                 mainAction: 'หากแต้มนำหรือเสมอกัน: เน้นกดซ่อมป้อม Crystal ของเราให้ % HP สูงกว่าศัตรู และรุมพังรถ AFV ศัตรูเพิ่ม (เพราะตัดสินที่ 1. HP ป้อม > 2. จำนวนรถที่พัง) หากแต้มตาม: ทุ่มคุ้มกันรถ AFV และบอสสาดสกิลถล่มป้อมศัตรูให้แตกเพื่อชนะ 3,000 แต้มทันที!',
                 subAction: 'ประคองแต้ม Morale 3,000 จนหมดเวลาการแข่งขัน',
-                shotcall: '📢 "เช็กเลือดป้อม! กดซ่อมป้อมรัวๆ ห้ามวิ่งเข้าจุดเกิดศัตรูไปแจกแต้มเด็ดขาด!"',
+                shotcall: '📢 "เช็กเลือดป้อม! กดซ่อมป้อมรัวๆ ห้ามวิ่งตามศัตรูเข้าจุดเกิดไปโดนหัก %HP ตายฟรีเด็ดขาด!"',
                 simId: 1
             }
         ];
@@ -1029,91 +1129,123 @@
         const roocMetaClasses = [
             {
                 name: 'Champion',
-                thaiName: 'แชมเปี้ยน',
+                thaiName: 'แชมเปี้ยน (สาย Asura & Combo รีเวิร์ก)',
                 role: 'lasthit',
-                roleBadge: 'Last Hit อันดับ 1',
+                roleBadge: 'เทพ Last Hit & ตัด Max HP 50%',
                 badgeColor: 'amber',
                 icon: 'fa-hand-fist',
-                skills: ['Asura Strike', 'Snap (พุ่งตัว)', 'Zen + Fury'],
-                duty: 'เก็บ Last Hit บอส Vanguard (14:00), Dominator (05:00) และมอนสเตอร์ Elite ในจุด Resource Point (+35 แต้ม)',
-                tip: 'ห้ามใช้อาชูร่าเปิดหัวมอนสเตอร์ ให้รอจังหวะเลือดบอส/มอนสเตอร์เหลือ 10-15% แล้วค่อยกด Snap เข้าไปต่อยปิดฉาก'
+                patchHighlight: 'Rebalance พ.ย. 2026: Rising Dragon II (+10) ตัด Fixed Cast Time ของ Asura Strike ออกทั้งหมด และลด Variable Cast 0.2 วิ! ที่ (+16) ทำลาย Shield เป้าหมายทันที และติดสถานะลด Max HP 50% นาน 20 วินาที (ซ้อนได้ 2 ชั้น ล้างไม่ได้!) ส่วนสาย Combo (+15) ระยะร่ายสกิลคอมโบเพิ่มจาก 1.5m เป็น 4m, Chain Crush (2,500%) เป็น AoE และขณะเปิด Steel Body สามารถกดสกิลคอมโบและพุ่ง Body Relocation ได้แล้ว!',
+                skills: ['Asura Strike (ไร้ Fixed Cast)', 'Grievous Wound (-50% Max HP)', 'Chain Crush AoE (ระยะ 4m)', 'Steel Body + พุ่งได้'],
+                duty: 'ชิง Last Hit บอส Vanguard (14:00), Dominator (05:00) และมอนสเตอร์ Elite จุด Resource (+35 แต้ม) รวมถึงต่อยตัดโล่และลด Max HP 50% ใส่ตัวแทงค์ศัตรู',
+                tip: 'ด้วยผลไร้ Fixed Cast ทำให้ต่อยแย่ง Last Hit แม่นยำขึ้นมาก หากต่อยปิดฉากหลังใช้คอมโบ (+15) จะระเบิด True Damage รัศมี 3m (50% ของดาเมจส่วนเกิน) กวาดคนรอบบอสได้ด้วย'
             },
             {
-                name: 'Biochemist',
-                thaiName: 'ไบโอเคมิสต์',
+                name: 'Biochemist (Creator)',
+                thaiName: 'ไบโอเคมิสต์ (สายปายา Acid Demo)',
                 role: 'lasthit',
-                roleBadge: 'ตัวละลายรถถัง AFV',
+                roleBadge: 'ปายาทะลุแลนด์ & ละลายรถถัง',
                 badgeColor: 'emerald',
                 icon: 'fa-flask-vial',
-                skills: ['Acid Demonstration', 'Chemical Protection', 'Slim Potion Pitcher'],
-                duty: 'ปาระเบิดขวดยาละลายรถถัง AFV ศัตรูให้พังก่อนถึงป้อม (+85 แต้ม/คัน) และเคลือบอุปกรณ์ให้ปาร์ตี้หลัก',
-                tip: 'ยืนเหยียบเพลง Bragi ของ Clown แล้วรัว Acid Demonstration ใส่รถถังศัตรู จะเก็บฉายา Vanguard และแต้มส่วนตัว +100 ได้ง่ายมาก'
+                patchHighlight: 'Rebalance พ.ย. 2026 (เปลี่ยนเมต้า!): สกิล Acid Demonstration สามารถปาทำดาเมจใส่เป้าหมายที่ยืนอยู่ในพื้น Land Protector (Earth Domain) ได้เต็มดาเมจแล้ว! (เพียงแต่จะไม่เกิดไฟลุกไหม้บนพื้นในแลนด์เท่านั้น)',
+                skills: ['Acid Demonstration (เข้าในแลนด์!)', 'Chemical Protection (เคลือบ)', 'Slim Potion Pitcher'],
+                duty: 'เป็นดาเมจหลักในการละลายรถถัง AFV ศัตรู (+85 แต้ม/คัน), เบิร์สเลือดบอส และปายาใส่กลุ่มศัตรูแม้ศัตรูจะกาง Land Protector อยู่ก็ตาม',
+                tip: 'ไม่ต้องกลัว Land Protector ของศัตรูอีกต่อไป! ยืนเหยียบเพลง Bragi แล้วรัวปายาใส่รถถังและตัวแทงค์ศัตรูเพื่อเก็บแต้มส่วนตัว +100 และฉายา Vanguard ได้เลย'
             },
             {
                 name: 'Paladin',
-                thaiName: 'พาลาดิน',
+                thaiName: 'พาลาดิน (สายหอก Sacrifice & สายโล่)',
                 role: 'zone',
-                roleBadge: 'แทงค์ & คุ้มกันตัวแบก',
+                roleBadge: 'Sacrifice เคลือบธาตุ & ปราการเหล็ก',
                 badgeColor: 'blue',
                 icon: 'fa-shield-halved',
-                skills: ['Devotion (ดึงสาย)', 'Sacrifice', 'Defender', 'Gospel'],
-                duty: 'ดึงสาย Devotion คุ้มกัน Champion มือลาสท์บอสและ Biochemist ไม่ให้ตายก่อนจังหวะสำคัญ และยืนค้ำโซนหน้ารถ/หน้าป้อม',
-                tip: 'เปิด Defender ลดดาเมจยิงไกลเวลาเดินนำขบวนรถ AFV และให้ High Priest กาง Safety Wall / Pneuma ทับตัว Paladin เสมอ'
+                patchHighlight: 'Rebalance พ.ย. 2026: หอก Blinding Spear / Heavens Tremble ลดการเสียเลือดตัวเองของ Sacrifice ลง 30% (และลดเพิ่มอีก 30% ที่ +15) ที่ (+12) ตีแลกเลือดไม่จำกัดจำนวนครั้ง และที่ (+16) "สกิล Sacrifice สามารถเคลือบธาตุได้แล้ว!" พร้อมเพิ่มเพดานคำนวณ HP อีก 80,000 หน่วย ส่วนสายโล่ Heroic Verve เปลี่ยน 20% PDEF/MDEF เป็น PATK, (+12) Rapid Smiting ไร้ร่าย + โล่ชิ่งหลายเป้า และ (+15) Smite ลด PATK/MATK ศัตรู 10%',
+                skills: ['Sacrifice (เคลือบธาตุได้/เสียเลือดลดลง)', 'Devotion (ดึงสาย)', 'Rapid Smiting (ไร้ร่าย)', 'Smite (-10% ATK/MATK)'],
+                duty: 'ยืนค้ำโซนหน้ารถ AFV และหน้าป้อม Crystal ดึงสาย Devotion คุ้มกันแชมป์ และใช้ Sacrifice เคลือบธาตุหวดละลายทั้งรถถังและผู้เล่นศัตรูโดยที่ตัวเองเลือดลดน้อยลงมาก',
+                tip: 'กดใบเคลือบธาตุให้ตรงกับแหวน Nibelungen Ring ของ Clown/Gypsy (ที่ได้บัฟดาเมจธาตุ +20%) จะทำให้ Paladin แทง Sacrifice แรงขึ้นแบบก้าวกระโดด!'
             },
             {
-                name: 'Professor',
-                thaiName: 'โปรเฟสเซอร์',
+                name: 'Professor (Sage)',
+                thaiName: 'โปรเฟสเซอร์ (สาย Psychic เปลี่ยนธาตุ)',
                 role: 'zone',
-                roleBadge: 'ปูแลนด์ & ตัดบัฟศัตรู',
+                roleBadge: 'Psychic เปลี่ยนธาตุ & คุมแลนด์',
                 badgeColor: 'cyan',
                 icon: 'fa-hat-wizard',
-                skills: ['Land Protector', 'Dispell', 'Spider Web', 'Soul Exhale'],
-                duty: 'ปูพื้น Land Protector กันเวทย์ใหญ่ให้ทีมตอนยืนตีบอสหรือดันป้อม คอยโยน SP ให้ Champion และลบบัฟศัตรู',
-                tip: 'เล็งใช้ Spider Web ขังขาและกด Dispell ใส่ Champion ศัตรูที่พยายามจะวิ่งเข้ามาแย่ง Last Hit บอส'
+                patchHighlight: 'Rebalance พ.ย. 2026: เพิ่มสกิลใหม่ "Light Bolt (โบลท์ธาตุแสง)" และปรับบิลด์ Resonance เมื่อยืนบนพื้นสนามธาตุ (ไฟ/น้ำ/ลม) ของทีม สกิล "Psychic Wave จะเปลี่ยนธาตุตามพื้นสนามที่เหยียบทันที!" พร้อมบัฟดาเมจ Psychic Wave +35%, ลด Fixed Cast 1 วิ, ลด Global CD 1 วิ และลดความต้านทานธาตุศัตรูลงสูงสุด 15% (3% x 5 Stack)',
+                skills: ['Psychic Wave (เปลี่ยนธาตุตามพื้น +35%)', 'Light Bolt (สกิลใหม่)', 'Land Protector', 'Dispell & Spider Web'],
+                duty: 'กางสนามธาตุแล้วยืนรัว Psychic Wave ธาตุเพื่อเจาะลดต้านทานธาตุศัตรู 15% ให้ทั้งทีมตีแรงขึ้น พร้อมปู Land Protector กันเวทย์ใหญ่ศัตรูและกด Dispell ตัวอันตราย',
+                tip: 'ยืนบนพื้นสนามธาตุคู่กับบัฟแหวนของ Clown (+ดาเมจธาตุ 20%) จะทำให้ Psychic Wave กวาดล้างกลุ่มศัตรูรอบบอสและรอบรถถังได้รุนแรงและต่อเนื่องมาก'
             },
             {
-                name: 'Rebellion & Sniper',
-                thaiName: 'รีเบลเลียน & สไนเปอร์',
+                name: 'Sniper',
+                thaiName: 'สไนเปอร์ (สายกับดัก God of Wisdom II)',
+                role: 'zone',
+                roleBadge: 'แทรปเจาะเกราะเวทย์ & %Max HP',
+                badgeColor: 'emerald',
+                icon: 'fa-explosion',
+                patchHighlight: 'Rebalance พ.ย. 2026 (รีเวิร์กสายแทรป): เพิ่ม Passive ใหม่ "Trap Mastery" คำนวณดาเมจกับดักจากค่าเจาะเกราะเวทย์ (M.Pen) และทุกๆ 20 INT จะเพิ่มเพดานดาเมจตาม Max HP ของเป้าหมาย +1%! ลด After-cast Delay ของกับดักทั้ง 4 ธาตุ + Sandman + Skid Trap เหลือเพียง 0.3 วินาที ขยายรัศมีระเบิดเป็น 3.0-3.5 เมตร และบัฟ True Sight เพิ่ม M.DMG +20%',
+                skills: ['Trap Mastery (คิด M.Pen + %Max HP)', 'แทรป 4 ธาตุ (ดีเลย์ 0.3 วิ / รัศมี 3.5m)', 'True Sight (+20% M.DMG)', 'Sandman / Ankle Snare'],
+                duty: 'วางกับดักรัศมีกว้าง 3.5m รัวๆ ทุก 0.3 วินาที ปิดทางเดินคอขวดจุดบอสเกิด (เลนล่าง 14:00 / เลนบน 05:00) และระเบิดพวกแทงค์เลือดเยอะๆ ด้วยเพดานดาเมจ %Max HP',
+                tip: 'อัดสเตตัส INT และของเพิ่ม M.Pen เต็มสูบ วางแทรปซ้อนหน้าโซนบอส จะทำให้แนวหน้าศัตรูที่พยายามเดินฝ่าเข้ามาแย่งบอสระเบิดตายในพริบตา'
+            },
+            {
+                name: 'Rebellion',
+                thaiName: 'รีเบลเลียน (ปืนกล Black Rose & ลูกซอง)',
                 role: 'lasthit',
-                roleBadge: 'ยิงไกลกดดันรถ & คน',
+                roleBadge: 'ปืนกลยิงไกล +100% & เจาะเกราะ',
                 badgeColor: 'rose',
                 icon: 'fa-crosshairs',
-                skills: ['Sharp Shooting / FAS', 'Fire Dance / Rapid Shower', 'Ankle Snare'],
-                duty: 'ใช้ระยะยิงที่ไกลกว่าคลาสอื่น ตอดเลือดรถถัง AFV ศัตรูจากนอกระยะอันตราย และวางกับดักล็อกขาแนวหน้าศัตรู',
-                tip: 'คอยดักยิงเก็บตกผู้เล่นศัตรูจังหวะที่เพิ่งกระโดดสละยานลงมาจากรถถัง หรือตอดเลือดมอนสเตอร์ Elite ให้พร้อมสำหรับแชมป์ลาสท์'
+                patchHighlight: 'Rebalance พ.ย. 2026: ปืนกล Black Rose (+15) ยิ่งยืนห่างเป้าหมาย ดาเมจยิ่งแรงขึ้น (20% ต่อเมตร สูงสุด +100%!) และที่ (+16) ทุกชั้นของ Gatling Mark เพิ่ม Ignore PDEF 20 หน่วย ส่วนปืนลูกซอง Golden Lux (+16) ใช้ Slug Shot พุ่งเข้ากลุ่มศัตรูจะได้โล่ 5-20% Max HP และลดดาเมจ 5-20% ตามจำนวนศัตรูรอบตัว',
+                skills: ['Black Rose Gatling (ไกลสุดแรง +100%)', 'Gatling Mark (Ignore PDEF)', 'Golden Lux Slug Shot (ได้โล่ + ลดดาเมจ)', 'Fire Dance'],
+                duty: 'สายปืนกลยืนระยะไกลสุดจอเพื่อยิงละลายรถถัง AFV ศัตรูด้วยโบนัสดาเมจระยะไกล +100% และเจาะเกราะ ส่วนสายลูกซองใช้พุ่งล้วงแนวหลังพร้อมรับโล่ป้องกันตัว',
+                tip: 'รักษาระยะห่างจากรถถัง AFV ศัตรูที่ 5 เมตรขึ้นไปขณะสาดปืนกล Black Rose จะได้โบนัสดาเมจเต็ม +100% พังรถศัตรู (+85 แต้ม) ได้ไวที่สุดในเกม'
             },
             {
                 name: 'High Wizard',
-                thaiName: 'ไฮวิซาร์ด',
+                thaiName: 'ไฮวิซาร์ด (สายใหม่ Soul Staff ธาตุ Ghost)',
                 role: 'zone',
-                roleBadge: 'ปูพรมเวทย์ปิดทางเดิน',
+                roleBadge: 'Soul Surge ไร้ร่าย & สโลว์กลุ่ม',
                 badgeColor: 'purple',
                 icon: 'fa-meteor',
-                skills: ['Storm Gust', 'Meteor Storm', 'Lord of Vermilion', 'Quagmire'],
-                duty: 'ร่ายเวทย์ใหญ่ปูพรมปิดทางเดินคอขวดตอนบอสเกิดนาทีที่ 14 (เลนล่าง) และนาทีที่ 5 (เลนบน) ไม่ให้ศัตรูเดินเข้าใกล้บอสได้',
-                tip: 'วาง Quagmire ลดความเร็วเคลื่อนที่หน้าโซน แล้วร่าย Storm Gust เลเวลสูงเพื่อทั้งทำดาเมจและแช่แข็งขัดจังหวะทีมศัตรู'
+                patchHighlight: 'Rebalance พ.ย. 2026: อาวุธ Soul Staff สายธาตุ Ghost เมื่อสะสมครบ 15 Stack จะเข้าสู่สถานะ "Soul Surge" (เพิ่ม Ghost DMG +50%, รีเซ็ตคูลดาวน์ Teleport ทันที, ยิง Napalm Vulcan ไร้หลอดร่ายและไร้ Global Cooldown พร้อมติดสถานะ Curse, และร่าย Gravity Field ไร้หลอดร่ายเพื่อลดความเร็วเคลื่อนที่ศัตรู 20%)',
+                skills: ['Soul Surge (Ghost DMG +50%)', 'Napalm Vulcan (ไร้ร่าย/ไร้ GCD/ติด Curse)', 'Gravity Field (ไร้ร่าย/สโลว์ 20%)', 'Storm Gust & Meteor Storm'],
+                duty: 'กาง Gravity Field ไร้ร่ายและ Storm Gust สโลว์/แช่แข็งกลุ่มศัตรูที่กำลังเดินเข้าหาบอสหรือรถถัง แล้วรัว Napalm Vulcan ไร้ GCD ยัดใส่เป้าหมายที่หนีไม่ได้',
+                tip: 'จังหวะเข้าสถานะ Soul Surge สามารถกด Teleport รีเซ็ตคูลดาวน์เพื่อหนีตัวล้วงได้ทันที และใช้ Gravity Field ไร้ร่ายตัดจังหวะการเคลื่อนที่ของทีมศัตรู'
+            },
+            {
+                name: 'Assassin Cross',
+                thaiName: 'แอสซาซินครอส (สายมีดคู่ Soul Destroyer)',
+                role: 'lasthit',
+                roleBadge: 'Soul Destroyer ไร้ร่าย & ซุ่มยิง +30%',
+                badgeColor: 'indigo',
+                icon: 'fa-user-ninja',
+                patchHighlight: 'Rebalance พ.ย. 2026: ปรับสูตรมีดคู่ Lunar Dagger II + Moonlight Dagger II ให้สกิล Soul Destroyer สเกลตามค่า INT และ STR สูงสุด +250%! ที่ (+16) "ไร้หลอดร่าย (0 Cast Time) และเพิ่มระยะยิง +1 เมตร" พร้อมปรับสกิล Hiding Research ขณะล่องหนจะได้รับ P.DMG และ M.DMG Bonus เพิ่มขึ้นถึง +30%!',
+                skills: ['Soul Destroyer (+16 ไร้ร่าย/ไกลขึ้น 1m)', 'Dual Dagger (INT+STR +250%)', 'Hiding Research (ล่องหน +30% DMG)', 'Enchant Deadly Poison'],
+                duty: 'มุดดินล่องหนรับบัฟดาเมจ +30% เพื่อซุ่มยิง Soul Destroyer ไร้ร่ายเก็บตัวซัพพอร์ต/ดาเมจแนวหลังศัตรู และช่วยชิง Last Hit มอนสเตอร์ Elite ตามจุด Resource Point',
+                tip: 'ใช้การมุด Hiding รอจังหวะมอนสเตอร์ Elite เลือดเหลือน้อย หรือรอให้ตัวแบกศัตรูเผลอ แล้วโผล่มาสาด Soul Destroyer ไร้หลอดร่ายจากระยะไกลที่ได้โบนัสดาเมจ +30%'
             },
             {
                 name: 'Clown & Gypsy',
-                thaiName: 'คลาวน์ & ยิปซี',
+                thaiName: 'คลาวน์ & ยิปซี (Legend II บัฟธาตุ & ลดเกราะ)',
                 role: 'support',
-                roleBadge: 'ลดร่าย & ลดดีเลย์สกิล',
-                badgeColor: 'indigo',
+                roleBadge: 'บัฟดาเมจธาตุ +20% & ลดเกราะ 20%',
+                badgeColor: 'amber',
                 icon: 'fa-guitar',
-                skills: ['Poem of Bragi', 'Service for You', 'Apple of Idun', 'Tarot Card of Fate'],
-                duty: 'กาง Poem of Bragi ให้ High Wizard ร่ายเวทย์ไร้หลอด และให้ Biochemist ปายาพังรถถัง AFV แบบรัวไม่ยั้ง',
-                tip: 'เดินเกาะติดกลุ่มดาเมจหลักเสมอ และใช้ไพ่ Tarot Card สุ่มใบ้หรือลบบัฟตัวแทงค์ศัตรูในจังหวะชุลมุน'
+                patchHighlight: 'Rebalance พ.ย. 2026: อาวุธ Legend II เมื่อร่ายสกิลเต้นคู่ Duet จะทริกเกอร์เอฟเฟกต์หลักของ Song of Lutie หรือ Loki\'s Veil อัตโนมัติ! สกิลกลองเพิ่ม PATK/MATK/P.DMG/M.DMG ให้เพื่อน +15%, สกิล Eternal Chaos ลด PDEF/MDEF และ P.DMG Reduction ของศัตรูทั้งหมดลง 20%! และสกิลแหวน (Nibelungen Ring) ปรับเป็น "เพิ่มดาเมจธาตุ น้ำ/ไฟ/ลม/ดิน/Holy ให้พันธมิตรทั้งหมด +20%!"',
+                skills: ['Nibelungen Ring (+20% ดาเมจ 5 ธาตุ)', 'Eternal Chaos (-20% DEF/MDEF/P.Reduc)', 'Battle Drum (+15% ATK/MATK/DMG)', 'Poem of Bragi & Duet Auto-Core'],
+                duty: 'เป็นหัวใจหลักของคอมพ์แพตช์ใหม่! เปิดแหวนเพิ่มดาเมจธาตุ +20% และลดเกราะศัตรู 20% เพื่อให้ Paladin (Sacrifice เคลือบธาตุ), Professor (Psychic ธาตุ) และ Sniper แทรปธาตุระเบิดดาเมจสูงสุด',
+                tip: 'การร่าย Duet แพตช์นี้คุ้มค่ามากเพราะได้เอฟเฟกต์คอร์ของ Song of Lutie / Loki\'s Veil พ่วงมาทันที พร้อมบัฟกลอง +15% และแหวนธาตุ +20% ยกปาร์ตี้'
             },
             {
-                name: 'High Priest',
-                thaiName: 'ไฮพรีสต์',
+                name: 'High Priest & Doram',
+                thaiName: 'ไฮพรีสต์ (SW/Pneuma 8 วิ) & แมวเวทย์ Doram',
                 role: 'support',
-                roleBadge: 'ยื้อชีวิตหน้าป้อม & จุดบอส',
+                roleBadge: 'เซฟทีมคูลดาวน์ไว & แมวเวทย์ไร้ร่าย',
                 badgeColor: 'emerald',
                 icon: 'fa-staff-snake',
-                skills: ['Safety Wall', 'Pneuma', 'Sanctuary', 'Assumptio'],
-                duty: 'กาง Safety Wall กันอาชูร่าศัตรู กาง Pneuma กันดาเมจยิงไกล และวาง Sanctuary ฮีลพื้นยื้อชีวิตทีมในรัศมีป้อมและจุดบอส',
-                tip: 'การรักษาชีวิตเพื่อนไม่ให้ตาย ช่วยป้องกันการโดนหัก Personal Points (-10) และทำให้ทีมไม่ต้องเสียเวลาวิ่งกลับจากจุดเกิด'
+                patchHighlight: 'Rebalance พ.ย. 2026: High Priest ปรับสกิล Pneuma และ Safety Wall เป็นลด Final Ranged / Melee Damage ลงโดยตรง, ลดคูลดาวน์ลงเหลือเพียง 8 วินาที และลดเลเวลสกิลสูงสุดเหลือ Lv.5 ทำให้กางเซฟเพื่อนได้ถี่ขึ้นมาก! ส่วน Doram สายเวทย์ (+16) ขณะอยู่ในร่างยักษ์ (Giant Form) จะร่ายสกิล Silvervine Stem Spear แบบไร้หลอดร่าย (0 Cast Time) พร้อมล็อกขาและทำดาเมจเวทย์กลุ่มอย่างต่อเนื่อง',
+                skills: ['Pneuma & Safety Wall (CD 8 วิ / ลด Final DMG)', 'Sanctuary & Assumptio', 'Doram Giant Form (Silvervine ไร้ร่าย)', 'แมวล็อกขา & ซัพพอร์ต'],
+                duty: 'High Priest คอยสลับกาง Safety Wall และ Pneuma ทุก 8 วินาทีเพื่อเซฟตัวแบกหน้าป้อม/จุดบอส ส่วน Doram ร่างยักษ์ช่วยยิง Silvervine ไร้ร่ายล็อกขาศัตรูไม่ให้เข้าถึงรถถังเรา',
+                tip: 'เพราะแพตช์นี้ Biochemist ปายาเข้าใน Land Protector ได้แล้ว การกาง Pneuma และ Safety Wall (คูลดาวน์ใหม่ 8 วิ) จึงเป็นวิธีหลักในการลด Final Damage เซฟชีวิตทีม!'
             }
         ];
 
@@ -1125,22 +1257,22 @@
             const panel = document.getElementById('scenario-checklist-panel');
             panel.innerHTML = `
                 <div>
-                    <span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">
+                    <span class="px-3 py-1 rounded-lg text-xs sm:text-sm font-bold bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">
                         ${data.badge}
                     </span>
-                    <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white mt-2">
+                    <h3 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mt-2.5">
                         ${data.title}
                     </h3>
                 </div>
 
                 <!-- สิ่งที่ต้องทำ -->
-                <div class="space-y-2">
-                    <div class="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 flex items-center gap-1.5">
+                <div class="space-y-2.5">
+                    <div class="text-xs sm:text-sm font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 flex items-center gap-1.5">
                         <i class="fa-solid fa-circle-check"></i> สิ่งที่ต้องทำ (Action Checklist)
                     </div>
-                    <ul class="space-y-2">
+                    <ul class="space-y-2.5">
                         ${data.doList.map(item => `
-                            <li class="flex items-start gap-2 text-xs sm:text-sm text-slate-700 dark:text-slate-300 bg-emerald-50/50 dark:bg-emerald-950/25 p-2.5 rounded-xl border border-emerald-200/60 dark:border-emerald-900/50">
+                            <li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 dark:text-slate-200 bg-emerald-50/50 dark:bg-emerald-950/25 p-3 rounded-xl border border-emerald-200/60 dark:border-emerald-900/50">
                                 <i class="fa-solid fa-check text-emerald-600 dark:text-emerald-400 mt-1 shrink-0"></i>
                                 <span>${item}</span>
                             </li>
@@ -1149,13 +1281,13 @@
                 </div>
 
                 <!-- ข้อควรระวัง -->
-                <div class="space-y-2">
-                    <div class="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-400 flex items-center gap-1.5">
+                <div class="space-y-2.5">
+                    <div class="text-xs sm:text-sm font-bold uppercase tracking-wider text-rose-700 dark:text-rose-400 flex items-center gap-1.5">
                         <i class="fa-solid fa-triangle-exclamation"></i> ข้อควรระวังเด็ดขาด
                     </div>
-                    <ul class="space-y-2">
+                    <ul class="space-y-2.5">
                         ${data.warnList.map(item => `
-                            <li class="flex items-start gap-2 text-xs sm:text-sm text-slate-700 dark:text-slate-300 bg-rose-50/50 dark:bg-rose-950/25 p-2.5 rounded-xl border border-rose-200/60 dark:border-rose-900/50">
+                            <li class="flex items-start gap-2.5 text-sm sm:text-base text-slate-700 dark:text-slate-200 bg-rose-50/50 dark:bg-rose-950/25 p-3 rounded-xl border border-rose-200/60 dark:border-rose-900/50">
                                 <i class="fa-solid fa-xmark text-rose-600 dark:text-rose-400 mt-1 shrink-0"></i>
                                 <span>${item}</span>
                             </li>
@@ -1165,10 +1297,10 @@
 
                 <!-- อาชีพหลักที่ใช้ -->
                 <div class="pt-3 border-t border-slate-100 dark:border-slate-800">
-                    <div class="text-xs font-bold text-slate-500 dark:text-slate-400 mb-2">อาชีพหลักที่ใช้ในจังหวะนี้:</div>
-                    <div class="flex flex-wrap gap-1.5">
+                    <div class="text-xs sm:text-sm font-bold text-slate-500 dark:text-slate-400 mb-2">อาชีพเมต้าที่ใช้ในจังหวะนี้:</div>
+                    <div class="flex flex-wrap gap-2">
                         ${data.classes.map(c => `
-                            <span class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700">
+                            <span class="px-3 py-1 rounded-lg text-xs sm:text-sm font-semibold bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700">
                                 ${c}
                             </span>
                         `).join('')}
@@ -1263,9 +1395,9 @@
             ['all', 'lasthit', 'zone', 'support'].forEach(r => {
                 const btn = document.getElementById('cls-btn-' + r);
                 if (r === role) {
-                    btn.className = 'px-3.5 py-1.5 rounded-xl text-xs font-bold transition bg-indigo-600 text-white shadow-sm';
+                    btn.className = 'px-4 py-2 rounded-xl text-sm font-bold transition bg-indigo-600 text-white shadow-sm';
                 } else {
-                    btn.className = 'px-3.5 py-1.5 rounded-xl text-xs font-bold transition bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800';
+                    btn.className = 'px-4 py-2 rounded-xl text-sm font-bold transition bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800';
                 }
             });
 
@@ -1283,29 +1415,44 @@
             };
 
             grid.innerHTML = filtered.map(c => `
-                <div class="bg-white dark:bg-slate-900 rounded-2xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between hover:border-indigo-300 dark:hover:border-indigo-700 transition">
-                    <div>
-                        <div class="flex items-center justify-between gap-2 mb-3">
-                            <div class="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-lg">
-                                <i class="fa-solid ${c.icon}"></i>
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between hover:border-indigo-300 dark:hover:border-indigo-700 transition space-y-4">
+                    <div class="space-y-3.5">
+                        <div class="flex items-start justify-between gap-3">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 rounded-xl bg-slate-100 dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-xl shrink-0">
+                                    <i class="fa-solid ${c.icon}"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-bold text-slate-900 dark:text-white leading-snug">${c.name}</h4>
+                                    <span class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium">${c.thaiName}</span>
+                                </div>
                             </div>
-                            <span class="px-2.5 py-1 rounded-lg text-[11px] font-bold ${badgeStyles[c.badgeColor]}">
+                            <span class="px-3 py-1 rounded-lg text-xs font-bold shrink-0 ${badgeStyles[c.badgeColor]}">
                                 ${c.roleBadge}
                             </span>
                         </div>
-                        <h4 class="text-base font-bold text-slate-900 dark:text-white">${c.name} <span class="text-xs font-normal text-slate-500 dark:text-slate-400">(${c.thaiName})</span></h4>
 
-                        <div class="mt-3 flex flex-wrap gap-1">
-                            ${c.skills.map(s => `<span class="px-2 py-0.5 rounded-md text-[11px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">${s}</span>`).join('')}
+                        <!-- Highlight Box for November 2026 Rebalance Patch -->
+                        <div class="p-3.5 rounded-xl bg-emerald-50/70 dark:bg-emerald-950/35 border border-emerald-200/80 dark:border-emerald-800/70">
+                            <div class="text-xs font-bold text-emerald-700 dark:text-emerald-300 uppercase mb-1 flex items-center gap-1.5">
+                                <i class="fa-solid fa-bolt"></i> อัปเดตสกิลแพตช์ Rebalance (พ.ย. 2026)
+                            </div>
+                            <p class="text-sm text-slate-700 dark:text-slate-200 leading-relaxed">
+                                ${c.patchHighlight}
+                            </p>
                         </div>
 
-                        <p class="mt-3 text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-                            <strong class="text-slate-800 dark:text-slate-200">หน้าที่หลัก:</strong> ${c.duty}
+                        <div class="flex flex-wrap gap-1.5">
+                            ${c.skills.map(s => `<span class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200/70 dark:border-slate-700">${s}</span>`).join('')}
+                        </div>
+
+                        <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
+                            <strong class="text-slate-900 dark:text-white">บทบาทใน AFV Riot:</strong> ${c.duty}
                         </p>
                     </div>
 
-                    <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 text-xs text-indigo-700 dark:text-indigo-300 font-medium">
-                        💡 <strong>ทริก:</strong> ${c.tip}
+                    <div class="pt-3.5 border-t border-slate-100 dark:border-slate-800 text-sm text-indigo-700 dark:text-indigo-300 font-medium leading-relaxed">
+                        💡 <strong>ทริกการเล่น:</strong> ${c.tip}
                     </div>
                 </div>
             `).join('');
@@ -1629,14 +1776,14 @@
             const redTopHP = p < 0.25 ? 100 : Math.max(0, 100 - ((p - 0.25) / 0.3) * 100);
 
             drawAFV(blueTopX, 88, true, 88, 5, 'AFV เรา');
-            drawHeroUnit(blueTopX - 36, 58, true, 'Biochemist', 'rgba(16, 185, 129, 0.35)');
-            drawHeroUnit(blueTopX - 68, 88, true, 'Sniper/Rebel');
+            drawHeroUnit(blueTopX - 36, 58, true, 'Biochemist (ทะลุแลนด์!)', 'rgba(16, 185, 129, 0.35)');
+            drawHeroUnit(blueTopX - 75, 88, true, 'Rebel ปืนกล (+100%)');
 
             if (redTopHP > 0) {
                 drawAFV(redTopX, 88, false, redTopHP, 5, 'AFV ศัตรู');
                 if (p >= 0.22 && p <= 0.55 && animTick % 12 === 0) {
                     spawnExplosion(redTopX, 88, '#10b981', 8);
-                    spawnFloatingText(redTopX, 66, 'Acid Demo! -18,500', '#34d399', 13);
+                    spawnFloatingText(redTopX, 64, 'Acid Demo ทะลุแลนด์! -22,500', '#34d399', 13);
                 }
             } else {
                 if (Math.abs(p - 0.56) < 0.015) {
@@ -1644,7 +1791,7 @@
                     spawnFloatingText(redTopX, 65, '💥 พังรถศัตรู! +85 แต้ม (ตายหมู่ 5 คน)', '#fbbf24', 15);
                 }
                 ctx.fillStyle = '#fb7185';
-                ctx.font = 'bold 11px "IBM Plex Sans Thai", sans-serif';
+                ctx.font = 'bold 12px "Anuphan", "Sarabun", sans-serif';
                 ctx.textAlign = 'center';
                 ctx.fillText('💥 รถศัตรูพัง (+85 คะแนน & ตายหมู่ 5 คน)', redTopX, 92);
             }
@@ -1671,7 +1818,7 @@
                         ctx.stroke();
                     }
                     ctx.fillStyle = '#38bdf8';
-                    ctx.font = 'bold 11px "IBM Plex Sans Thai", sans-serif';
+                    ctx.font = 'bold 12px "Anuphan", "Sarabun", sans-serif';
                     ctx.textAlign = 'center';
                     ctx.fillText('โดดลงรถทัน 5 คน! (รอดตายหมู่)', blueBotX - 60, 385);
                 }
@@ -1681,7 +1828,7 @@
                     spawnFloatingText(blueBotX, 312, '✅ รถพังแต่ทีมเรารอดครบ 5 คน!', '#38bdf8', 14);
                 }
                 ctx.fillStyle = '#38bdf8';
-                ctx.font = 'bold 11px "IBM Plex Sans Thai", sans-serif';
+                ctx.font = 'bold 12px "Anuphan", "Sarabun", sans-serif';
                 ctx.textAlign = 'center';
                 ctx.fillText('✅ สละยานสำเร็จ! ไม่เสียแต้มส่วนตัว (-10x5)', blueBotX - 25, 336);
             }
@@ -1690,9 +1837,9 @@
             drawAFV(w * 0.56, 210, false, 68, 5, 'AFV ศัตรู');
 
             if (p < 0.25) {
-                updateSimHUD('สถานการณ์ที่ 1: การดันรถ AFV & กฎสละยาน', 'Phase 1/3', 'รถถัง AFV บรรทุกผู้เล่น 5 คนเคลื่อนที่ตามเลน ให้ Biochemist และ Sniper/Rebellion เดินประกบ', '19:10', 420, 390, 600, 96, 85);
+                updateSimHUD('สถานการณ์ที่ 1: การดันรถ AFV & เมต้าละลายรถ', 'Phase 1/3', 'รถถัง AFV บรรทุกผู้เล่น 5 คนเคลื่อนที่ตามเลน ให้ Biochemist (ปายาทะลุแลนด์) และ Rebellion (ปืนกล Black Rose) เดินประกบ', '19:10', 420, 390, 600, 96, 85);
             } else if (p < 0.6) {
-                updateSimHUD('สถานการณ์ที่ 1: ปายาละลายรถศัตรู (+85 แต้ม)', 'Phase 2/3', 'Biochemist ปา Acid Demonstration พังรถ AFV ศัตรูเลนบน! ศัตรูไม่โดดลงรถ ตายหมู่ 5 คน เราได้ +85 แต้ม!', '18:35', 505, 390, 800, 96, 85);
+                updateSimHUD('สถานการณ์ที่ 1: ปายาทะลุแลนด์ละลายรถศัตรู (+85 แต้ม)', 'Phase 2/3', 'Biochemist ปา Acid Demonstration (เข้าแม้ใน Land Protector) ร่วมกับ Rebellion ยิงไกล +100% พังรถศัตรู! ได้ +85 แต้ม!', '18:35', 505, 390, 800, 96, 85);
             } else {
                 updateSimHUD('สถานการณ์ที่ 1: HP < 15% สั่งสละยานทันที!', 'Phase 3/3', 'เลนล่างรถ AFV เราเลือดต่ำกว่า 15% หัวหน้าตี้สั่งทุกคนกดสละยานโดดลงรถทันที รอดตายหมู่ครบ 5 คน!', '18:05', 510, 475, 950, 96, 85);
             }
@@ -1719,7 +1866,7 @@
                 ctx.lineWidth = 2;
                 ctx.stroke();
                 ctx.fillStyle = '#fff';
-                ctx.font = 'bold 10px "IBM Plex Sans Thai", sans-serif';
+                ctx.font = 'bold 11px "Anuphan", "Sarabun", sans-serif';
                 ctx.textAlign = 'center';
                 ctx.fillText('ELITE', targetX, targetY + 4);
 
@@ -1748,12 +1895,12 @@
             ctx.stroke();
             ctx.restore();
 
-            drawHeroUnit(paladinX, paladinY, true, 'Paladin (Devotion)');
-            drawHeroUnit(champX, champY, true, 'Champion', 'rgba(245, 158, 11, 0.45)');
+            drawHeroUnit(paladinX, paladinY, true, 'Paladin (Sac เคลือบธาตุ)');
+            drawHeroUnit(champX, champY, true, 'Champ (ไร้ Fixed Cast)', 'rgba(245, 158, 11, 0.45)');
 
             if (Math.abs(p - 0.49) < 0.018) {
                 spawnExplosion(targetX, targetY, '#f59e0b', 28);
-                spawnFloatingText(targetX, targetY - 28, '💥 ASURA STRIKE! Last Hit (+35 แต้ม!)', '#fbbf24', 16);
+                spawnFloatingText(targetX, targetY - 28, '💥 ASURA ไร้ Fixed Cast! Last Hit (+35 แต้ม!)', '#fbbf24', 16);
             }
 
             if (p >= 0.55 && p <= 0.85) {
@@ -1769,7 +1916,7 @@
                 ctx.lineWidth = 2;
                 ctx.stroke();
                 ctx.fillStyle = '#6ee7b7';
-                ctx.font = 'bold 11px "IBM Plex Sans Thai", sans-serif';
+                ctx.font = 'bold 12px "Anuphan", "Sarabun", sans-serif';
                 ctx.textAlign = 'center';
                 ctx.fillText('แต้มซ่อมป้อม', orbX, orbY - 12);
                 ctx.restore();
@@ -1781,9 +1928,9 @@
             }
 
             if (p < 0.44) {
-                updateSimHUD('สถานการณ์ที่ 2: ซุ่มรอจังหวะ Last Hit จุด Resource', 'Phase 1/3', 'Paladin ดึงสาย Devotion ให้ Champion ยืนซุ่มรอให้ศัตรูตีมอนสเตอร์ Elite จนเลือดลดเหลือ ~15%', '17:00', 820, 810, 1100, 76, 82);
+                updateSimHUD('สถานการณ์ที่ 2: ซุ่มรอจังหวะ Last Hit จุด Resource', 'Phase 1/3', 'Paladin ดึงสายคุ้มกัน Champion (Rising Dragon II +10 ไร้ Fixed Cast) รอให้ศัตรูตีมอนสเตอร์ Elite จนเลือดเหลือ ~15%', '17:00', 820, 810, 1100, 76, 82);
             } else if (p < 0.68) {
-                updateSimHUD('สถานการณ์ที่ 2: Champion พุ่งต่อย Asura Strike!', 'Phase 2/3', 'เมื่อเลือด Elite เหลือ 12% Champion พุ่ง Snap เข้าไปกด Asura Strike ปิดฉาก! คว้า +35 คะแนนและทรัพยากรทันที', '16:52', 855, 810, 1150, 76, 82);
+                updateSimHUD('สถานการณ์ที่ 2: Champion ต่อย Asura ไร้หลอดร่ายคงที่!', 'Phase 2/3', 'เมื่อเลือด Elite เหลือ 12% Champion พุ่งเข้าไปกด Asura Strike (ไร้ Fixed Cast) ปิดฉากไวกว่าเดิม! คว้า +35 คะแนนทันที', '16:52', 855, 810, 1150, 76, 82);
             } else {
                 updateSimHUD('สถานการณ์ที่ 2: นำทรัพยากรไปซ่อมป้อม Crystal', 'Phase 3/3', 'นำทรัพยากรที่ได้มากดซ่อมแซมป้อม Crystal ของเราให้เลือดเต็ม เพื่อรักษาความได้เปรียบและตัดแต้มศัตรู', '16:40', 855, 810, 1200, Math.round(blueRepairedHP), 82);
             }
@@ -1805,7 +1952,7 @@
                 const zoneX = bossBotX + 90;
                 const zoneY = 332;
 
-                // Land Protector
+                // Elemental Domain + Psychic Wave Resonance
                 ctx.save();
                 ctx.beginPath();
                 ctx.arc(bossBotX - 24, bossBotY, 40, 0, Math.PI * 2);
@@ -1815,12 +1962,12 @@
                 ctx.lineWidth = 2;
                 ctx.stroke();
                 ctx.fillStyle = '#fde68a';
-                ctx.font = 'bold 10px "IBM Plex Sans Thai", sans-serif';
+                ctx.font = 'bold 11px "Anuphan", "Sarabun", sans-serif';
                 ctx.textAlign = 'center';
-                ctx.fillText('Land Protector', bossBotX - 24, bossBotY + 52);
+                ctx.fillText('สนามธาตุ + Psychic ธาตุ', bossBotX - 24, bossBotY + 52);
                 ctx.restore();
 
-                // Storm Gust Zone
+                // Sniper M.Pen Trap & Wizard Gravity Field Zone
                 ctx.save();
                 ctx.beginPath();
                 ctx.arc(zoneX, zoneY, 35, 0, Math.PI * 2);
@@ -1830,21 +1977,21 @@
                 ctx.lineWidth = 2;
                 ctx.stroke();
                 ctx.fillStyle = '#7dd3fc';
-                ctx.font = 'bold 10px "IBM Plex Sans Thai", sans-serif';
+                ctx.font = 'bold 11px "Anuphan", "Sarabun", sans-serif';
                 ctx.textAlign = 'center';
-                ctx.fillText('❄️ Storm Gust + Bragi', zoneX, zoneY - 42);
+                ctx.fillText('💥 Trap M.Pen + Gravity สโลว์', zoneX, zoneY - 42);
                 ctx.restore();
 
-                drawHeroUnit(bossBotX - 52, bossBotY - 20, true, 'Professor');
-                drawHeroUnit(bossBotX + 32, bossBotY - 24, true, 'High Wizard');
-                drawHeroUnit(bossBotX - 26, bossBotY + 10, true, 'Champion', 'rgba(245, 158, 11, 0.5)');
+                drawHeroUnit(bossBotX - 52, bossBotY - 20, true, 'Professor (Resonance)');
+                drawHeroUnit(bossBotX + 32, bossBotY - 24, true, 'Sniper (Trap 0.3s)');
+                drawHeroUnit(bossBotX - 26, bossBotY + 10, true, 'Champ (ตัดโล่/-50%HP)', 'rgba(245, 158, 11, 0.5)');
 
-                drawHeroUnit(zoneX + 48, zoneY - 10, false, 'Red Champ (ติดโซน!)');
-                drawHeroUnit(zoneX + 54, zoneY + 18, false, 'Red Team');
+                drawHeroUnit(zoneX + 48, zoneY - 10, false, 'Red Tank (-50% MaxHP!)');
+                drawHeroUnit(zoneX + 54, zoneY + 18, false, 'Red Team (ติดแทรป)');
 
                 if (Math.abs(p - 0.48) < 0.018) {
                     spawnExplosion(bossBotX, bossBotY, '#f59e0b', 30);
-                    spawnFloatingText(bossBotX, bossBotY - 42, '👑 Champion ต่อย Asura Strike ได้ Last Hit บอส!', '#fbbf24', 15);
+                    spawnFloatingText(bossBotX, bossBotY - 42, '👑 Champion ต่อย Asura ไร้ Fixed Cast ได้ Last Hit บอส!', '#fbbf24', 15);
                 }
             } else {
                 const marchProg = (p - 0.52) / 0.45;
@@ -1868,9 +2015,9 @@
             }
 
             if (p < 0.35) {
-                updateSimHUD('สถานการณ์ที่ 3: ศึกชิงบอสใหญ่ (นาที 14:00 & 05:00)', 'Phase 1/3', 'ครึ่งทีมกางโซน: Professor ปู Land Protector + Clown กาง Bragi + High Wizard ร่าย Storm Gust ปิดทางศัตรู', '14:00', 1420, 1380, 1800, 90, 78);
+                updateSimHUD('สถานการณ์ที่ 3: ศึกชิงบอสใหญ่ (นาที 14:00 & 05:00)', 'Phase 1/3', 'Sniper วางแทรปเจาะเกราะเวทย์ (0.3 วิ) + High Wizard ร่าย Gravity Field สโลว์ 20% + Professor ยิง Psychic เปลี่ยนธาตุ', '14:00', 1420, 1380, 1800, 90, 78);
             } else if (p < 0.55) {
-                updateSimHUD('สถานการณ์ที่ 3: Champion เก็บ Last Hit บอสสำเร็จ!', 'Phase 2/3', 'ศัตรูติดโซนเวทย์เข้ามาไม่ได้ Champion ของเรากด Asura Strike เก็บ Last Hit บอส Vanguard สำเร็จ!', '13:45', 1450, 1380, 1950, 90, 78);
+                updateSimHUD('สถานการณ์ที่ 3: Champion ตัดโล่/ลดเลือด 50% & ลาสท์บอส!', 'Phase 2/3', 'Champion ต่อยตัดโล่ลด Max HP แทงค์ศัตรู 50% แล้วกด Asura ไร้ Fixed Cast เก็บ Last Hit บอส Vanguard สำเร็จ!', '13:45', 1450, 1380, 1950, 90, 78);
             } else {
                 updateSimHUD('สถานการณ์ที่ 3: บอสเดินลุยเลนกลาง ทุบรถ & ป้อมศัตรู!', 'Phase 3/3', 'บอสเกิดที่ป้อมเราและเดินลุยเลนกลาง (ไม่สนคนตี) หยุดทุบรถ AFV ศัตรูจนพัง (+85 แต้ม) แล้วไปทุบป้อมศัตรู!', '13:15', 1860, 1380, 2100, 90, Math.round(redCrystalHP));
             }
